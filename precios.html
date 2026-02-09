@@ -291,6 +291,23 @@
     <input type="number" id="clavos" placeholder="Precio CUP/kg">
     <small>Clavos galvanizados para fijación de planchas y tejas</small>
 </div>
+<div class="card">
+    <label>Cubierta ligera de Cinc</label>
+    <input type="number" id="precioPlanchaCinc" placeholder="Precio plancha de cinc" value="0">
+    <small>Planchas de 1.2 x 2.4 m</small>
+    <input type="number" id="precioPurlin3m" placeholder="Precio purlin 3m" value="0">
+    <small>Purlin metálico 3 m</small>
+</div>
+<script>
+// Guardar precios en localStorage
+document.getElementById('guardarPrecios').addEventListener('click', ()=>{
+    let precios = JSON.parse(localStorage.getItem('precios'))||{};
+    precios['planchaCinc']=parseFloat(document.getElementById('precioPlanchaCinc').value)||0;
+    precios['purlin3m']=parseFloat(document.getElementById('precioPurlin3m').value)||0;
+    localStorage.setItem('precios', JSON.stringify(precios));
+    alert('Precios guardados');
+});
+</script>
 
 <h2>Falso Techo</h2>
 <div class="card">

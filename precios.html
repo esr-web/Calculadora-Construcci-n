@@ -198,24 +198,39 @@
 
 <h2>Losas de Piso</h2>
 <div class="card">
-    <label>Losas de hormigón armado</label>
-    <input type="number" id="losaArmado" placeholder="Precio CUP/m²">
-    <small>Piso estructural de hormigón armado</small>
+    <label>Losas hidráulica 20x20 cm</label>
+    <input type="number" id="losaH20" placeholder="Precio CUP/m²">
+    <small>Losas hidráulica de 20x20 cm</small>
 </div>
 <div class="card">
-    <label>Losas prefabricadas</label>
-    <input type="number" id="losaPrefabricada" placeholder="Precio CUP/m²">
-    <small>Instalación rápida, prefabricada</small>
+    <label>Losas hidráulica 30x30 cm</label>
+    <input type="number" id="losaH30" placeholder="Precio CUP/m²">
+    <small>Losas hidráulica de 30x30 cm</small>
 </div>
 <div class="card">
-    <label>Losas aligeradas</label>
-    <input type="number" id="losaAligerada" placeholder="Precio CUP/m²">
-    <small>Hormigón con bloques de poliestireno o cerámica</small>
+    <label>Losas cerámica 30x30 cm</label>
+    <input type="number" id="losaC30" placeholder="Precio CUP/m²">
+    <small>Losas cerámica de 30x30 cm</small>
 </div>
 <div class="card">
-    <label>Losas de concreto simple</label>
-    <input type="number" id="losaSimple" placeholder="Precio CUP/m²">
-    <small>Piso no estructural, concreto simple</small>
+    <label>Losas cerámica 40x40 cm</label>
+    <input type="number" id="losaC40" placeholder="Precio CUP/m²">
+    <small>Losas cerámica de 40x40 cm</small>
+</div>
+<div class="card">
+    <label>Losas cerámica 50x50 cm</label>
+    <input type="number" id="losaC50" placeholder="Precio CUP/m²">
+    <small>Losas cerámica de 50x50 cm</small>
+</div>
+<div class="card">
+    <label>Losas granito 30x30 cm</label>
+    <input type="number" id="losaG30" placeholder="Precio CUP/m²">
+    <small>Losas de granito de 30x30 cm</small>
+</div>
+<div class="card">
+    <label>Losas granito 40x40 cm</label>
+    <input type="number" id="losaG40" placeholder="Precio CUP/m²">
+    <small>Losas de granito de 40x40 cm</small>
 </div>
 
 <h2>Monedas</h2>
@@ -248,10 +263,13 @@ function guardarPrecios(){
         acero10: document.getElementById("acero10").value,
         acero12: document.getElementById("acero12").value,
         acero16: document.getElementById("acero16").value,
-        losaArmado: document.getElementById("losaArmado").value,
-        losaPrefabricada: document.getElementById("losaPrefabricada").value,
-        losaAligerada: document.getElementById("losaAligerada").value,
-        losaSimple: document.getElementById("losaSimple").value,
+        losaH20: document.getElementById("losaH20").value,
+        losaH30: document.getElementById("losaH30").value,
+        losaC30: document.getElementById("losaC30").value,
+        losaC40: document.getElementById("losaC40").value,
+        losaC50: document.getElementById("losaC50").value,
+        losaG30: document.getElementById("losaG30").value,
+        losaG40: document.getElementById("losaG40").value,
         usd: document.getElementById("usd").value,
         eur: document.getElementById("eur").value
     };
@@ -277,10 +295,13 @@ function cargarPrecios(){
         document.getElementById("acero10").value = precios.acero10 || '';
         document.getElementById("acero12").value = precios.acero12 || '';
         document.getElementById("acero16").value = precios.acero16 || '';
-        document.getElementById("losaArmado").value = precios.losaArmado || '';
-        document.getElementById("losaPrefabricada").value = precios.losaPrefabricada || '';
-        document.getElementById("losaAligerada").value = precios.losaAligerada || '';
-        document.getElementById("losaSimple").value = precios.losaSimple || '';
+        document.getElementById("losaH20").value = precios.losaH20 || '';
+        document.getElementById("losaH30").value = precios.losaH30 || '';
+        document.getElementById("losaC30").value = precios.losaC30 || '';
+        document.getElementById("losaC40").value = precios.losaC40 || '';
+        document.getElementById("losaC50").value = precios.losaC50 || '';
+        document.getElementById("losaG30").value = precios.losaG30 || '';
+        document.getElementById("losaG40").value = precios.losaG40 || '';
         document.getElementById("usd").value = precios.usd || '';
         document.getElementById("eur").value = precios.eur || '';
     }

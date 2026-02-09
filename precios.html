@@ -281,6 +281,31 @@
     <input type="number" id="tejaEspanola" placeholder="Precio CUP/m²">
     <small>Teja arcilla tipo española</small>
 </div>
+  <div class="card">
+    <label>Cubierta ligera de Cinc</label>
+    <input type="number" id="precioPlanchaCinc" placeholder="Precio plancha de cinc" value="0">
+    <small>Planchas de 1.2 x 2.4 m</small>
+    <input type="number" id="precioPurlin3m" placeholder="Precio purlin 3m" value="0">
+    <small>Purlin metálico 3 m</small>
+</div>
+
+<div class="card">
+    <label>Hormigón armado</label>
+    <input type="number" id="precioHormigonArmado" placeholder="Precio por m³" value="0">
+    <small>Incluye varillas de acero, según norma</small>
+</div>
+
+<script>
+document.getElementById('guardarPrecios').addEventListener('click', ()=>{
+    let precios = JSON.parse(localStorage.getItem('precios'))||{};
+    precios['planchaCinc']=parseFloat(document.getElementById('precioPlanchaCinc').value)||0;
+    precios['purlin3m']=parseFloat(document.getElementById('precioPurlin3m').value)||0;
+    precios['hormigonArmado']=parseFloat(document.getElementById('precioHormigonArmado').value)||0;
+    localStorage.setItem('precios', JSON.stringify(precios));
+    alert('Precios guardados');
+});
+</script>
+  
 <div class="card">
     <label>Impermeabilizante para cubierta</label>
     <input type="number" id="imperCubierta" placeholder="Precio CUP/litro">

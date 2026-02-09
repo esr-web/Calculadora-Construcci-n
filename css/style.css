@@ -117,28 +117,37 @@ button {
     margin-top: 0.5rem;
 }
 
+/* Botones a relieve minimalistas */
 .nav-link {
-    background: #2563eb;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
+    background: #f0f0f0; /* fondo minimalista */
+    color: #1f2937; /* texto oscuro */
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 500;
-    transition: transform 0.1s, box-shadow 0.1s;
+    font-size: 1rem;
+
+    /* Efecto relieve */
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.1),
+                -4px -4px 8px rgba(255,255,255,0.7);
+    transition: all 0.2s ease;
 }
 
 .nav-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2),
+                -2px -2px 6px rgba(255,255,255,0.8);
+    background: #e0e0e0; /* ligero cambio de fondo al pasar */
 }
 
-/* Estilo para el header en todas las páginas */
+/* Header fijo y moderno */
 .header {
-    background: #1f2937;
-    color: white;
+    background: #fff;
+    color: #1f2937;
     padding: 1rem;
     text-align: center;
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }

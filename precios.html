@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Precios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <h1>Precios de Materiales</h1>
+</header>
+
+<main class="container">
+
+    <div class="card">
+        <h3>Bloques</h3>
+        <label>Bloque 15 (CUP)</label>
+        <input id="bloque15" type="number">
+    </div>
+
+    <div class="card">
+        <h3>Cemento (por saco)</h3>
+        <label>P-250 (CUP)</label>
+        <input id="p250" type="number">
+        <label>P-350 (CUP)</label>
+        <input id="p350" type="number">
+    </div>
+
+    <div class="card">
+        <h3>Áridos</h3>
+        <label>Arena (CUP/m³)</label>
+        <input id="arena" type="number">
+    </div>
+
+    <div class="card">
+        <h3>Monedas</h3>
+        <label>1 USD en CUP</label>
+        <input id="usd" type="number">
+        <label>1 EUR en CUP</label>
+        <input id="eur" type="number">
+    </div>
+
+    <button class="btn-primary" onclick="guardarPrecios()">Guardar</button>
+
+</main>
+
+<script>
+function guardarPrecios(){
+    const precios = {
+        bloque15: bloque15.value,
+        p250: p250.value,
+        p350: p350.value,
+        arena: arena.value,
+        usd: usd.value,
+        eur: eur.value
+    };
+    localStorage.setItem('precios', JSON.stringify(precios));
+    alert("Precios guardados");
+}
+</script>
+</body>
+</html>

@@ -140,10 +140,10 @@ button {
     background: #e0e0e0; /* ligero cambio de fondo al pasar */
 }
 
-/* Header fijo y moderno */
+/* Header uniforme en todas las páginas */
 .header {
-    background: #fff;
-    color: #1f2937;
+    background: #1f2937; /* mismo color para todas las páginas */
+    color: white;
     padding: 1rem;
     text-align: center;
     position: sticky;
@@ -151,7 +151,46 @@ button {
     z-index: 1000;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* Navegación en header */
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+/* Botones minimalistas a relieve */
+.nav-link {
+    background: #f0f0f0;
+    color: #1f2937;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.1),
+                -4px -4px 8px rgba(255,255,255,0.7);
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2),
+                -2px -2px 6px rgba(255,255,255,0.8);
+    background: #e0e0e0;
+}
+
 /* Tarjetas de precios */
+.card {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
 .card input {
     width: 100%;
     padding: 0.5rem;
@@ -162,7 +201,7 @@ button {
 
 .card small {
     display: block;
-    color: #6b7280; /* letra clara y sutil */
+    color: #6b7280;
     font-size: 0.85rem;
     margin-top: 0.2rem;
 }

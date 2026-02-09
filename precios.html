@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Precios de Materiales</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>Precios de Materiales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -22,75 +22,80 @@
 
 <main class="container">
 
-    <!-- BLOQUES -->
-    <h2>Bloques y Materiales para Muro</h2>
-    <div class="card">
-        <label>Bloque 15</label>
-        <input type="number" id="bloque15" placeholder="Precio CUP">
-        <small>Medida: 15x20x40 cm · Hormigón hueco</small>
-    </div>
+<h2>Bloques</h2>
+<div class="card">
+    <label>Bloque 10</label>
+    <input type="number" id="bloque10" placeholder="Precio CUP">
+    <small>Medida: 10x20x40 cm · Hormigón hueco</small>
+</div>
+<div class="card">
+    <label>Bloque 15</label>
+    <input type="number" id="bloque15" placeholder="Precio CUP">
+    <small>Medida: 15x20x40 cm · Hormigón hueco</small>
+</div>
+<div class="card">
+    <label>Bloque 20</label>
+    <input type="number" id="bloque20" placeholder="Precio CUP">
+    <small>Medida: 20x20x40 cm · Hormigón hueco</small>
+</div>
 
-    <div class="card">
-        <label>Bloque 20</label>
-        <input type="number" id="bloque20" placeholder="Precio CUP">
-        <small>Medida: 20x20x40 cm · Hormigón hueco</small>
-    </div>
+<h2>Cemento</h2>
+<div class="card">
+    <label>Cemento P-250</label>
+    <input type="number" id="p250" placeholder="Precio CUP">
+    <small>Saco 50 kg · Uso general</small>
+</div>
+<div class="card">
+    <label>Cemento P-350</label>
+    <input type="number" id="p350" placeholder="Precio CUP">
+    <small>Saco 50 kg · Alta resistencia</small>
+</div>
 
-    <div class="card">
-        <label>Cemento P-250</label>
-        <input type="number" id="p250" placeholder="Precio CUP">
-        <small>Saco 50 kg · Uso general</small>
-    </div>
+<h2>Áridos</h2>
+<div class="card">
+    <label>Arena fina</label>
+    <input type="number" id="arena" placeholder="Precio CUP/m³">
+    <small>Grano fino, limpio, sin arcilla</small>
+</div>
+<div class="card">
+    <label>Gravilla / Arido grueso</label>
+    <input type="number" id="grava" placeholder="Precio CUP/m³">
+    <small>Tamaño 10-20 mm · Para mortero y concreto</small>
+</div>
+<div class="card">
+    <label>Agua</label>
+    <input type="number" id="agua" placeholder="Precio CUP/m³">
+    <small>Potable o apta para mezcla de mortero</small>
+</div>
+<div class="card">
+    <label>Aditivo impermeabilizante</label>
+    <input type="number" id="aditivo" placeholder="Precio CUP/litro">
+    <small>Para morteros y mezcla de bloques</small>
+</div>
 
-    <div class="card">
-        <label>Cemento P-350</label>
-        <input type="number" id="p350" placeholder="Precio CUP">
-        <small>Saco 50 kg · Alta resistencia</small>
-    </div>
+<h2>Acero</h2>
+<div class="card">
+    <label>Acero Corrugado</label>
+    <input type="number" id="acero" placeholder="Precio CUP/kg">
+    <small>Diámetros: 6, 8, 10, 12, 16 mm · Varillas corrugadas</small>
+</div>
 
-    <div class="card">
-        <label>Arena</label>
-        <input type="number" id="arena" placeholder="Precio CUP/m³">
-        <small>Grano fino, limpio, sin arcilla</small>
-    </div>
+<h2>Monedas</h2>
+<div class="card">
+    <label>1 USD en CUP</label>
+    <input type="number" id="usd" placeholder="Valor en CUP">
+</div>
+<div class="card">
+    <label>1 EUR en CUP</label>
+    <input type="number" id="eur" placeholder="Valor en CUP">
+</div>
 
-    <div class="card">
-        <label>Grava</label>
-        <input type="number" id="grava" placeholder="Precio CUP/m³">
-        <small>Tamaño 10-20 mm · Para mortero y concreto</small>
-    </div>
-
-    <div class="card">
-        <label>Agua</label>
-        <input type="number" id="agua" placeholder="Precio CUP/m³">
-        <small>Potable o apta para mezcla de mortero</small>
-    </div>
-
-    <div class="card">
-        <label>Aditivo impermeabilizante</label>
-        <input type="number" id="aditivo" placeholder="Precio CUP/litro">
-        <small>Para morteros y mezcla de bloques</small>
-    </div>
-
-    <!-- MONEDAS -->
-    <h2>Monedas</h2>
-    <div class="card">
-        <label>1 USD en CUP</label>
-        <input type="number" id="usd" placeholder="Valor en CUP">
-    </div>
-
-    <div class="card">
-        <label>1 EUR en CUP</label>
-        <input type="number" id="eur" placeholder="Valor en CUP">
-    </div>
-
-    <button class="btn-primary" onclick="guardarPrecios()">Guardar Precios</button>
-
-</main>
+<button class="btn-primary" onclick="guardarPrecios()">Guardar Precios</button>
 
 <script>
 function guardarPrecios(){
     const precios = {
+        bloque10: document.getElementById("bloque10").value,
         bloque15: document.getElementById("bloque15").value,
         bloque20: document.getElementById("bloque20").value,
         p250: document.getElementById("p250").value,
@@ -99,6 +104,7 @@ function guardarPrecios(){
         grava: document.getElementById("grava").value,
         agua: document.getElementById("agua").value,
         aditivo: document.getElementById("aditivo").value,
+        acero: document.getElementById("acero").value,
         usd: document.getElementById("usd").value,
         eur: document.getElementById("eur").value
     };
@@ -107,5 +113,6 @@ function guardarPrecios(){
 }
 </script>
 
+</main>
 </body>
 </html>

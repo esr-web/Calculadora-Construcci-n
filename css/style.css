@@ -80,3 +80,31 @@ button {
 .hidden {
     display: none;
 }
+.nav-button {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    margin-top: .7rem;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: transform .1s, box-shadow .1s;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,.15);
+}
+
+.nav-button.secondary {
+    background: #16a34a;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: #6b7280;
+    font-size: .9rem;
+}

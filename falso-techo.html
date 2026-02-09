@@ -161,48 +161,47 @@ function calcularTecho(){
         return;
     }
 
-    // Variables de cálculo
     let cantidadMaterial = 0;
     let perfiles = 0;
     let cintillos = 0;
-    let tiempoH = 0; // horas
+    let tiempoH = 0;
     let precioCUP = 0;
 
     if(tipo === 'pladur1' || tipo === 'pladurH'){
         // Placas de pladur
         const placa = precios[tipo] || 0;
-        cantidadMaterial = Math.ceil(area / (1.2 * (tipo==='pladur1'?2.4:2.0))); // cantidad placas
-        perfiles = Math.ceil(area * 0.5); // perfiles por m² aproximado
-        cintillos = Math.ceil(area * 0.5); // cintillos por m² aproximado
-        // Precio
+        const largoPlaca = tipo==='pladur1'?2.4:2.0;
+        cantidadMaterial = Math.ceil(area / (1.2 * largoPlaca));
+        perfiles = Math.ceil(area * 0.5); 
+        cintillos = Math.ceil(area * 0.5); 
         precioCUP = (cantidadMaterial*placa) + (perfiles*(precios['perfilMet']||0)) + (cintillos*(precios['cintilloMet']||0));
-        // Tiempo
-        tiempoH = area * 0.3; // 0.3 h/m² aproximado
+        tiempoH = area * 0.3; 
     } else if(tipo === 'losa50' || tipo === 'losa60'){
         const losa = precios[tipo] || 0;
-        const tamLosa = tipo==='losa50'?0.5*0.5:0.6*0.6;
-        cantidadMaterial = Math.ceil(area / tamLosa);
-        precioCUP = cantidadMaterial * losa;
-        tiempoH = area * 0.25; // menos tiempo por losa registrable
+        const tamLosa = tipo==='losa50'?0.5:0.6; // cada lado de la losa
+        const cantFilas = Math.ceil(largo / tamLosa);
+        const cantCols = Math.ceil(ancho / tamLosa);
+        cantidadMaterial = cantFilas * cantCols;
+        // Cintillo metálico = perímetro de cada losa * cantidad de losas
+        cintillos = cantidadMaterial * 4 * tamLosa; // metros lineales
+        precioCUP = (cantidadMaterial*losa) + (cintillos*(precios['cintilloMet']||0));
+        tiempoH = area * 0.25;
     }
 
-    // Mano de obra
-    let hombres = area < 100 ? 2 : 3; // 1 albañil + 1 o 2 ayudantes
+    let hombres = area < 100 ? 2 : 3; 
 
-    // Conversión monedas
     const usd = parseFloat(precios['usd']) || 1;
     const eur = parseFloat(precios['eur']) || 1;
     const precioUSD = (precioCUP / usd).toFixed(2);
     const precioEUR = (precioCUP / eur).toFixed(2);
 
-    // Mostrar resultados
     document.getElementById('resultado').style.display = 'block';
     document.getElementById('resultado').innerHTML = `
         <h3>Resumen de Materiales y Costos</h3>
         <p><strong>Área:</strong> ${area.toFixed(2)} m²</p>
         <p><strong>Tipo de techo:</strong> ${tipo==='pladur1'?'Pladur 1.2x2.40':tipo==='pladurH'?'Pladur hidrófugo 1.2x2.0':tipo==='losa50'?'Losa registrable 50x50':'Losa registrable 60x60'}</p>
         <p><strong>Cantidad de placas/losas:</strong> ${cantidadMaterial}</p>
-        ${ (tipo==='pladur1' || tipo==='pladurH') ? `<p><strong>Perfiles metálicos:</strong> ${perfiles}</p><p><strong>Cintillos:</strong> ${cintillos}</p>`: '' }
+        ${ (tipo==='pladur1' || tipo==='pladurH') ? `<p><strong>Perfiles metálicos:</strong> ${perfiles}</p><p><strong>Cintillos metálicos:</strong> ${cintillos}</p>` : `<p><strong>Cintillo metálico:</strong> ${cintillos.toFixed(2)} m</p>` }
         <p><strong>Mano de obra:</strong> ${hombres} personas</p>
         <p><strong>Tiempo estimado:</strong> ${tiempoH.toFixed(2)} horas</p>
         <p><strong>Precio total:</strong> ${precioCUP.toFixed(2)} CUP | ${precioUSD} USD | ${precioEUR} EUR</p>

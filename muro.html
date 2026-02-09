@@ -73,6 +73,13 @@
     <div id="resultado" class="resultado hidden"></div>
 
 </main>
+let hombres = 0;
+if(areaMuro <= 100){
+    hombres = "1 albañil + 1 ayudante";
+}else{
+    hombres = "1 albañil + 2 ayudantes";
+}
+document.getElementById("manoObra").innerText = hombres;
 
 <script src="js/muro.js"></script>
 </body>

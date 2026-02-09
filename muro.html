@@ -6,128 +6,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Header */
-.header {
-    background: #1f2937;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-}
-.nav-link {
-    background: #f0f0f0;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
-                -2px -2px 5px rgba(255,255,255,0.7);
-    transition: all 0.15s ease;
-}
-.nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
-                -1px -1px 3px rgba(255,255,255,0.8);
-    background: #e8e8e8;
-}
-
-/* Tarjetas y estilos */
-.container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-.card {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-.card label {
-    font-weight: 500;
-}
-.card input, .card select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
-}
-.btn-primary {
-    display: block;
-    margin: 1.5rem auto;
-    padding: 0.7rem 2rem;
-    background-color: #1f2937;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-primary:hover {
-    background-color: #374151;
-}
-.result {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 12px;
-    margin-top: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    color: #6b7280;
-    font-size: 0.9rem;
-}
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0;z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width: 800px;margin: 2rem auto;padding: 0 1rem;}
+.card {background: #fff;padding: 1rem;margin-bottom: 1rem;border-radius: 14px;box-shadow: 0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight: 500;}
+.card input, .card select {width: 100%;padding: 0.5rem;margin-top: 0.2rem;border-radius: 8px;border: 1px solid #ccc;}
+.card small {display: block;color: #6b7280;font-size: 0.85rem;margin-top: 0.2rem;}
+.btn-primary {display: block;margin: 1.5rem auto;padding: 0.7rem 2rem;background-color: #1f2937;color: white;border: none;border-radius: 10px;font-size: 1rem;cursor: pointer;transition: 0.2s;}
+.btn-primary:hover {background-color: #374151;}
+.result {background: #f9f9f9;padding: 1rem;border-radius: 12px;margin-top: 1rem;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-size: 0.9rem;}
 </style>
 </head>
 <body>
 
 <header class="header">
-    <h1>Calculadora de Muro</h1>
-    <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Inicio</a>
-        <a href="muro.html" class="nav-link">Muro</a>
-        <a href="piso.html" class="nav-link">Piso</a>
-        <a href="cubierta.html" class="nav-link">Cubierta</a>
-        <a href="cimentacion.html" class="nav-link">Cimentación</a>
-        <a href="estructura.html" class="nav-link">Estructura</a>
-        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-    </nav>
+<h1>Calculadora de Muro</h1>
+<nav class="nav-menu">
+    <a href="index.html" class="nav-link">Inicio</a>
+    <a href="muro.html" class="nav-link">Muro</a>
+    <a href="piso.html" class="nav-link">Piso</a>
+    <a href="cubierta.html" class="nav-link">Cubierta</a>
+    <a href="cimentacion.html" class="nav-link">Cimentación</a>
+    <a href="estructura.html" class="nav-link">Estructura</a>
+    <a href="falso-techo.html" class="nav-link">Falso Techo</a>
+</nav>
 </header>
 
 <main class="container">
 
 <div class="card">
-    <label>Material del muro</label>
-    <select id="tipoBloque">
-        <option value="">-- Selecciona bloque --</option>
-        <option value="bloque10">Bloque 10</option>
-        <option value="bloque15">Bloque 15</option>
-        <option value="bloque20">Bloque 20</option>
+    <label>Tipo de muro</label>
+    <select id="tipoMuro">
+        <option value="">-- Selecciona tipo --</option>
+        <option value="bloque">Bloque</option>
+        <option value="ladrillo">Ladrillo</option>
+        <option value="hormigon">Hormigón armado</option>
     </select>
+</div>
+
+<div class="card" id="materialesDiv" style="display:none;">
+    <label id="materialLabel">Material</label>
+    <select id="tipoMaterial"></select>
 </div>
 
 <div class="card">
@@ -144,21 +67,24 @@ footer {
 </div>
 
 <div class="card">
-    <label>Tipo de cemento</label>
+    <label>Tipo de cemento / Hormigón</label>
     <select id="tipoCemento">
-        <option value="">-- Selecciona cemento --</option>
-        <option value="P250">P-250</option>
-        <option value="P350">P-350</option>
+        <option value="">-- Selecciona --</option>
+        <option value="P250">Cemento P-250</option>
+        <option value="P350">Cemento P-350</option>
+        <option value="H200">Hormigón H-200</option>
+        <option value="H250">Hormigón H-250</option>
     </select>
 </div>
 
 <div class="card">
-    <label>Dosificación</label>
+    <label>Dosificación / Composición</label>
     <select id="dosificacion">
         <option value="">-- Selecciona --</option>
         <option value="1:3:1">1:3:1</option>
         <option value="1:2:1">1:2:1</option>
         <option value="1:4:1">1:4:1</option>
+        <option value="Hormigon">Hormigón estándar</option>
     </select>
 </div>
 
@@ -170,70 +96,105 @@ footer {
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
-// Cargar precios
 let precios = {};
-function cargarPrecios(){
-    precios = JSON.parse(localStorage.getItem('precios')) || {};
-}
+function cargarPrecios(){precios = JSON.parse(localStorage.getItem('precios')) || {};}
 cargarPrecios();
 
-// Calcular área y materiales
+document.getElementById('tipoMuro').addEventListener('change', function(){
+    const div = document.getElementById('materialesDiv');
+    const select = document.getElementById('tipoMaterial');
+    select.innerHTML = '';
+    if(this.value==='bloque'){
+        div.style.display='block';
+        document.getElementById('materialLabel').innerText='Tipo de bloque';
+        ['bloque10','bloque15','bloque20'].forEach(b=>{
+            const opt=document.createElement('option'); opt.value=b; opt.text=b.toUpperCase(); select.add(opt);
+        });
+    } else if(this.value==='ladrillo'){
+        div.style.display='block';
+        document.getElementById('materialLabel').innerText='Tipo de ladrillo';
+        ['ladrilloRojo','ladrilloHueco'].forEach(l=>{
+            const opt=document.createElement('option'); opt.value=l; opt.text=l.charAt(0).toUpperCase()+l.slice(1); select.add(opt);
+        });
+    } else div.style.display='none';
+});
+
 function calcularMuro(){
-    const tipoBloque = document.getElementById('tipoBloque').value;
+    const tipoMuro = document.getElementById('tipoMuro').value;
+    const material = document.getElementById('tipoMaterial').value;
     const largo = parseFloat(document.getElementById('largoMuro').value) || 0;
     const ancho = parseFloat(document.getElementById('anchoMuro').value) || 0;
-    const area = largo * ancho;
+    const area = largo*ancho;
     document.getElementById('areaMuro').value = area.toFixed(2);
-
     const tipoCemento = document.getElementById('tipoCemento').value;
     const dosificacion = document.getElementById('dosificacion').value;
+    if(!tipoMuro || area<=0 || !tipoCemento || !dosificacion){alert("Complete todos los datos correctamente"); return;}
 
-    if(!tipoBloque || !tipoCemento || !dosificacion || area <=0){
-        alert("Seleccione todos los valores y dimensiones válidas");
-        return;
+    let resumen = `<h3>Resumen del muro</h3><p><strong>Área:</strong> ${area.toFixed(2)} m²</p>`;
+    let totalCUP=0;
+
+    // Material del muro
+    if(tipoMuro==='bloque'||tipoMuro==='ladrillo'){
+        const precioMaterial=precios[material]||0;
+        const cantidad=area*10; // unidades
+        const precioMat=cantidad*precioMaterial;
+        totalCUP+=precioMat;
+        resumen+=`<p><strong>Material principal:</strong> ${material}</p>`;
+        resumen+=`<p>Cantidad unidades: ${cantidad}</p>`;
+        resumen+=`<p>Precio material: ${precioMat.toFixed(2)} CUP</p>`;
     }
 
-    // Materiales
-    const bloquePrecio = precios[tipoBloque] || 0;
-    const cementoPrecio = precios[tipoCemento] || 0;
-    const volumenCemento = area * 0.01; // supongamos 0.01 m³ por m²
-    const cantidadBloques = area * 10; // ejemplo: 10 bloques por m²
+    if(tipoMuro==='hormigon'){
+        const precioHorm=precios[tipoCemento]||0;
+        const volumen=area*0.15; // m³
+        const varilla=area*2; // metros lineales
+        const precioVarilla=varilla*(precios['acero']||0);
+        totalCUP+=volumen*precioHorm+precioVarilla;
+        resumen+=`<p><strong>Hormigón:</strong> ${volumen.toFixed(2)} m³ (Precio: ${(volumen*precioHorm).toFixed(2)} CUP)</p>`;
+        resumen+=`<p>Varilla: ${varilla.toFixed(2)} m (Precio: ${precioVarilla.toFixed(2)} CUP)</p>`;
+    }
 
-    const precioBloques = cantidadBloques * bloquePrecio;
-    const precioCemento = volumenCemento * cementoPrecio;
+    // Repello
+    const repelloCemento=area*0.008;
+    const repelloArena=area*0.012;
+    const repelloPrecio=(repelloCemento*(precios['P250']||0)) + (repelloArena*(precios['arena']||0));
+    totalCUP+=repelloPrecio;
+    resumen+=`<p><strong>Repello:</strong> Cemento ${repelloCemento.toFixed(2)} m³, Arena ${repelloArena.toFixed(2)} m³ (Precio: ${repelloPrecio.toFixed(2)} CUP)</p>`;
 
-    const totalCUP = precioBloques + precioCemento;
-    const totalUSD = (totalCUP / (precios['usd']||1)).toFixed(2);
-    const totalEUR = (totalCUP / (precios['eur']||1)).toFixed(2);
+    // Fino
+    const finoCemento=area*0.005;
+    const finoArena=area*0.007;
+    const finoPrecio=(finoCemento*(precios['P250']||0)) + (finoArena*(precios['arenaFina']||0));
+    totalCUP+=finoPrecio;
+    resumen+=`<p><strong>Fino:</strong> Cemento ${finoCemento.toFixed(2)} m³, Arena fina ${finoArena.toFixed(2)} m³ (Precio: ${finoPrecio.toFixed(2)} CUP)</p>`;
 
-    const hombres = area < 100 ? 2 : 3;
-    const tiempo = area * 0.5; // horas aproximadas
+    // Resumen general
+    const totalUSD=(totalCUP/(precios['usd']||1)).toFixed(2);
+    const totalEUR=(totalCUP/(precios['eur']||1)).toFixed(2);
 
-    const resultadoHTML = `
-        <h3>Resumen del muro</h3>
-        <p><strong>Área:</strong> ${area.toFixed(2)} m²</p>
-        <p><strong>Bloques:</strong> ${cantidadBloques} unidades (Precio: ${precioBloques.toFixed(2)} CUP)</p>
-        <p><strong>Cemento:</strong> ${volumenCemento.toFixed(2)} m³ (Precio: ${precioCemento.toFixed(2)} CUP)</p>
-        <p><strong>Dosificación:</strong> ${dosificacion}</p>
-        <p><strong>Mano de obra:</strong> ${hombres} personas</p>
-        <p><strong>Tiempo estimado:</strong> ${tiempo.toFixed(2)} horas</p>
-        <p><strong>Precio total:</strong> ${totalCUP.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>
-    `;
+    const hombres = area<100 ? 2 : 3;
+    const tiempo = area*0.5;
 
-    document.getElementById('resultado').style.display = 'block';
-    document.getElementById('resultado').innerHTML = resultadoHTML;
+    resumen+=`<p><strong>Total materiales:</strong> ${totalCUP.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>`;
+    resumen+=`<p><strong>Mano de obra:</strong> ${hombres} personas</p>`;
+    resumen+=`<p><strong>Tiempo estimado:</strong> ${tiempo.toFixed(2)} horas</p>`;
+
+    const divRes=document.getElementById('resultado');
+    divRes.style.display='block';
+    divRes.innerHTML=resumen;
 }
 
 function borrarCalculo(){
-    document.getElementById('tipoBloque').value = '';
-    document.getElementById('largoMuro').value = '';
-    document.getElementById('anchoMuro').value = '';
-    document.getElementById('areaMuro').value = '';
-    document.getElementById('tipoCemento').value = '';
-    document.getElementById('dosificacion').value = '';
-    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('tipoMuro').value='';
+    document.getElementById('tipoMaterial').innerHTML='';
+    document.getElementById('materialesDiv').style.display='none';
+    document.getElementById('largoMuro').value='';
+    document.getElementById('anchoMuro').value='';
+    document.getElementById('areaMuro').value='';
+    document.getElementById('tipoCemento').value='';
+    document.getElementById('dosificacion').value='';
+    document.getElementById('resultado').style.display='none';
 }
 </script>
-
 </body>
 </html>

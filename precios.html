@@ -129,6 +129,23 @@
     <small>Medida: 20x20x40 cm · Hormigón hueco</small>
 </div>
 
+<h2>Ladrillos</h2>
+<div class="card">
+    <label>Ladrillo macizo</label>
+    <input type="number" id="ladrilloMacizo" placeholder="Precio CUP">
+    <small>Medida: 12x12x24 cm · Para muros estructurales</small>
+</div>
+<div class="card">
+    <label>Ladrillo hueco</label>
+    <input type="number" id="ladrilloHueco" placeholder="Precio CUP">
+    <small>Medida: 12x12x24 cm · Para muros divisorios</small>
+</div>
+<div class="card">
+    <label>Ladrillo perforado</label>
+    <input type="number" id="ladrilloPerforado" placeholder="Precio CUP">
+    <small>Medida: 10x20x30 cm · Ligero y aislante</small>
+</div>
+
 <h2>Cemento</h2>
 <div class="card">
     <label>Cemento P-250</label>
@@ -233,6 +250,80 @@
     <small>Losas de granito de 40x40 cm</small>
 </div>
 
+<h2>Cubierta</h2>
+<div class="card">
+    <label>Planchas de cinc 1.0 mm</label>
+    <input type="number" id="cinc1" placeholder="Precio CUP/m²">
+    <small>Planchas galvanizadas de 1 mm</small>
+</div>
+<div class="card">
+    <label>Planchas de cinc 1.2 mm</label>
+    <input type="number" id="cinc12" placeholder="Precio CUP/m²">
+    <small>Planchas galvanizadas de 1.2 mm</small>
+</div>
+<div class="card">
+    <label>Loseta prefabricada</label>
+    <input type="number" id="losetaPref" placeholder="Precio CUP/m²">
+    <small>Loseta prefabricada para cubierta</small>
+</div>
+<div class="card">
+    <label>Teja criolla</label>
+    <input type="number" id="tejaCriolla" placeholder="Precio CUP/m²">
+    <small>Teja arcilla tipo criolla</small>
+</div>
+<div class="card">
+    <label>Teja francesa</label>
+    <input type="number" id="tejaFrancesa" placeholder="Precio CUP/m²">
+    <small>Teja arcilla tipo francesa</small>
+</div>
+<div class="card">
+    <label>Teja española</label>
+    <input type="number" id="tejaEspanola" placeholder="Precio CUP/m²">
+    <small>Teja arcilla tipo española</small>
+</div>
+<div class="card">
+    <label>Impermeabilizante para cubierta</label>
+    <input type="number" id="imperCubierta" placeholder="Precio CUP/litro">
+    <small>Membrana líquida impermeabilizante</small>
+</div>
+<div class="card">
+    <label>Clavos y fijaciones</label>
+    <input type="number" id="clavos" placeholder="Precio CUP/kg">
+    <small>Clavos galvanizados para fijación de planchas y tejas</small>
+</div>
+
+<h2>Falso Techo</h2>
+<div class="card">
+    <label>Planchas de pladur 1.2 x 2.40 m</label>
+    <input type="number" id="pladur1" placeholder="Precio CUP/m²">
+    <small>Placa de yeso laminado estándar</small>
+</div>
+<div class="card">
+    <label>Planchas de pladur hidrófugo 1.2 x 2.00 m</label>
+    <input type="number" id="pladurH" placeholder="Precio CUP/m²">
+    <small>Placa de yeso laminado resistente a humedad</small>
+</div>
+<div class="card">
+    <label>Perfiles metálicos 3 m</label>
+    <input type="number" id="perfilMet" placeholder="Precio CUP/unidad">
+    <small>Perfiles para estructura del falso techo</small>
+</div>
+<div class="card">
+    <label>Cintillos metálicos</label>
+    <input type="number" id="cintilloMet" placeholder="Precio CUP/unidad">
+    <small>Para fijación de perfiles y placas</small>
+</div>
+<div class="card">
+    <label>Losa registrable 50 x 50 cm</label>
+    <input type="number" id="losa50" placeholder="Precio CUP/m²">
+    <small>Losa registrable para falso techo modular</small>
+</div>
+<div class="card">
+    <label>Losa registrable 60 x 60 cm</label>
+    <input type="number" id="losa60" placeholder="Precio CUP/m²">
+    <small>Losa registrable para falso techo modular</small>
+</div>
+
 <h2>Monedas</h2>
 <div class="card">
     <label>1 USD en CUP</label>
@@ -247,32 +338,10 @@
 
 <script>
 function guardarPrecios(){
-    const precios = {
-        bloque10: document.getElementById("bloque10").value,
-        bloque15: document.getElementById("bloque15").value,
-        bloque20: document.getElementById("bloque20").value,
-        p250: document.getElementById("p250").value,
-        p350: document.getElementById("p350").value,
-        arena: document.getElementById("arena").value,
-        arenaFina: document.getElementById("arenaFina").value,
-        grava: document.getElementById("grava").value,
-        agua: document.getElementById("agua").value,
-        aditivo: document.getElementById("aditivo").value,
-        acero6: document.getElementById("acero6").value,
-        acero8: document.getElementById("acero8").value,
-        acero10: document.getElementById("acero10").value,
-        acero12: document.getElementById("acero12").value,
-        acero16: document.getElementById("acero16").value,
-        losaH20: document.getElementById("losaH20").value,
-        losaH30: document.getElementById("losaH30").value,
-        losaC30: document.getElementById("losaC30").value,
-        losaC40: document.getElementById("losaC40").value,
-        losaC50: document.getElementById("losaC50").value,
-        losaG30: document.getElementById("losaG30").value,
-        losaG40: document.getElementById("losaG40").value,
-        usd: document.getElementById("usd").value,
-        eur: document.getElementById("eur").value
-    };
+    const precios = {};
+    document.querySelectorAll('input[id]').forEach(input => {
+        precios[input.id] = input.value;
+    });
     localStorage.setItem('precios', JSON.stringify(precios));
     alert("Precios guardados correctamente");
 }
@@ -280,30 +349,11 @@ function guardarPrecios(){
 function cargarPrecios(){
     const precios = JSON.parse(localStorage.getItem('precios'));
     if(precios){
-        document.getElementById("bloque10").value = precios.bloque10 || '';
-        document.getElementById("bloque15").value = precios.bloque15 || '';
-        document.getElementById("bloque20").value = precios.bloque20 || '';
-        document.getElementById("p250").value = precios.p250 || '';
-        document.getElementById("p350").value = precios.p350 || '';
-        document.getElementById("arena").value = precios.arena || '';
-        document.getElementById("arenaFina").value = precios.arenaFina || '';
-        document.getElementById("grava").value = precios.grava || '';
-        document.getElementById("agua").value = precios.agua || '';
-        document.getElementById("aditivo").value = precios.aditivo || '';
-        document.getElementById("acero6").value = precios.acero6 || '';
-        document.getElementById("acero8").value = precios.acero8 || '';
-        document.getElementById("acero10").value = precios.acero10 || '';
-        document.getElementById("acero12").value = precios.acero12 || '';
-        document.getElementById("acero16").value = precios.acero16 || '';
-        document.getElementById("losaH20").value = precios.losaH20 || '';
-        document.getElementById("losaH30").value = precios.losaH30 || '';
-        document.getElementById("losaC30").value = precios.losaC30 || '';
-        document.getElementById("losaC40").value = precios.losaC40 || '';
-        document.getElementById("losaC50").value = precios.losaC50 || '';
-        document.getElementById("losaG30").value = precios.losaG30 || '';
-        document.getElementById("losaG40").value = precios.losaG40 || '';
-        document.getElementById("usd").value = precios.usd || '';
-        document.getElementById("eur").value = precios.eur || '';
+        for(const key in precios){
+            if(document.getElementById(key)){
+                document.getElementById(key).value = precios[key] || '';
+            }
+        }
     }
 }
 

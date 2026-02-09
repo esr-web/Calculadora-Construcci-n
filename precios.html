@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Precios</title>
+    <title>Precios de Materiales</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
-    <h1>Calculadora de Construcción</h1>
+    <h1>Precios de Materiales</h1>
     <nav class="nav-menu">
         <a href="index.html" class="nav-link">Inicio</a>
         <a href="muro.html" class="nav-link">Muro</a>
@@ -17,58 +17,95 @@
         <a href="cubierta.html" class="nav-link">Cubierta</a>
         <a href="cimentacion.html" class="nav-link">Cimentación</a>
         <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-        <a href="precios.html" class="nav-link">Precios</a>
     </nav>
 </header>
 
-
 <main class="container">
 
+    <!-- BLOQUES -->
+    <h2>Bloques y Materiales para Muro</h2>
     <div class="card">
-        <h3>Bloques</h3>
-        <label>Bloque 15 (CUP)</label>
-        <input id="bloque15" type="number">
+        <label>Bloque 15</label>
+        <input type="number" id="bloque15" placeholder="Precio CUP">
+        <small>Medida: 15x20x40 cm · Hormigón hueco</small>
     </div>
 
     <div class="card">
-        <h3>Cemento (por saco)</h3>
-        <label>P-250 (CUP)</label>
-        <input id="p250" type="number">
-        <label>P-350 (CUP)</label>
-        <input id="p350" type="number">
+        <label>Bloque 20</label>
+        <input type="number" id="bloque20" placeholder="Precio CUP">
+        <small>Medida: 20x20x40 cm · Hormigón hueco</small>
     </div>
 
     <div class="card">
-        <h3>Áridos</h3>
-        <label>Arena (CUP/m³)</label>
-        <input id="arena" type="number">
+        <label>Cemento P-250</label>
+        <input type="number" id="p250" placeholder="Precio CUP">
+        <small>Saco 50 kg · Uso general</small>
     </div>
 
     <div class="card">
-        <h3>Monedas</h3>
+        <label>Cemento P-350</label>
+        <input type="number" id="p350" placeholder="Precio CUP">
+        <small>Saco 50 kg · Alta resistencia</small>
+    </div>
+
+    <div class="card">
+        <label>Arena</label>
+        <input type="number" id="arena" placeholder="Precio CUP/m³">
+        <small>Grano fino, limpio, sin arcilla</small>
+    </div>
+
+    <div class="card">
+        <label>Grava</label>
+        <input type="number" id="grava" placeholder="Precio CUP/m³">
+        <small>Tamaño 10-20 mm · Para mortero y concreto</small>
+    </div>
+
+    <div class="card">
+        <label>Agua</label>
+        <input type="number" id="agua" placeholder="Precio CUP/m³">
+        <small>Potable o apta para mezcla de mortero</small>
+    </div>
+
+    <div class="card">
+        <label>Aditivo impermeabilizante</label>
+        <input type="number" id="aditivo" placeholder="Precio CUP/litro">
+        <small>Para morteros y mezcla de bloques</small>
+    </div>
+
+    <!-- MONEDAS -->
+    <h2>Monedas</h2>
+    <div class="card">
         <label>1 USD en CUP</label>
-        <input id="usd" type="number">
-        <label>1 EUR en CUP</label>
-        <input id="eur" type="number">
+        <input type="number" id="usd" placeholder="Valor en CUP">
     </div>
 
-    <button class="btn-primary" onclick="guardarPrecios()">Guardar</button>
+    <div class="card">
+        <label>1 EUR en CUP</label>
+        <input type="number" id="eur" placeholder="Valor en CUP">
+    </div>
+
+    <button class="btn-primary" onclick="guardarPrecios()">Guardar Precios</button>
 
 </main>
 
 <script>
 function guardarPrecios(){
     const precios = {
-        bloque15: bloque15.value,
-        p250: p250.value,
-        p350: p350.value,
-        arena: arena.value,
-        usd: usd.value,
-        eur: eur.value
+        bloque15: document.getElementById("bloque15").value,
+        bloque20: document.getElementById("bloque20").value,
+        p250: document.getElementById("p250").value,
+        p350: document.getElementById("p350").value,
+        arena: document.getElementById("arena").value,
+        grava: document.getElementById("grava").value,
+        agua: document.getElementById("agua").value,
+        aditivo: document.getElementById("aditivo").value,
+        usd: document.getElementById("usd").value,
+        eur: document.getElementById("eur").value
     };
     localStorage.setItem('precios', JSON.stringify(precios));
-    alert("Precios guardados");
+    alert("Precios guardados correctamente");
 }
 </script>
+
 </body>
 </html>

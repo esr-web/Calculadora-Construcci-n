@@ -5,6 +5,96 @@
 <title>Precios de Materiales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* Header */
+.header {
+    background: #1f2937;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Navegación */
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+/* Botones minimalistas */
+.nav-link {
+    background: #f0f0f0;
+    color: #1f2937;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
+                -2px -2px 5px rgba(255,255,255,0.7);
+    transition: all 0.15s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
+                -1px -1px 3px rgba(255,255,255,0.8);
+    background: #e8e8e8;
+}
+
+/* Tarjetas de materiales */
+.container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.card {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.card input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.2rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.card small {
+    display: block;
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+.btn-primary {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.7rem 2rem;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #374151;
+}
+</style>
 </head>
 <body>
 
@@ -53,35 +143,21 @@
 
 <h2>Áridos</h2>
 <div class="card">
-    <label>Arena fina</label>
+    <label>Arena (para mortero de unión)</label>
     <input type="number" id="arena" placeholder="Precio CUP/m³">
-    <small>Grano fino, limpio, sin arcilla</small>
+    <small>Grano medio, limpia, usada para mortero de muros</small>
 </div>
- <h2>Áridos</h2>
-
-<div class="card">
-    <label>Arena </label>
-    <input type="number" id="arena" placeholder="Precio CUP/m³">
-    <small>Grano medio, limpia</small>
-</div>
-
 <div class="card">
     <label>Arena fina (para enlucidos y enchapes)</label>
     <input type="number" id="arenaFina" placeholder="Precio CUP/m³">
     <small>Grano fino, limpia, sin arcilla · Para acabados y enlucidos</small>
 </div>
-
 <div class="card">
     <label>Gravilla / Árido grueso (para hormigón)</label>
     <input type="number" id="grava" placeholder="Precio CUP/m³">
     <small>Tamaño 10-20 mm · Para hormigón y fundaciones</small>
 </div>
-   
-<div class="card">
-    <label>Gravilla / Arido grueso</label>
-    <input type="number" id="grava" placeholder="Precio CUP/m³">
-    <small>Tamaño 10-20 mm · Para mortero y concreto</small>
-</div>
+
 <div class="card">
     <label>Agua</label>
     <input type="number" id="agua" placeholder="Precio CUP/m³">
@@ -93,11 +169,31 @@
     <small>Para morteros y mezcla de bloques</small>
 </div>
 
-<h2>Acero</h2>
+<h2>Acero Corrugado</h2>
 <div class="card">
-    <label>Acero Corrugado</label>
-    <input type="number" id="acero" placeholder="Precio CUP/kg">
-    <small>Diámetros: 6, 8, 10, 12, 16 mm · Varillas corrugadas</small>
+    <label>Acero Ø6 mm</label>
+    <input type="number" id="acero6" placeholder="Precio CUP/kg">
+    <small>Varilla corrugada 6 mm</small>
+</div>
+<div class="card">
+    <label>Acero Ø8 mm</label>
+    <input type="number" id="acero8" placeholder="Precio CUP/kg">
+    <small>Varilla corrugada 8 mm</small>
+</div>
+<div class="card">
+    <label>Acero Ø10 mm</label>
+    <input type="number" id="acero10" placeholder="Precio CUP/kg">
+    <small>Varilla corrugada 10 mm</small>
+</div>
+<div class="card">
+    <label>Acero Ø12 mm</label>
+    <input type="number" id="acero12" placeholder="Precio CUP/kg">
+    <small>Varilla corrugada 12 mm</small>
+</div>
+<div class="card">
+    <label>Acero Ø16 mm</label>
+    <input type="number" id="acero16" placeholder="Precio CUP/kg">
+    <small>Varilla corrugada 16 mm</small>
 </div>
 
 <h2>Monedas</h2>
@@ -121,18 +217,47 @@ function guardarPrecios(){
         p250: document.getElementById("p250").value,
         p350: document.getElementById("p350").value,
         arena: document.getElementById("arena").value,
+        arenaFina: document.getElementById("arenaFina").value,
         grava: document.getElementById("grava").value,
         agua: document.getElementById("agua").value,
         aditivo: document.getElementById("aditivo").value,
-        acero: document.getElementById("acero").value,
+        acero6: document.getElementById("acero6").value,
+        acero8: document.getElementById("acero8").value,
+        acero10: document.getElementById("acero10").value,
+        acero12: document.getElementById("acero12").value,
+        acero16: document.getElementById("acero16").value,
         usd: document.getElementById("usd").value,
         eur: document.getElementById("eur").value
     };
     localStorage.setItem('precios', JSON.stringify(precios));
     alert("Precios guardados correctamente");
 }
+
+function cargarPrecios(){
+    const precios = JSON.parse(localStorage.getItem('precios'));
+    if(precios){
+        document.getElementById("bloque10").value = precios.bloque10 || '';
+        document.getElementById("bloque15").value = precios.bloque15 || '';
+        document.getElementById("bloque20").value = precios.bloque20 || '';
+        document.getElementById("p250").value = precios.p250 || '';
+        document.getElementById("p350").value = precios.p350 || '';
+        document.getElementById("arena").value = precios.arena || '';
+        document.getElementById("arenaFina").value = precios.arenaFina || '';
+        document.getElementById("grava").value = precios.grava || '';
+        document.getElementById("agua").value = precios.agua || '';
+        document.getElementById("aditivo").value = precios.aditivo || '';
+        document.getElementById("acero6").value = precios.acero6 || '';
+        document.getElementById("acero8").value = precios.acero8 || '';
+        document.getElementById("acero10").value = precios.acero10 || '';
+        document.getElementById("acero12").value = precios.acero12 || '';
+        document.getElementById("acero16").value = precios.acero16 || '';
+        document.getElementById("usd").value = precios.usd || '';
+        document.getElementById("eur").value = precios.eur || '';
+    }
+}
+
+window.onload = cargarPrecios;
 </script>
 
-</main>
 </body>
 </html>

@@ -196,6 +196,28 @@
     <small>Varilla corrugada 16 mm</small>
 </div>
 
+<h2>Losas de Piso</h2>
+<div class="card">
+    <label>Losas de hormigón armado</label>
+    <input type="number" id="losaArmado" placeholder="Precio CUP/m²">
+    <small>Piso estructural de hormigón armado</small>
+</div>
+<div class="card">
+    <label>Losas prefabricadas</label>
+    <input type="number" id="losaPrefabricada" placeholder="Precio CUP/m²">
+    <small>Instalación rápida, prefabricada</small>
+</div>
+<div class="card">
+    <label>Losas aligeradas</label>
+    <input type="number" id="losaAligerada" placeholder="Precio CUP/m²">
+    <small>Hormigón con bloques de poliestireno o cerámica</small>
+</div>
+<div class="card">
+    <label>Losas de concreto simple</label>
+    <input type="number" id="losaSimple" placeholder="Precio CUP/m²">
+    <small>Piso no estructural, concreto simple</small>
+</div>
+
 <h2>Monedas</h2>
 <div class="card">
     <label>1 USD en CUP</label>
@@ -226,6 +248,10 @@ function guardarPrecios(){
         acero10: document.getElementById("acero10").value,
         acero12: document.getElementById("acero12").value,
         acero16: document.getElementById("acero16").value,
+        losaArmado: document.getElementById("losaArmado").value,
+        losaPrefabricada: document.getElementById("losaPrefabricada").value,
+        losaAligerada: document.getElementById("losaAligerada").value,
+        losaSimple: document.getElementById("losaSimple").value,
         usd: document.getElementById("usd").value,
         eur: document.getElementById("eur").value
     };
@@ -251,6 +277,10 @@ function cargarPrecios(){
         document.getElementById("acero10").value = precios.acero10 || '';
         document.getElementById("acero12").value = precios.acero12 || '';
         document.getElementById("acero16").value = precios.acero16 || '';
+        document.getElementById("losaArmado").value = precios.losaArmado || '';
+        document.getElementById("losaPrefabricada").value = precios.losaPrefabricada || '';
+        document.getElementById("losaAligerada").value = precios.losaAligerada || '';
+        document.getElementById("losaSimple").value = precios.losaSimple || '';
         document.getElementById("usd").value = precios.usd || '';
         document.getElementById("eur").value = precios.eur || '';
     }

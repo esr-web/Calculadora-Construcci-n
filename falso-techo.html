@@ -1,1 +1,223 @@
-1
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Falso Techo - Calculadora</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Header */
+.header {
+    background: #1f2937;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+.nav-link {
+    background: #f0f0f0;
+    color: #1f2937;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
+                -2px -2px 5px rgba(255,255,255,0.7);
+    transition: all 0.15s ease;
+}
+.nav-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
+                -1px -1px 3px rgba(255,255,255,0.8);
+    background: #e8e8e8;
+}
+
+/* Tarjetas y estilos */
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.card {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.card label {
+    font-weight: 500;
+}
+.card input, .card select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.2rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.card small {
+    display: block;
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+.btn-primary {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.7rem 2rem;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-primary:hover {
+    background-color: #374151;
+}
+.result {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+    <h1>Calculadora de Falso Techo</h1>
+    <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="muro.html" class="nav-link">Muro</a>
+        <a href="piso.html" class="nav-link">Piso</a>
+        <a href="cubierta.html" class="nav-link">Cubierta</a>
+        <a href="cimentacion.html" class="nav-link">Cimentación</a>
+        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
+    </nav>
+</header>
+
+<main class="container">
+<div class="card">
+    <label>Tipo de Falso Techo</label>
+    <select id="tipoTecho">
+        <option value="">-- Selecciona --</option>
+        <option value="pladur1">Pladur 1.2 x 2.40 m</option>
+        <option value="pladurH">Pladur hidrófugo 1.2 x 2.00 m</option>
+        <option value="losa50">Losa registrable 50 x 50 cm</option>
+        <option value="losa60">Losa registrable 60 x 60 cm</option>
+    </select>
+</div>
+
+<div class="card">
+    <label>Largo del techo (m)</label>
+    <input type="number" id="largo" placeholder="Largo en metros">
+</div>
+<div class="card">
+    <label>Ancho del techo (m)</label>
+    <input type="number" id="ancho" placeholder="Ancho en metros">
+</div>
+<div class="card">
+    <label>Área del techo (m²)</label>
+    <input type="number" id="area" readonly>
+</div>
+
+<button class="btn-primary" onclick="calcularTecho()">Calcular</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarCalculo()">Borrar</button>
+
+<div id="resultado" class="result" style="display:none;"></div>
+
+<script>
+// Cargar precios de localStorage
+let precios = {};
+function cargarPrecios(){
+    precios = JSON.parse(localStorage.getItem('precios')) || {};
+}
+cargarPrecios();
+
+// Calcular área y materiales
+function calcularTecho(){
+    const tipo = document.getElementById('tipoTecho').value;
+    const largo = parseFloat(document.getElementById('largo').value) || 0;
+    const ancho = parseFloat(document.getElementById('ancho').value) || 0;
+    const area = largo * ancho;
+    document.getElementById('area').value = area.toFixed(2);
+
+    if(!tipo || area <=0){
+        alert("Seleccione tipo de techo y valores válidos de largo y ancho");
+        return;
+    }
+
+    // Variables de cálculo
+    let cantidadMaterial = 0;
+    let perfiles = 0;
+    let cintillos = 0;
+    let tiempoH = 0; // horas
+    let precioCUP = 0;
+
+    if(tipo === 'pladur1' || tipo === 'pladurH'){
+        // Placas de pladur
+        const placa = precios[tipo] || 0;
+        cantidadMaterial = Math.ceil(area / (1.2 * (tipo==='pladur1'?2.4:2.0))); // cantidad placas
+        perfiles = Math.ceil(area * 0.5); // perfiles por m² aproximado
+        cintillos = Math.ceil(area * 0.5); // cintillos por m² aproximado
+        // Precio
+        precioCUP = (cantidadMaterial*placa) + (perfiles*(precios['perfilMet']||0)) + (cintillos*(precios['cintilloMet']||0));
+        // Tiempo
+        tiempoH = area * 0.3; // 0.3 h/m² aproximado
+    } else if(tipo === 'losa50' || tipo === 'losa60'){
+        const losa = precios[tipo] || 0;
+        const tamLosa = tipo==='losa50'?0.5*0.5:0.6*0.6;
+        cantidadMaterial = Math.ceil(area / tamLosa);
+        precioCUP = cantidadMaterial * losa;
+        tiempoH = area * 0.25; // menos tiempo por losa registrable
+    }
+
+    // Mano de obra
+    let hombres = area < 100 ? 2 : 3; // 1 albañil + 1 o 2 ayudantes
+
+    // Conversión monedas
+    const usd = parseFloat(precios['usd']) || 1;
+    const eur = parseFloat(precios['eur']) || 1;
+    const precioUSD = (precioCUP / usd).toFixed(2);
+    const precioEUR = (precioCUP / eur).toFixed(2);
+
+    // Mostrar resultados
+    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('resultado').innerHTML = `
+        <h3>Resumen de Materiales y Costos</h3>
+        <p><strong>Área:</strong> ${area.toFixed(2)} m²</p>
+        <p><strong>Tipo de techo:</strong> ${tipo==='pladur1'?'Pladur 1.2x2.40':tipo==='pladurH'?'Pladur hidrófugo 1.2x2.0':tipo==='losa50'?'Losa registrable 50x50':'Losa registrable 60x60'}</p>
+        <p><strong>Cantidad de placas/losas:</strong> ${cantidadMaterial}</p>
+        ${ (tipo==='pladur1' || tipo==='pladurH') ? `<p><strong>Perfiles metálicos:</strong> ${perfiles}</p><p><strong>Cintillos:</strong> ${cintillos}</p>`: '' }
+        <p><strong>Mano de obra:</strong> ${hombres} personas</p>
+        <p><strong>Tiempo estimado:</strong> ${tiempoH.toFixed(2)} horas</p>
+        <p><strong>Precio total:</strong> ${precioCUP.toFixed(2)} CUP | ${precioUSD} USD | ${precioEUR} EUR</p>
+    `;
+}
+
+function borrarCalculo(){
+    document.getElementById('largo').value = '';
+    document.getElementById('ancho').value = '';
+    document.getElementById('area').value = '';
+    document.getElementById('tipoTecho').value = '';
+    document.getElementById('resultado').style.display = 'none';
+}
+</script>
+
+</main>
+</body>
+</html>

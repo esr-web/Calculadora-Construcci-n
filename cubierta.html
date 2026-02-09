@@ -46,12 +46,8 @@ footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-si
         <option value="tejaCriolla">Teja criolla</option>
         <option value="tejaFrancesa">Teja francesa</option>
         <option value="tejaEspañola">Teja española</option>
+        <option value="hormigonArmado">Hormigón armado</option>
     </select>
-</div>
-
-<div class="card" id="materialDiv" style="display:none;">
-    <label>Material</label>
-    <select id="tipoMaterial"></select>
 </div>
 
 <div class="card">
@@ -75,55 +71,45 @@ let precios = {};
 function cargarPrecios(){precios = JSON.parse(localStorage.getItem('precios'))||{};}
 cargarPrecios();
 
-// Materiales según tipo de cubierta
-document.getElementById('tipoCubierta').addEventListener('change', function(){
-    const div = document.getElementById('materialDiv');
-    const select = document.getElementById('tipoMaterial');
-    select.innerHTML = '';
-    if(this.value==='cincLigera'){
-        div.style.display='block';
-        ['planchaCinc','purlin3m'].forEach(m=>{
-            const opt=document.createElement('option'); opt.value=m; opt.text=m.toUpperCase(); select.add(opt);
-        });
-    } else if(this.value==='losetaPref'){
-        div.style.display='block';
-        ['losetaPref'].forEach(m=>{const opt=document.createElement('option'); opt.value=m; opt.text=m.toUpperCase(); select.add(opt);});
-    } else {
-        div.style.display='block';
-        ['tejaCriolla','tejaFrancesa','tejaEspañola'].forEach(m=>{const opt=document.createElement('option'); opt.value=m; opt.text=m; select.add(opt);});
-    }
-});
-
-// Calcular cubierta
 function calcularCubierta(){
     const tipo = document.getElementById('tipoCubierta').value;
     const largo = parseFloat(document.getElementById('largo').value)||0;
     const ancho = parseFloat(document.getElementById('ancho').value)||0;
     const area = largo*ancho;
     if(!tipo||area<=0){alert("Complete todos los datos");return;}
+
     let resumen=`<h3>Resumen de la cubierta</h3><p><strong>Área:</strong> ${area.toFixed(2)} m²</p>`;
     let totalCUP=0;
 
     if(tipo==='cincLigera'){
-        const planchas=area/2; // ejemplo: cada plancha cubre 2 m²
+        const planchas=area/2; // cada plancha cubre 2 m²
         const precioPlancha=precios['planchaCinc']||0;
-        const precioPurlin=(Math.ceil(largo/3)*Math.ceil(ancho/3))*(precios['purlin3m']||0); // cantidad aproximada de purlin
+        const cantidadPurlin=Math.ceil(largo/3)*Math.ceil(ancho/3);
+        const precioPurlin=cantidadPurlin*(precios['purlin3m']||0);
         totalCUP+=planchas*precioPlancha+precioPurlin;
         resumen+=`<p>Planchas de cinc: ${planchas.toFixed(2)} unidades (Precio: ${(planchas*precioPlancha).toFixed(2)} CUP)</p>`;
-        resumen+=`<p>Purlin metálico 3m: Precio total ${(precioPurlin).toFixed(2)} CUP</p>`;
+        resumen+=`<p>Purlin metálico 3m: ${cantidadPurlin} unidades (Precio total: ${precioPurlin.toFixed(2)} CUP)</p>`;
     } else if(tipo==='losetaPref'){
         const precio=precios['losetaPref']||0;
         totalCUP+=area*precio;
         resumen+=`<p>Loseta prefabricada: ${area.toFixed(2)} m² (Precio: ${(area*precio).toFixed(2)} CUP)</p>`;
-    } else { 
+    } else if(tipo==='tejaCriolla' || tipo==='tejaFrancesa' || tipo==='tejaEspañola'){
         const precio=precios[tipo]||0;
         totalCUP+=area*precio;
         resumen+=`<p>${tipo}: ${area.toFixed(2)} m² (Precio: ${(area*precio).toFixed(2)} CUP)</p>`;
+    } else if(tipo==='hormigonArmado'){
+        const espesor = 0.15; // m
+        const volumen = area*espesor; // m³ hormigón
+        const precioHorm=precios['hormigonArmado']||0;
+        const varilla=area*2; // m lineales aprox
+        const precioVarilla=(precios['acero']||0)*varilla;
+        totalCUP+=volumen*precioHorm + precioVarilla;
+        resumen+=`<p>Hormigón armado: ${volumen.toFixed(2)} m³ (Precio: ${(volumen*precioHorm).toFixed(2)} CUP)</p>`;
+        resumen+=`<p>Varilla: ${varilla.toFixed(2)} m (Precio: ${precioVarilla.toFixed(2)} CUP)</p>`;
     }
 
     const totalUSD=(totalCUP/(precios['usd']||1)).toFixed(2);
     const totalEUR=(totalCUP/(precios['eur']||1)).toFixed(2);
-
     resumen+=`<p><strong>Total:</strong> ${totalCUP.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>`;
 
     const divRes=document.getElementById('resultado');
@@ -133,8 +119,6 @@ function calcularCubierta(){
 
 function borrarCal(){
     document.getElementById('tipoCubierta').value='';
-    document.getElementById('tipoMaterial').innerHTML='';
-    document.getElementById('materialDiv').style.display='none';
     document.getElementById('largo').value='';
     document.getElementById('ancho').value='';
     document.getElementById('resultado').style.display='none';

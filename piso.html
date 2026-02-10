@@ -16,7 +16,7 @@
 .card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
 .btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
 .btn-primary:hover{background-color:#374151;}
-.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05); flex:1;}
 footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
@@ -26,7 +26,6 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <nav class="nav-menu">
 <a href="index.html" class="nav-link">Inicio</a>
 <a href="muro.html" class="nav-link">Muro</a>
-
 <a href="cubierta.html" class="nav-link">Cubierta</a>
 <a href="cimentacion.html" class="nav-link">Cimentación</a>
 <a href="estructura.html" class="nav-link">Estructura</a>
@@ -65,13 +64,18 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <button class="btn-primary" onclick="calcularPiso()">Calcular</button>
 <button class="btn-primary" style="background:#ef4444;" onclick="borrarPiso()">Borrar</button>
 
-<div id="resultado" class="result" style="display:none;"></div>
+<!-- RESULTADOS Y TARJETA TÉCNICA -->
+<div style="display:flex;gap:1rem;flex-wrap:wrap;">
+    <div id="resultado" class="result" style="display:none;"></div>
+    <div id="tarjetaTecnica" class="card" style="flex:1;display:none;"></div>
+</div>
 
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
 let precios = JSON.parse(localStorage.getItem('precios'))||{};
 
+// Actualizar área automáticamente
 document.getElementById('largo').addEventListener('input', actualizarArea);
 document.getElementById('ancho').addEventListener('input', actualizarArea);
 function actualizarArea(){
@@ -80,31 +84,79 @@ function actualizarArea(){
     document.getElementById('area').value=(largo*ancho).toFixed(2);
 }
 
+// Cálculo avanzado del piso
 function calcularPiso(){
     const tipo=document.getElementById('tipoPiso').value;
     const area=parseFloat(document.getElementById('area').value)||0;
     if(!tipo || area<=0){alert("Complete todos los datos"); return;}
-    const precio=precios[tipo]||0;
-    const cantidad=area; // 1 m² por cada 1 m² de área
-    const costo=cantidad*precio;
-    let resultadoHtml=`<h3>Resumen Piso</h3>`;
-    resultadoHtml+=`<p>${document.getElementById('tipoPiso').selectedOptions[0].text}: ${cantidad.toFixed(2)} m² (CUP ${costo.toFixed(2)})</p>`;
-    resultadoHtml+=`<h4>Total</h4><p>${costo.toFixed(2)} CUP | ${(costo/(precios['usd']||1)).toFixed(2)} USD | ${(costo/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+
+    let resultadoHtml=`<h3>Resultados Piso</h3>`;
+    let total=0;
+    let materiales = [];
+
+    // Dependiendo del tipo de piso
+    if(tipo.startsWith('losaH')){ // Losa hidráulica
+        let precioLosa = precios[tipo]||0;
+        let cantidad=area; // 1 m² por m²
+        let costo=cantidad*precioLosa;
+        total+=costo;
+        materiales.push({nombre:'Losa hidráulica',cantidad:cantidad,unidad:'m²',costo:costo});
+        materiales.push({nombre:'Cemento (mortero de asiento)',cantidad:area*0.03,unidad:'m³',costo:(area*0.03*precios['cemento'])});
+        materiales.push({nombre:'Arena (mortero de asiento)',cantidad:area*0.05,unidad:'m³',costo:(area*0.05*precios['arena'])});
+    } 
+    else if(tipo.startsWith('losaC')){ // Losa cerámica
+        let precioLosa = precios[tipo]||0;
+        let cantidad=area;
+        let costo=cantidad*precioLosa;
+        total+=costo;
+        materiales.push({nombre:'Losa cerámica',cantidad:cantidad,unidad:'m²',costo:costo});
+        materiales.push({nombre:'Cemento (pegamento)',cantidad:area*0.02,unidad:'m³',costo:(area*0.02*precios['cemento'])});
+        materiales.push({nombre:'Arena fina',cantidad:area*0.03,unidad:'m³',costo:(area*0.03*precios['arenaFina'])});
+    }
+    else if(tipo.startsWith('losaG')){ // Losa granito
+        let precioLosa = precios[tipo]||0;
+        let cantidad=area;
+        let costo=cantidad*precioLosa;
+        total+=costo;
+        materiales.push({nombre:'Losa granito',cantidad:cantidad,unidad:'m²',costo:costo});
+        materiales.push({nombre:'Mortero cemento-arena',cantidad:area*0.02,unidad:'m³',costo:(area*0.02*precios['cemento'] + area*0.03*precios['arena'])});
+    }
+    else if(tipo==='cementoPulido'){ // Cemento pulido
+        materiales.push({nombre:'Cemento',cantidad:area*0.04,unidad:'m³',costo:area*0.04*precios['cemento']});
+        materiales.push({nombre:'Arena',cantidad:area*0.05,unidad:'m³',costo:area*0.05*precios['arena']});
+        materiales.push({nombre:'Agua',cantidad:area*10,unidad:'L',costo:0});
+        total+=area*0.5*precios['cemento']); // ejemplo precio por m²
+    }
+
+    // Mostrar materiales y precios
+    materiales.forEach(m=>{
+        resultadoHtml+=`<p>${m.nombre}: ${m.cantidad.toFixed(2)} ${m.unidad} (CUP ${m.costo.toFixed(2)})</p>`;
+    });
+
+    resultadoHtml+=`<h4>Total</h4><p>${total.toFixed(2)} CUP | ${(total/(precios['usd']||1)).toFixed(2)} USD | ${(total/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+
     document.getElementById('resultado').style.display='block';
     document.getElementById('resultado').innerHTML=resultadoHtml;
 
-    // Guardar área para pintura
-    let areas=JSON.parse(localStorage.getItem('areasCalculadas'))||{};
-    areas['pisos']=area;
-    localStorage.setItem('areasCalculadas',JSON.stringify(areas));
+    // Tarjeta técnica
+    let desc = `<h3>Objeto de obra: Piso</h3>
+    <p>Tipo: ${document.getElementById('tipoPiso').selectedOptions[0].text}</p>
+    <p>Área: ${area.toFixed(2)} m²</p>
+    <p>Función: Revestimiento de piso para tránsito y acabado estético</p>
+    <p>Incluye mortero y preparación de base según tipo de piso</p>`;
+
+    document.getElementById('tarjetaTecnica').style.display='block';
+    document.getElementById('tarjetaTecnica').innerHTML=desc;
 }
 
+// Limpiar campos
 function borrarPiso(){
     document.getElementById('tipoPiso').value='';
     document.getElementById('largo').value='';
     document.getElementById('ancho').value='';
     document.getElementById('area').value='';
     document.getElementById('resultado').style.display='none';
+    document.getElementById('tarjetaTecnica').style.display='none';
 }
 </script>
 </body>

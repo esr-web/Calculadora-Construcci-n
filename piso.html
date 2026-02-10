@@ -6,208 +6,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Header */
-.header {
-    background: #1f2937;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-}
-.nav-link {
-    background: #f0f0f0;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
-                -2px -2px 5px rgba(255,255,255,0.7);
-    transition: all 0.15s ease;
-}
-.nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
-                -1px -1px 3px rgba(255,255,255,0.8);
-    background: #e8e8e8;
-}
-
-/* Tarjetas y estilos */
-.container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-.card {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-.card label {
-    font-weight: 500;
-}
-.card input, .card select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
-}
-.btn-primary {
-    display: block;
-    margin: 1.5rem auto;
-    padding: 0.7rem 2rem;
-    background-color: #1f2937;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-primary:hover {
-    background-color: #374151;
-}
-.result {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 12px;
-    margin-top: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    color: #6b7280;
-    font-size: 0.9rem;
-}
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
+.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight:500; display:block;margin-top:0.5rem;}
+.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
+.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
+.btn-primary:hover{background-color:#374151;}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
 <body>
-
 <header class="header">
-    <h1>Calculadora de Piso</h1>
-    <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Inicio</a>
-        <a href="muro.html" class="nav-link">Muro</a>
-        <a href="piso.html" class="nav-link">Piso</a>
-        <a href="cubierta.html" class="nav-link">Cubierta</a>
-        <a href="cimentacion.html" class="nav-link">Cimentación</a>
-        <a href="estructura.html" class="nav-link">Estructura</a>
-        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-    </nav>
+<h1>Calculadora de Piso</h1>
+<nav class="nav-menu">
+<a href="index.html" class="nav-link">Inicio</a>
+<a href="muro.html" class="nav-link">Muro</a>
+<a href="piso.html" class="nav-link">Piso</a>
+<a href="cubierta.html" class="nav-link">Cubierta</a>
+<a href="cimentacion.html" class="nav-link">Cimentación</a>
+<a href="estructura.html" class="nav-link">Estructura</a>
+<a href="falso-techo.html" class="nav-link">Falso Techo</a>
+<a href="pintura.html" class="nav-link">Pintura</a>
+</nav>
 </header>
 
 <main class="container">
 
 <div class="card">
-    <label>Tipo de losa</label>
-    <select id="tipoLosa">
-        <option value="">-- Selecciona losa --</option>
-        <option value="losaHidra20">Losa hidráulica 20x20 cm</option>
-        <option value="losaHidra30">Losa hidráulica 30x30 cm</option>
-        <option value="losaCeram30">Losa cerámica 30x30 cm</option>
-        <option value="losaCeram40">Losa cerámica 40x40 cm</option>
-        <option value="losaCeram50">Losa cerámica 50x50 cm</option>
-        <option value="losaGranito30">Losa granito 30x30 cm</option>
-        <option value="losaGranito40">Losa granito 40x40 cm</option>
-    </select>
+<label>Tipo de piso</label>
+<select id="tipoPiso">
+<option value="">-- Selecciona --</option>
+<option value="losaH20">Losa hidráulica 20x20 cm</option>
+<option value="losaH30">Losa hidráulica 30x30 cm</option>
+<option value="losaC30">Losa cerámica 30x30 cm</option>
+<option value="losaC40">Losa cerámica 40x40 cm</option>
+<option value="losaC50">Losa cerámica 50x50 cm</option>
+<option value="losaG30">Losa granito 30x30 cm</option>
+<option value="losaG40">Losa granito 40x40 cm</option>
+<option value="cementoPulido">Piso de cemento pulido</option>
+</select>
 </div>
 
 <div class="card">
-    <label>Largo del piso (m)</label>
-    <input type="number" id="largoPiso" placeholder="Largo en metros">
-</div>
-<div class="card">
-    <label>Ancho del piso (m)</label>
-    <input type="number" id="anchoPiso" placeholder="Ancho en metros">
-</div>
-<div class="card">
-    <label>Área del piso (m²)</label>
-    <input type="number" id="areaPiso" readonly>
+<label>Largo (m)</label>
+<input type="number" id="largo" placeholder="Largo del piso">
+<label>Ancho (m)</label>
+<input type="number" id="ancho" placeholder="Ancho del piso">
+<label>Área (m²)</label>
+<input type="number" id="area" readonly>
 </div>
 
 <button class="btn-primary" onclick="calcularPiso()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444;" onclick="borrarCalculo()">Borrar</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarPiso()">Borrar</button>
 
 <div id="resultado" class="result" style="display:none;"></div>
 
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
-// Cargar precios
-let precios = {};
-function cargarPrecios(){
-    precios = JSON.parse(localStorage.getItem('precios')) || {};
-}
-cargarPrecios();
+let precios = JSON.parse(localStorage.getItem('precios'))||{};
 
-// Calcular área y materiales
+document.getElementById('largo').addEventListener('input', actualizarArea);
+document.getElementById('ancho').addEventListener('input', actualizarArea);
+function actualizarArea(){
+    const largo=parseFloat(document.getElementById('largo').value)||0;
+    const ancho=parseFloat(document.getElementById('ancho').value)||0;
+    document.getElementById('area').value=(largo*ancho).toFixed(2);
+}
+
 function calcularPiso(){
-    const tipoLosa = document.getElementById('tipoLosa').value;
-    const largo = parseFloat(document.getElementById('largoPiso').value) || 0;
-    const ancho = parseFloat(document.getElementById('anchoPiso').value) || 0;
-    const area = largo * ancho;
-    document.getElementById('areaPiso').value = area.toFixed(2);
+    const tipo=document.getElementById('tipoPiso').value;
+    const area=parseFloat(document.getElementById('area').value)||0;
+    if(!tipo || area<=0){alert("Complete todos los datos"); return;}
+    const precio=precios[tipo]||0;
+    const cantidad=area; // 1 m² por cada 1 m² de área
+    const costo=cantidad*precio;
+    let resultadoHtml=`<h3>Resumen Piso</h3>`;
+    resultadoHtml+=`<p>${document.getElementById('tipoPiso').selectedOptions[0].text}: ${cantidad.toFixed(2)} m² (CUP ${costo.toFixed(2)})</p>`;
+    resultadoHtml+=`<h4>Total</h4><p>${costo.toFixed(2)} CUP | ${(costo/(precios['usd']||1)).toFixed(2)} USD | ${(costo/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('resultado').innerHTML=resultadoHtml;
 
-    if(!tipoLosa || area <=0){
-        alert("Seleccione tipo de losa y dimensiones válidas");
-        return;
-    }
-
-    // Materiales
-    const precioLosa = precios[tipoLosa] || 0;
-    const cantidadLosa = area / 0.09; // ejemplo: si losa 30x30 cm = 0.09 m²
-    const precioTotal = cantidadLosa * precioLosa;
-
-    const hombres = area < 50 ? 2 : 3;
-    const tiempo = area * 0.5; // horas aproximadas
-
-    const totalUSD = (precioTotal / (precios['usd']||1)).toFixed(2);
-    const totalEUR = (precioTotal / (precios['eur']||1)).toFixed(2);
-
-    const resultadoHTML = `
-        <h3>Resumen del piso</h3>
-        <p><strong>Área:</strong> ${area.toFixed(2)} m²</p>
-        <p><strong>Tipo de losa:</strong> ${document.getElementById('tipoLosa').selectedOptions[0].text}</p>
-        <p><strong>Cantidad de losas:</strong> ${cantidadLosa.toFixed(0)}</p>
-        <p><strong>Precio total:</strong> ${precioTotal.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>
-        <p><strong>Mano de obra:</strong> ${hombres} personas</p>
-        <p><strong>Tiempo estimado:</strong> ${tiempo.toFixed(2)} horas</p>
-    `;
-
-    document.getElementById('resultado').style.display = 'block';
-    document.getElementById('resultado').innerHTML = resultadoHTML;
+    // Guardar área para pintura
+    let areas=JSON.parse(localStorage.getItem('areasCalculadas'))||{};
+    areas['pisos']=area;
+    localStorage.setItem('areasCalculadas',JSON.stringify(areas));
 }
 
-function borrarCalculo(){
-    document.getElementById('tipoLosa').value = '';
-    document.getElementById('largoPiso').value = '';
-    document.getElementById('anchoPiso').value = '';
-    document.getElementById('areaPiso').value = '';
-    document.getElementById('resultado').style.display = 'none';
+function borrarPiso(){
+    document.getElementById('tipoPiso').value='';
+    document.getElementById('largo').value='';
+    document.getElementById('ancho').value='';
+    document.getElementById('area').value='';
+    document.getElementById('resultado').style.display='none';
 }
 </script>
-
 </body>
 </html>

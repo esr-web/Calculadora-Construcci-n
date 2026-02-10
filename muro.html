@@ -8,24 +8,23 @@
 <style>
 .header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
 .nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
-.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
-.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);}
 .container {max-width:900px;margin:2rem auto;padding:0 1rem;}
 .card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
 .card label {font-weight:500; display:block;margin-top:0.5rem;}
 .card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
-.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
-.btn-primary:hover{background-color:#374151;}
-.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;}
 footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
+
 <body>
+
 <header class="header">
 <h1>Calculadora de Muro</h1>
 <nav class="nav-menu">
 <a href="index.html" class="nav-link">Inicio</a>
-
 <a href="piso.html" class="nav-link">Piso</a>
 <a href="cubierta.html" class="nav-link">Cubierta</a>
 <a href="cimentacion.html" class="nav-link">Cimentación</a>
@@ -55,26 +54,27 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 
 <div class="card">
 <label>Largo (m)</label>
-<input type="number" id="largo" placeholder="Largo del muro">
+<input type="number" id="largo">
 <label>Ancho (m)</label>
-<input type="number" id="ancho" placeholder="Ancho del muro">
-<label>Área (m²)</label>
+<input type="number" id="ancho">
+<label id="labelAlto" style="display:none;">Alto (m)</label>
+<input type="number" id="alto" style="display:none;">
+<label>Área / Volumen</label>
 <input type="number" id="area" readonly>
 </div>
 
 <div class="card">
 <label>Tipo de cemento</label>
 <select id="tipoCemento">
-<option value="">-- Selecciona --</option>
 <option value="P250">P-250</option>
 <option value="P350">P-350</option>
 </select>
 
 <label>Dosificación</label>
 <select id="dosificacion">
-<option value="1:3:1">1:3:1</option>
-<option value="1:4:1">1:4:1</option>
-<option value="1:5:1">1:5:1</option>
+<option value="1:3">1:3</option>
+<option value="1:4">1:4</option>
+<option value="1:5">1:5</option>
 </select>
 </div>
 
@@ -83,112 +83,109 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 
 <div id="resultado" class="result" style="display:none;"></div>
 
+</main>
+
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
-// Traer precios
-let precios = JSON.parse(localStorage.getItem('precios'))||{};
-
-// Actualizar área
-document.getElementById('largo').addEventListener('input', actualizarArea);
-document.getElementById('ancho').addEventListener('input', actualizarArea);
-function actualizarArea(){
-    const largo=parseFloat(document.getElementById('largo').value)||0;
-    const ancho=parseFloat(document.getElementById('ancho').value)||0;
-    document.getElementById('area').value=(largo*ancho).toFixed(2);
-}
-
-// Material según tipo de muro
-const materiales = {
-    bloque:['Bloque 20x20x40'],
-    ladrillo:['Ladrillo común 24x12x6','Ladrillo hueco 24x12x14'],
-    hormigon:['Hormigón armado']
-};
+let precios = JSON.parse(localStorage.getItem('precios')) || {};
+let bloquesPrecio = JSON.parse(localStorage.getItem('preciosBloques')) || [
+    {nombre:'Bloque 20x20x40', precio:0}
+];
 
 document.getElementById('tipoMuro').addEventListener('change',function(){
     const tipo=this.value;
     const select=document.getElementById('materialMuro');
     select.innerHTML='';
-    if(tipo){
-        materiales[tipo].forEach(m=>{
-            const opt=document.createElement('option');
-            opt.value=m; opt.textContent=m; select.appendChild(opt);
+    document.getElementById('materialCard').style.display='block';
+
+    document.getElementById('alto').style.display = tipo==='hormigon'?'block':'none';
+    document.getElementById('labelAlto').style.display = tipo==='hormigon'?'block':'none';
+
+    if(tipo==='bloque'){
+        bloquesPrecio.forEach(b=>{
+            let o=document.createElement('option');
+            o.value=b.nombre;
+            o.textContent=b.nombre;
+            select.appendChild(o);
         });
-        document.getElementById('materialCard').style.display='block';
-    } else {
-        document.getElementById('materialCard').style.display='none';
+    }
+    if(tipo==='ladrillo'){
+        ['Ladrillo común','Ladrillo hueco'].forEach(l=>{
+            let o=document.createElement('option');
+            o.value=l; o.textContent=l;
+            select.appendChild(o);
+        });
+    }
+    if(tipo==='hormigon'){
+        let o=document.createElement('option');
+        o.value='Hormigón armado';
+        o.textContent='Hormigón armado';
+        select.appendChild(o);
     }
 });
 
+['largo','ancho','alto'].forEach(id=>{
+document.getElementById(id).addEventListener('input',()=>{
+    const l=+largo.value||0,a=+ancho.value||0,h=+alto.value||0;
+    area.value=(document.getElementById('tipoMuro').value==='hormigon'
+        ?(l*a*h):(l*a)).toFixed(2);
+});
+});
+
 function calcularMuro(){
-    const tipo=document.getElementById('tipoMuro').value;
-    const material=document.getElementById('materialMuro').value;
-    const area=parseFloat(document.getElementById('area').value)||0;
-    if(!tipo || !material || area<=0){alert("Complete todos los datos"); return;}
-    let resultadoHtml=`<h3>Resumen Muro</h3>`;
-    let totalCUP=0;
+const tipo=tipoMuro.value;
+const areaVal=parseFloat(area.value)||0;
+if(!tipo||areaVal<=0){alert('Complete los datos');return;}
 
-    // Materiales muro
-    if(tipo==='bloque'){
-        const precioBloque=precios['bloque']||0;
-        const cantidadBloque=area*12; // aprox 12 bloques por m2
-        const costoBloque=cantidadBloque*precioBloque;
-        totalCUP+=costoBloque;
-        resultadoHtml+=`<p>Bloques: ${cantidadBloque.toFixed(2)} unidades (CUP ${costoBloque.toFixed(2)})</p>`;
-    }
-    if(tipo==='ladrillo'){
-        const precioLad=material==='Ladrillo común 24x12x6'?precios['ladrillo']:precios['ladrilloHueco'];
-        const cantidadLad=area*60; // aprox 60 ladrillos por m2
-        const costoLad=cantidadLad*precioLad;
-        totalCUP+=costoLad;
-        resultadoHtml+=`<p>${material}: ${cantidadLad.toFixed(2)} unidades (CUP ${costoLad.toFixed(2)})</p>`;
-    }
-    if(tipo==='hormigon'){
-        const volumen=area*0.15; // espesor 15cm
-        const precioH=precios['hormigonArmado']||0;
-        const costoH=volumen*precioH;
-        totalCUP+=costoH;
-        resultadoHtml+=`<p>Hormigón armado: ${volumen.toFixed(2)} m³ (CUP ${costoH.toFixed(2)})</p>`;
-    }
+let r='<h3>Resultados</h3>';
+let total=0;
 
-    // Repello y fino
-    const precioCem=precios[document.getElementById('tipoCemento').value]||0;
-    const dosificacion=document.getElementById('dosificacion').value;
-    const cementoRepello=area*0.01*precioCem; // aproximado
-    const cementoFino=area*0.005*precioCem;
-    totalCUP+=cementoRepello+cementoFino;
-    resultadoHtml+=`<p>Repello: CUP ${cementoRepello.toFixed(2)}</p>`;
-    resultadoHtml+=`<p>Fino: CUP ${cementoFino.toFixed(2)}</p>`;
+// ===== MURO =====
+r+='<h4>Muro</h4>';
+if(tipo==='bloque'){
+let cantBloque=areaVal*12;
+let costoBloque=cantBloque*(bloquesPrecio.find(b=>b.nombre===materialMuro.value)?.precio||0);
+let cem=areaVal*0.02, arena=areaVal*0.04, agua=areaVal*10;
+total+=costoBloque;
+r+=`Bloques: ${cantBloque.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${arena.toFixed(2)} m³<br>Agua: ${agua.toFixed(0)} L<br>`;
+}
 
-    // Mano de obra
-    const obreros=area>100?3:2;
-    const tiempo=area/20;
-    resultadoHtml+=`<p>Obreros: ${obreros}, Tiempo: ${tiempo.toFixed(1)} días</p>`;
+if(tipo==='ladrillo'){
+let cant=areaVal*60;
+let cem=areaVal*0.025, arena=areaVal*0.05, agua=areaVal*12;
+r+=`Ladrillos: ${cant.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${arena.toFixed(2)} m³<br>Agua: ${agua.toFixed(0)} L<br>`;
+}
 
-    // Resumen total
-    resultadoHtml+=`<h4>Resumen total materiales y precio</h4>`;
-    resultadoHtml+=`<p>Total: ${totalCUP.toFixed(2)} CUP | ${(totalCUP/(precios['usd']||1)).toFixed(2)} USD | ${(totalCUP/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+if(tipo==='hormigon'){
+let v=areaVal;
+let cem=v*7, arena=v*0.5, grav=v*0.8, acero=v*80, agua=v*180;
+r+=`Volumen: ${v} m³<br>
+Cemento: ${cem} sacos<br>
+Arena: ${arena} m³<br>
+Gravilla: ${grav} m³<br>
+Acero: ${acero} kg<br>
+Agua: ${agua} L<br>`;
+}
 
-    document.getElementById('resultado').style.display='block';
-    document.getElementById('resultado').innerHTML=resultadoHtml;
+// ===== REPELLO =====
+let cemR=areaVal*0.015, arenaR=areaVal*0.03, aguaR=areaVal*8;
+r+=`<h4>Repello</h4>Cemento: ${cemR.toFixed(2)} sacos<br>Arena: ${arenaR.toFixed(2)} m³<br>Agua: ${aguaR.toFixed(0)} L<br>`;
 
-    // Guardar área para pintura
-    let areas=JSON.parse(localStorage.getItem('areasCalculadas'))||{};
-    areas['muros']=area;
-    localStorage.setItem('areasCalculadas',JSON.stringify(areas));
+// ===== FINO =====
+let cemF=areaVal*0.01, arenaF=areaVal*0.02, aguaF=areaVal*5;
+r+=`<h4>Fino</h4>Cemento: ${cemF.toFixed(2)} sacos<br>Arena fina: ${arenaF.toFixed(2)} m³<br>Agua: ${aguaF.toFixed(0)} L<br>`;
+
+document.getElementById('resultado').style.display='block';
+document.getElementById('resultado').innerHTML=r;
 }
 
 function borrarMuro(){
-    document.getElementById('tipoMuro').value='';
-    document.getElementById('materialMuro').innerHTML='';
-    document.getElementById('materialCard').style.display='none';
-    document.getElementById('largo').value='';
-    document.getElementById('ancho').value='';
-    document.getElementById('area').value='';
-    document.getElementById('tipoCemento').value='';
-    document.getElementById('dosificacion').value='';
-    document.getElementById('resultado').style.display='none';
+document.querySelectorAll('input').forEach(i=>i.value='');
+resultado.style.display='none';
+materialCard.style.display='none';
 }
 </script>
+
 </body>
 </html>

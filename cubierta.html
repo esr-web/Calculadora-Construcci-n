@@ -10,11 +10,11 @@
 .nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
 .nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
 .nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
-.container {max-width: 800px;margin: 2rem auto;padding: 0 1rem;}
+.container {max-width: 900px;margin: 2rem auto;padding: 0 1rem;}
 .card {background: #fff;padding: 1rem;margin-bottom: 1rem;border-radius: 14px;box-shadow: 0 4px 8px rgba(0,0,0,0.05);}
 .card label {font-weight: 500;}
 .card input, .card select {width: 100%;padding: 0.5rem;margin-top: 0.2rem;border-radius: 8px;border: 1px solid #ccc;}
-.btn-primary {display: block;margin: 1.5rem auto;padding: 0.7rem 2rem;background-color: #1f2937;color: white;border: none;border-radius: 10px;font-size: 1rem;cursor: pointer;transition: 0.2s;}
+.btn-primary {display: block;margin: 1rem auto;padding: 0.7rem 2rem;background-color: #1f2937;color: white;border: none;border-radius: 10px;font-size: 1rem;cursor: pointer;transition: 0.2s;}
 .btn-primary:hover {background-color: #374151;}
 .result {background: #f9f9f9;padding: 1rem;border-radius: 12px;margin-top: 1rem;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
 footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-size: 0.9rem;}
@@ -32,31 +32,41 @@ footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-si
     <a href="cimentacion.html" class="nav-link">Cimentación</a>
     <a href="estructura.html" class="nav-link">Estructura</a>
     <a href="falso-techo.html" class="nav-link">Falso Techo</a>
+    <a href="pintura.html" class="nav-link">Pintura</a>
 </nav>
 </header>
 
 <main class="container">
 
+<!-- Tipo de cubierta -->
 <div class="card">
     <label>Tipo de cubierta</label>
     <select id="tipoCubierta">
         <option value="">-- Selecciona tipo --</option>
-        <option value="cincLigera">Ligera de Cinc</option>
-        <option value="losetaPref">Loseta prefabricada</option>
-        <option value="tejaCriolla">Teja criolla</option>
-        <option value="tejaFrancesa">Teja francesa</option>
-        <option value="tejaEspañola">Teja española</option>
-        <option value="hormigonArmado">Hormigón armado</option>
+        <option value="cinc">Ligera de cinc</option>
+        <option value="hormigon">Hormigón armado</option>
+        <option value="teja">Teja (criolla, francesa, española)</option>
     </select>
 </div>
 
+<!-- Material específico -->
+<div class="card" id="materialesCubiertaCard" style="display:none;">
+    <label>Material / Medida</label>
+    <select id="materialCubierta"></select>
+</div>
+
+<!-- Dimensiones -->
 <div class="card">
     <label>Largo (m)</label>
-    <input type="number" id="largo" placeholder="Largo en metros">
+    <input type="number" id="largo" placeholder="Largo">
 </div>
 <div class="card">
     <label>Ancho (m)</label>
-    <input type="number" id="ancho" placeholder="Ancho en metros">
+    <input type="number" id="ancho" placeholder="Ancho">
+</div>
+<div class="card">
+    <label>Área (m²)</label>
+    <input type="number" id="area" readonly>
 </div>
 
 <button class="btn-primary" onclick="calcularCubierta()">Calcular</button>
@@ -67,60 +77,105 @@ footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-si
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
-let precios = {};
-function cargarPrecios(){precios = JSON.parse(localStorage.getItem('precios'))||{};}
-cargarPrecios();
+// Precios
+let precios = JSON.parse(localStorage.getItem('precios'))||{};
+
+// Actualizar área
+document.getElementById('largo').addEventListener('input', actualizarArea);
+document.getElementById('ancho').addEventListener('input', actualizarArea);
+function actualizarArea(){
+    const largo = parseFloat(document.getElementById('largo').value)||0;
+    const ancho = parseFloat(document.getElementById('ancho').value)||0;
+    document.getElementById('area').value = (largo*ancho).toFixed(2);
+}
+
+// Materiales según tipo de cubierta
+const materiales = {
+    cinc: ['Planchas de cinc 3x1m','Planchas de cinc 4x1m','Purlin metálico 3m'],
+    hormigon: ['Hormigón armado'],
+    teja: ['Teja criolla','Teja francesa','Teja española','Loseta prefabricada']
+};
+
+document.getElementById('tipoCubierta').addEventListener('change', function(){
+    const tipo = this.value;
+    const select = document.getElementById('materialCubierta');
+    select.innerHTML='';
+    if(tipo){
+        materiales[tipo].forEach(m=>{
+            const opt = document.createElement('option');
+            opt.value = m;
+            opt.textContent = m;
+            select.appendChild(opt);
+        });
+        document.getElementById('materialesCubiertaCard').style.display='block';
+    } else {
+        document.getElementById('materialesCubiertaCard').style.display='none';
+    }
+});
 
 function calcularCubierta(){
     const tipo = document.getElementById('tipoCubierta').value;
-    const largo = parseFloat(document.getElementById('largo').value)||0;
-    const ancho = parseFloat(document.getElementById('ancho').value)||0;
-    const area = largo*ancho;
-    if(!tipo||area<=0){alert("Complete todos los datos");return;}
+    const material = document.getElementById('materialCubierta').value;
+    const area = parseFloat(document.getElementById('area').value)||0;
+    if(!tipo || !material || area<=0){alert("Complete todos los datos"); return;}
 
-    let resumen=`<h3>Resumen de la cubierta</h3><p><strong>Área:</strong> ${area.toFixed(2)} m²</p>`;
-    let totalCUP=0;
+    let totalCUP = 0;
+    let resumen = `<h3>Resumen de cubierta</h3>`;
+    
+    // Materiales
+    if(tipo==='cinc'){
+        let precioPlancha = precios['planchasCinc']||0;
+        let cantidadPlancha = area/3; // aprox
+        let costoPlancha = cantidadPlancha*precioPlancha;
+        totalCUP += costoPlancha;
 
-    if(tipo==='cincLigera'){
-        const planchas=area/2; // cada plancha cubre 2 m²
-        const precioPlancha=precios['planchaCinc']||0;
-        const cantidadPurlin=Math.ceil(largo/3)*Math.ceil(ancho/3);
-        const precioPurlin=cantidadPurlin*(precios['purlin3m']||0);
-        totalCUP+=planchas*precioPlancha+precioPurlin;
-        resumen+=`<p>Planchas de cinc: ${planchas.toFixed(2)} unidades (Precio: ${(planchas*precioPlancha).toFixed(2)} CUP)</p>`;
-        resumen+=`<p>Purlin metálico 3m: ${cantidadPurlin} unidades (Precio total: ${precioPurlin.toFixed(2)} CUP)</p>`;
-    } else if(tipo==='losetaPref'){
-        const precio=precios['losetaPref']||0;
-        totalCUP+=area*precio;
-        resumen+=`<p>Loseta prefabricada: ${area.toFixed(2)} m² (Precio: ${(area*precio).toFixed(2)} CUP)</p>`;
-    } else if(tipo==='tejaCriolla' || tipo==='tejaFrancesa' || tipo==='tejaEspañola'){
-        const precio=precios[tipo]||0;
-        totalCUP+=area*precio;
-        resumen+=`<p>${tipo}: ${area.toFixed(2)} m² (Precio: ${(area*precio).toFixed(2)} CUP)</p>`;
-    } else if(tipo==='hormigonArmado'){
-        const espesor = 0.15; // m
-        const volumen = area*espesor; // m³ hormigón
-        const precioHorm=precios['hormigonArmado']||0;
-        const varilla=area*2; // m lineales aprox
-        const precioVarilla=(precios['acero']||0)*varilla;
-        totalCUP+=volumen*precioHorm + precioVarilla;
-        resumen+=`<p>Hormigón armado: ${volumen.toFixed(2)} m³ (Precio: ${(volumen*precioHorm).toFixed(2)} CUP)</p>`;
-        resumen+=`<p>Varilla: ${varilla.toFixed(2)} m (Precio: ${precioVarilla.toFixed(2)} CUP)</p>`;
+        let precioPurlin = precios['purlin']||0;
+        let cantidadPurlin = area/3; // m lineales aprox
+        let costoPurlin = cantidadPurlin*precioPurlin;
+        totalCUP += costoPurlin;
+
+        resumen+=`<p>Planchas de cinc: ${cantidadPlancha.toFixed(2)} unidades (Precio: ${costoPlancha.toFixed(2)} CUP)</p>`;
+        resumen+=`<p>Purlin metálico: ${cantidadPurlin.toFixed(2)} m (Precio: ${costoPurlin.toFixed(2)} CUP)</p>`;
+    }
+    else if(tipo==='hormigon'){
+        let espesor = 0.15; // m
+        let volumen = area*espesor;
+        let precioHorm = precios['hormigonArmado']||0;
+        let costoHorm = volumen*precioHorm;
+        totalCUP += costoHorm;
+        resumen+=`<p>Hormigón armado: ${volumen.toFixed(2)} m³ (Precio: ${costoHorm.toFixed(2)} CUP)</p>`;
+    }
+    else if(tipo==='teja'){
+        let precioTeja = precios['teja']||0;
+        let cantidadTeja = area/0.25; // aprox 0.25 m² por teja
+        let costoTeja = cantidadTeja*precioTeja;
+        totalCUP += costoTeja;
+        resumen+=`<p>${material}: ${cantidadTeja.toFixed(2)} unidades (Precio: ${costoTeja.toFixed(2)} CUP)</p>`;
     }
 
-    const totalUSD=(totalCUP/(precios['usd']||1)).toFixed(2);
-    const totalEUR=(totalCUP/(precios['eur']||1)).toFixed(2);
-    resumen+=`<p><strong>Total:</strong> ${totalCUP.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>`;
+    resumen+=`<p><strong>Total materiales:</strong> ${totalCUP.toFixed(2)} CUP | ${(totalCUP/(precios['usd']||1)).toFixed(2)} USD | ${(totalCUP/(precios['eur']||1)).toFixed(2)} EUR</p>`;
 
-    const divRes=document.getElementById('resultado');
-    divRes.style.display='block';
-    divRes.innerHTML=resumen;
+    // Mano de obra
+    let obreros = area>100?3:2;
+    let tiempo = area/20; // días aprox
+    resumen+=`<p>Obreros: ${obreros}, Tiempo estimado: ${tiempo.toFixed(1)} días</p>`;
+
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('resultado').innerHTML=resumen;
+
+    // Guardar área para pintura
+    let areas = JSON.parse(localStorage.getItem('areasCalculadas'))||{};
+    areas['cubiertas'] = area;
+    localStorage.setItem('areasCalculadas', JSON.stringify(areas));
 }
 
 function borrarCal(){
     document.getElementById('tipoCubierta').value='';
+    document.getElementById('materialCubierta').innerHTML='';
+    document.getElementById('materialesCubiertaCard').style.display='none';
     document.getElementById('largo').value='';
     document.getElementById('ancho').value='';
+    document.getElementById('area').value='';
     document.getElementById('resultado').style.display='none';
 }
 </script>

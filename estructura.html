@@ -6,181 +6,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Header */
-.header {
-    background: #1f2937;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-}
-.nav-link {
-    background: #f0f0f0;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
-                -2px -2px 5px rgba(255,255,255,0.7);
-    transition: all 0.15s ease;
-}
-.nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
-                -1px -1px 3px rgba(255,255,255,0.8);
-    background: #e8e8e8;
-}
-
-/* Tarjetas y estilos */
-.container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-.card {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-.card label {
-    font-weight: 500;
-}
-.card input, .card select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
-}
-.btn-primary {
-    display: block;
-    margin: 1.5rem auto;
-    padding: 0.7rem 2rem;
-    background-color: #1f2937;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-primary:hover {
-    background-color: #374151;
-}
-.result {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 12px;
-    margin-top: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
+.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight:500; display:block;margin-top:0.5rem;}
+.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
+.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
+.btn-primary:hover{background-color:#374151;}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
 <body>
-
 <header class="header">
-    <h1>Calculadora de Estructura</h1>
-    <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Inicio</a>
-        <a href="muro.html" class="nav-link">Muro</a>
-        <a href="piso.html" class="nav-link">Piso</a>
-        <a href="cubierta.html" class="nav-link">Cubierta</a>
-        <a href="cimentacion.html" class="nav-link">Cimentación</a>
-        <a href="estructura.html" class="nav-link">Estructura</a>
-        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-    </nav>
+<h1>Calculadora de Estructura</h1>
+<nav class="nav-menu">
+<a href="index.html" class="nav-link">Inicio</a>
+<a href="muro.html" class="nav-link">Muro</a>
+<a href="piso.html" class="nav-link">Piso</a>
+<a href="cubierta.html" class="nav-link">Cubierta</a>
+<a href="cimentacion.html" class="nav-link">Cimentación</a>
+<a href="estructura.html" class="nav-link">Estructura</a>
+<a href="falso-techo.html" class="nav-link">Falso Techo</a>
+<a href="pintura.html" class="nav-link">Pintura</a>
+</nav>
 </header>
 
 <main class="container">
 
-<!-- Tarjeta de Vigas -->
 <div class="card">
-    <label>Vigas</label>
-    <select id="tipoViga">
-        <option value="">-- Selecciona tipo de viga --</option>
-        <option value="vigaHormigon">Hormigón armado</option>
-        <option value="vigaAcero">Acero estructural</option>
-    </select>
-</div>
-<div class="card">
-    <label>Largo de la viga (m)</label>
-    <input type="number" id="largoViga" placeholder="Largo en metros">
-</div>
-<div class="card">
-    <label>Ancho de la viga (m)</label>
-    <input type="number" id="anchoViga" placeholder="Ancho en metros">
-</div>
-<div class="card">
-    <label>Altura de la viga (m)</label>
-    <input type="number" id="altoViga" placeholder="Altura en metros">
+<label>Elemento estructural</label>
+<select id="tipoEstructura">
+<option value="">-- Selecciona --</option>
+<option value="viga">Viga</option>
+<option value="columna">Columna</option>
+</select>
 </div>
 
-<!-- Tarjeta de Columnas -->
 <div class="card">
-    <label>Columnas</label>
-    <select id="tipoColumna">
-        <option value="">-- Selecciona tipo de columna --</option>
-        <option value="colHormigon">Hormigón armado</option>
-        <option value="colAcero">Acero estructural</option>
-    </select>
-</div>
-<div class="card">
-    <label>Largo de la columna (m)</label>
-    <input type="number" id="largoCol" placeholder="Largo en metros">
-</div>
-<div class="card">
-    <label>Ancho de la columna (m)</label>
-    <input type="number" id="anchoCol" placeholder="Ancho en metros">
-</div>
-<div class="card">
-    <label>Altura de la columna (m)</label>
-    <input type="number" id="altoCol" placeholder="Altura en metros">
+<label>Largo (m)</label>
+<input type="number" id="largo" placeholder="Largo del elemento">
+<label>Ancho (m)</label>
+<input type="number" id="ancho" placeholder="Ancho del elemento">
+<label>Altura (m)</label>
+<input type="number" id="altura" placeholder="Altura del elemento">
+<label>Volumen (m³)</label>
+<input type="number" id="volumen" readonly>
 </div>
 
 <button class="btn-primary" onclick="calcularEstructura()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444;" onclick="borrarCalculo()">Borrar</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarEstructura()">Borrar</button>
 
 <div id="resultado" class="result" style="display:none;"></div>
 
+<footer>Arq. Emanuel Silva Riambaut</footer>
+
 <script>
-// Cargar precios de localStorage
-let precios = {};
-function cargarPrecios(){
-    precios = JSON.parse(localStorage.getItem('precios')) || {};
+let precios = JSON.parse(localStorage.getItem('precios'))||{};
+
+document.getElementById('largo').addEventListener('input', actualizarVolumen);
+document.getElementById('ancho').addEventListener('input', actualizarVolumen);
+document.getElementById('altura').addEventListener('input', actualizarVolumen);
+
+function actualizarVolumen(){
+    const largo=parseFloat(document.getElementById('largo').value)||0;
+    const ancho=parseFloat(document.getElementById('ancho').value)||0;
+    const altura=parseFloat(document.getElementById('altura').value)||0;
+    document.getElementById('volumen').value=(largo*ancho*altura).toFixed(2);
 }
-cargarPrecios();
 
-// Función de cálculo
 function calcularEstructura(){
-    const tipoViga = document.getElementById('tipoViga').value;
-    const largoViga = parseFloat(document.getElementById('largoViga').value) || 0;
-    const anchoViga = parseFloat(document.getElementById('anchoViga').value) || 0;
-    const altoViga = parseFloat(document.getElementById('altoViga').value) || 0;
+    const tipo=document.getElementById('tipoEstructura').value;
+    const volumen=parseFloat(document.getElementById('volumen').value)||0;
+    if(!tipo || volumen<=0){alert("Complete todos los datos"); return;}
+    let resultadoHtml=`<h3>Resumen ${tipo.charAt(0).toUpperCase()+tipo.slice(1)}</h3>`;
+    let totalCUP=0;
 
-    const tipoCol = document.getElementById('tipoColumna').value;
-    const largoCol = parseFloat(document.getElementById('largoCol').value) || 0;
-    const anchoCol = parseFloat(document.getElementById('anchoCol').value) || 0;
-    const altoCol = parseFloat(document.getElementById('altoCol').value) || 0;
+    if(tipo==='viga'){
+        const precioH=precios['hormigonViga']||0;
+        const precioA=precios['aceroViga']||0;
+        const cantidadHormigon=volumen;
+        const cantidadAcero=volumen*80; // kg aprox por m³
+        const costoH=cantidadHormigon*precioH;
+        const costoA=cantidadAcero*precioA;
+        totalCUP+=costoH+costoA;
+        resultadoHtml+=`<p>Hormigón: ${cantidadHormigon.toFixed(2)} m³ (CUP ${costoH.toFixed(2)})</p>`;
+        resultadoHtml+=`<p>Acero: ${cantidadAcero.toFixed(2)} kg (CUP ${costoA.toFixed(2)})</p>`;
+    }
+    else if(tipo==='columna'){
+        const precioH=precios['hormigonColumna']||0;
+        const precioA=precios['aceroColumna']||0;
+        const cantidadHormigon=volumen;
+        const cantidadAcero=volumen*100; // kg aprox por m³
+        const costoH=cantidadHormigon*precioH;
+        const costoA=cantidadAcero*precioA;
+        totalCUP+=costoH+costoA;
+        resultadoHtml+=`<p>Hormigón: ${cantidadHormigon.toFixed(2)} m³ (CUP ${costoH.toFixed(2)})</p>`;
+        resultadoHtml+=`<p>Acero: ${cantidadAcero.toFixed(2)} kg (CUP ${costoA.toFixed(2)})</p>`;
+    }
 
-    if((!tipoViga && !tipoCol) || (largoViga <=0 && altoViga <=0 && anchoViga<=0 && largoCol<=0 && altoCol<=0 && anchoCol<=0)){
-        alert("Ingrese al menos un
+    resultadoHtml+=`<h4>Total</h4><p>${totalCUP.toFixed(2)} CUP | ${(totalCUP/(precios['usd']||1)).toFixed(2)} USD | ${(totalCUP/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('resultado').innerHTML=resultadoHtml;
+
+    // Guardar área/volumen para pintura si aplica
+    let areas=JSON.parse(localStorage.getItem('areasCalculadas'))||{};
+    areas['estructura']=volumen;
+    localStorage.setItem('areasCalculadas',JSON.stringify(areas));
+}
+
+function borrarEstructura(){
+    document.getElementById('tipoEstructura').value='';
+    document.getElementById('largo').value='';
+    document.getElementById('ancho').value='';
+    document.getElementById('altura').value='';
+    document.getElementById('volumen').value='';
+    document.getElementById('resultado').style.display='none';
+}
+</script>
+</body>
+</html>

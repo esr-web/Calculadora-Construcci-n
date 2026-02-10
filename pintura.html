@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pintura - Calculadora</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0;z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width: 800px;margin: 2rem auto;padding: 0 1rem;}
+.card {background: #fff;padding: 1rem;margin-bottom: 1rem;border-radius: 14px;box-shadow: 0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight: 500;}
+.card input, .card select {width: 100%;padding: 0.5rem;margin-top: 0.2rem;border-radius: 8px;border: 1px solid #ccc;}
+.btn-primary {display: block;margin: 1.5rem auto;padding: 0.7rem 2rem;background-color: #1f2937;color: white;border: none;border-radius: 10px;font-size: 1rem;cursor: pointer;transition: 0.2s;}
+.btn-primary:hover {background-color: #374151;}
+.result {background: #f9f9f9;padding: 1rem;border-radius: 12px;margin-top: 1rem;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+footer {text-align: center;padding: 1rem;margin-top: 2rem;color: #6b7280;font-size: 0.9rem;}
+</style>
+</head>
+<body>
+
+<header class="header">
+<h1>Calculadora de Pintura</h1>
+<nav class="nav-menu">
+    <a href="index.html" class="nav-link">Inicio</a>
+    <a href="muro.html" class="nav-link">Muro</a>
+    <a href="piso.html" class="nav-link">Piso</a>
+    <a href="cubierta.html" class="nav-link">Cubierta</a>
+    <a href="cimentacion.html" class="nav-link">Cimentación</a>
+    <a href="estructura.html" class="nav-link">Estructura</a>
+    <a href="falso-techo.html" class="nav-link">Falso Techo</a>
+    <a href="pintura.html" class="nav-link">Pintura</a>
+</nav>
+</header>
+
+<main class="container">
+
+<div class="card">
+    <label>Tipo de pintura</label>
+    <select id="tipoPintura">
+        <option value="">-- Selecciona tipo --</option>
+        <option value="vinil">Vinil</option>
+        <option value="esmalte">Esmalte</option>
+        <option value="epoxica">Epóxica</option>
+        <option value="dobleComponente">Doble Componente</option>
+        <option value="impermeable">Impermeable</option>
+    </select>
+</div>
+
+<div class="card">
+    <label>Superficie a pintar</label>
+    <select id="superficie">
+        <option value="">-- Selecciona superficie --</option>
+        <option value="muros">Muros</option>
+        <option value="techos">Techos</option>
+        <option value="cubiertas">Cubiertas</option>
+        <option value="falsoTecho">Falso Techo</option>
+    </select>
+</div>
+
+<div class="card">
+    <label>Área (m²)</label>
+    <input type="number" id="area" placeholder="Área a pintar" readonly>
+</div>
+
+<button class="btn-primary" onclick="calcularPintura()">Calcular</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarCal()">Borrar</button>
+
+<div id="resultado" class="result" style="display:none;"></div>
+
+<footer>Arq. Emanuel Silva Riambaut</footer>
+
+<script>
+let precios = {};
+function cargarPrecios(){precios = JSON.parse(localStorage.getItem('precios'))||{};}
+cargarPrecios();
+
+// Cargar áreas desde otras páginas automáticamente
+let areas = JSON.parse(localStorage.getItem('areasCalculadas')) || {};
+document.getElementById('superficie').addEventListener('change', function(){
+    const sup = this.value;
+    if(areas[sup]){
+        document.getElementById('area').value = areas[sup];
+    } else {
+        document.getElementById('area').value = 0;
+    }
+});
+
+// Rendimiento por tipo de pintura (m² por litro)
+const rendimientos = {
+    vinil: 12,
+    esmalte: 10,
+    epoxica: 8,
+    dobleComponente: 6,
+    impermeable: 7
+};
+
+function calcularPintura(){
+    const tipo = document.getElementById('tipoPintura').value;
+    const area = parseFloat(document.getElementById('area').value) || 0;
+    if(!tipo || area<=0){alert("Complete todos los datos"); return;}
+    const rendimiento = rendimientos[tipo];
+    const litros = area / rendimiento;
+
+    const precioLitro = precios[tipo] || 0;
+    const totalCUP = litros * precioLitro;
+    const totalUSD = (totalCUP / (precios['usd']||1)).toFixed(2);
+    const totalEUR = (totalCUP / (precios['eur']||1)).toFixed(2);
+
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('resultado').innerHTML = `
+        <h3>Resultado de pintura</h3>
+        <p>Superficie: <strong>${area.toFixed(2)} m²</strong></p>
+        <p>Pintura: <strong>${tipo}</strong> (Rendimiento: ${rendimiento} m²/litro)</p>
+        <p>Litros necesarios: <strong>${litros.toFixed(2)} L</strong></p>
+        <p>Total: ${totalCUP.toFixed(2)} CUP | ${totalUSD} USD | ${totalEUR} EUR</p>
+    `;
+}
+
+function borrarCal(){
+    document.getElementById('tipoPintura').value='';
+    document.getElementById('superficie').value='';
+    document.getElementById('area').value='';
+    document.getElementById('resultado').style.display='none';
+}
+</script>
+
+</body>
+</html>

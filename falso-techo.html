@@ -6,217 +6,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Header */
-.header {
-    background: #1f2937;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-}
-.nav-link {
-    background: #f0f0f0;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.08),
-                -2px -2px 5px rgba(255,255,255,0.7);
-    transition: all 0.15s ease;
-}
-.nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.1),
-                -1px -1px 3px rgba(255,255,255,0.8);
-    background: #e8e8e8;
-}
-
-/* Tarjetas y estilos */
-.container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-.card {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-.card label {
-    font-weight: 500;
-}
-.card input, .card select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
-}
-.btn-primary {
-    display: block;
-    margin: 1.5rem auto;
-    padding: 0.7rem 2rem;
-    background-color: #1f2937;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-primary:hover {
-    background-color: #374151;
-}
-.result {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 12px;
-    margin-top: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
+.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight:500; display:block;margin-top:0.5rem;}
+.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
+.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
+.btn-primary:hover{background-color:#374151;}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
 <body>
-
 <header class="header">
-    <h1>Calculadora de Falso Techo</h1>
-    <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Inicio</a>
-        <a href="muro.html" class="nav-link">Muro</a>
-        <a href="piso.html" class="nav-link">Piso</a>
-        <a href="cubierta.html" class="nav-link">Cubierta</a>
-        <a href="cimentacion.html" class="nav-link">Cimentación</a>
-        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-    </nav>
+<h1>Calculadora de Falso Techo</h1>
+<nav class="nav-menu">
+<a href="index.html" class="nav-link">Inicio</a>
+<a href="muro.html" class="nav-link">Muro</a>
+<a href="piso.html" class="nav-link">Piso</a>
+<a href="cubierta.html" class="nav-link">Cubierta</a>
+<a href="cimentacion.html" class="nav-link">Cimentación</a>
+<a href="estructura.html" class="nav-link">Estructura</a>
+<a href="falso-techo.html" class="nav-link">Falso Techo</a>
+<a href="pintura.html" class="nav-link">Pintura</a>
+</nav>
 </header>
 
 <main class="container">
+
 <div class="card">
-    <label>Tipo de Falso Techo</label>
-    <select id="tipoTecho">
-        <option value="">-- Selecciona --</option>
-        <option value="pladur1">Pladur 1.2 x 2.40 m</option>
-        <option value="pladurH">Pladur hidrófugo 1.2 x 2.00 m</option>
-        <option value="losa50">Losa registrable 50 x 50 cm</option>
-        <option value="losa60">Losa registrable 60 x 60 cm</option>
-    </select>
+<label>Tipo de falso techo</label>
+<select id="tipoFalsoTecho">
+<option value="">-- Selecciona --</option>
+<option value="pladurNormal">Pladur 1.2x2.40 m</option>
+<option value="pladurHidrofugo">Pladur hidrófugo 1.2x2.00 m</option>
+<option value="losas50">Losas registrables 50x50 cm</option>
+<option value="losas60">Losas registrables 60x60 cm</option>
+</select>
 </div>
 
 <div class="card">
-    <label>Largo del techo (m)</label>
-    <input type="number" id="largo" placeholder="Largo en metros">
-</div>
-<div class="card">
-    <label>Ancho del techo (m)</label>
-    <input type="number" id="ancho" placeholder="Ancho en metros">
-</div>
-<div class="card">
-    <label>Área del techo (m²)</label>
-    <input type="number" id="area" readonly>
+<label>Largo (m)</label>
+<input type="number" id="largo" placeholder="Largo del área">
+<label>Ancho (m)</label>
+<input type="number" id="ancho" placeholder="Ancho del área">
+<label>Área (m²)</label>
+<input type="number" id="area" readonly>
 </div>
 
-<button class="btn-primary" onclick="calcularTecho()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444;" onclick="borrarCalculo()">Borrar</button>
+<button class="btn-primary" onclick="calcularFalsoTecho()">Calcular</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarFalsoTecho()">Borrar</button>
 
 <div id="resultado" class="result" style="display:none;"></div>
 
+<footer>Arq. Emanuel Silva Riambaut</footer>
+
 <script>
-// Cargar precios de localStorage
-let precios = {};
-function cargarPrecios(){
-    precios = JSON.parse(localStorage.getItem('precios')) || {};
-}
-cargarPrecios();
+let precios = JSON.parse(localStorage.getItem('precios'))||{};
 
-// Calcular área y materiales
-function calcularTecho(){
-    const tipo = document.getElementById('tipoTecho').value;
-    const largo = parseFloat(document.getElementById('largo').value) || 0;
-    const ancho = parseFloat(document.getElementById('ancho').value) || 0;
-    const area = largo * ancho;
-    document.getElementById('area').value = area.toFixed(2);
+document.getElementById('largo').addEventListener('input', actualizarArea);
+document.getElementById('ancho').addEventListener('input', actualizarArea);
 
-    if(!tipo || area <=0){
-        alert("Seleccione tipo de techo y valores válidos de largo y ancho");
-        return;
-    }
-
-    let cantidadMaterial = 0;
-    let perfiles = 0;
-    let cintillos = 0;
-    let tiempoH = 0;
-    let precioCUP = 0;
-
-    if(tipo === 'pladur1' || tipo === 'pladurH'){
-        // Placas de pladur
-        const placa = precios[tipo] || 0;
-        const largoPlaca = tipo==='pladur1'?2.4:2.0;
-        cantidadMaterial = Math.ceil(area / (1.2 * largoPlaca));
-        perfiles = Math.ceil(area * 0.5); 
-        cintillos = Math.ceil(area * 0.5); 
-        precioCUP = (cantidadMaterial*placa) + (perfiles*(precios['perfilMet']||0)) + (cintillos*(precios['cintilloMet']||0));
-        tiempoH = area * 0.3; 
-    } else if(tipo === 'losa50' || tipo === 'losa60'){
-        const losa = precios[tipo] || 0;
-        const tamLosa = tipo==='losa50'?0.5:0.6; // cada lado de la losa
-        const cantFilas = Math.ceil(largo / tamLosa);
-        const cantCols = Math.ceil(ancho / tamLosa);
-        cantidadMaterial = cantFilas * cantCols;
-        // Cintillo metálico = perímetro de cada losa * cantidad de losas
-        cintillos = cantidadMaterial * 4 * tamLosa; // metros lineales
-        precioCUP = (cantidadMaterial*losa) + (cintillos*(precios['cintilloMet']||0));
-        tiempoH = area * 0.25;
-    }
-
-    let hombres = area < 100 ? 2 : 3; 
-
-    const usd = parseFloat(precios['usd']) || 1;
-    const eur = parseFloat(precios['eur']) || 1;
-    const precioUSD = (precioCUP / usd).toFixed(2);
-    const precioEUR = (precioCUP / eur).toFixed(2);
-
-    document.getElementById('resultado').style.display = 'block';
-    document.getElementById('resultado').innerHTML = `
-        <h3>Resumen de Materiales y Costos</h3>
-        <p><strong>Área:</strong> ${area.toFixed(2)} m²</p>
-        <p><strong>Tipo de techo:</strong> ${tipo==='pladur1'?'Pladur 1.2x2.40':tipo==='pladurH'?'Pladur hidrófugo 1.2x2.0':tipo==='losa50'?'Losa registrable 50x50':'Losa registrable 60x60'}</p>
-        <p><strong>Cantidad de placas/losas:</strong> ${cantidadMaterial}</p>
-        ${ (tipo==='pladur1' || tipo==='pladurH') ? `<p><strong>Perfiles metálicos:</strong> ${perfiles}</p><p><strong>Cintillos metálicos:</strong> ${cintillos}</p>` : `<p><strong>Cintillo metálico:</strong> ${cintillos.toFixed(2)} m</p>` }
-        <p><strong>Mano de obra:</strong> ${hombres} personas</p>
-        <p><strong>Tiempo estimado:</strong> ${tiempoH.toFixed(2)} horas</p>
-        <p><strong>Precio total:</strong> ${precioCUP.toFixed(2)} CUP | ${precioUSD} USD | ${precioEUR} EUR</p>
-    `;
+function actualizarArea(){
+    const largo=parseFloat(document.getElementById('largo').value)||0;
+    const ancho=parseFloat(document.getElementById('ancho').value)||0;
+    document.getElementById('area').value=(largo*ancho).toFixed(2);
 }
 
-function borrarCalculo(){
-    document.getElementById('largo').value = '';
-    document.getElementById('ancho').value = '';
-    document.getElementById('area').value = '';
-    document.getElementById('tipoTecho').value = '';
-    document.getElementById('resultado').style.display = 'none';
+function calcularFalsoTecho(){
+    const tipo=document.getElementById('tipoFalsoTecho').value;
+    const area=parseFloat(document.getElementById('area').value)||0;
+    if(!tipo || area<=0){alert("Complete todos los datos"); return;}
+    let resultadoHtml=`<h3>Resumen Falso Techo</h3>`;
+    let totalCUP=0;
+
+    if(tipo==='pladurNormal' || tipo==='pladurHidrofugo'){
+        const precioPladur=precios[tipo]||0;
+        const precioPerfil=precios['perfilMetalico']||0;
+        const cantidadPladur=area;
+        const cantidadPerfil=((document.getElementById('largo').value*2)+(document.getElementById('ancho').value*2))/3; // m de perfil 3m aprox
+        const costoPladur=cantidadPladur*precioPladur;
+        const costoPerfil=cantidadPerfil*precioPerfil;
+        totalCUP+=costoPladur+costoPerfil;
+        resultadoHtml+=`<p>Pladur: ${cantidadPladur.toFixed(2)} m² (CUP ${costoPladur.toFixed(2)})</p>`;
+        resultadoHtml+=`<p>Perfiles metálicos 3m: ${cantidadPerfil.toFixed(2)} unidades (CUP ${costoPerfil.toFixed(2)})</p>`;
+    }
+    else if(tipo==='losas50' || tipo==='losas60'){
+        const precioLosas=precios[tipo]||0;
+        const precioCintillo=precios['cintillo']||0;
+        const lado=parseInt(tipo==='losas50'?50:60)/100; // tamaño en m
+        const numLosas=Math.ceil(area/(lado*lado));
+        const perimetro=2*(document.getElementById('largo').value*1 + document.getElementById('ancho').value*1);
+        const costoLosas=numLosas*precioLosas;
+        const costoCintillo=perimetro*precioCintillo;
+        totalCUP+=costoLosas+costoCintillo;
+        resultadoHtml+=`<p>Losas ${tipo==='losas50'?'50x50':'60x60'}: ${numLosas} unidades (CUP ${costoLosas.toFixed(2)})</p>`;
+        resultadoHtml+=`<p>Cintillos metálicos: ${perimetro.toFixed(2)} m (CUP ${costoCintillo.toFixed(2)})</p>`;
+    }
+
+    resultadoHtml+=`<h4>Total</h4><p>${totalCUP.toFixed(2)} CUP | ${(totalCUP/(precios['usd']||1)).toFixed(2)} USD | ${(totalCUP/(precios['eur']||1)).toFixed(2)} EUR</p>`;
+    document.getElementById('resultado').style.display='block';
+    document.getElementById('resultado').innerHTML=resultadoHtml;
+
+    // Guardar área para pintura
+    let areas=JSON.parse(localStorage.getItem('areasCalculadas'))||{};
+    areas['falsoTecho']=area;
+    localStorage.setItem('areasCalculadas',JSON.stringify(areas));
+}
+
+function borrarFalsoTecho(){
+    document.getElementById('tipoFalsoTecho').value='';
+    document.getElementById('largo').value='';
+    document.getElementById('ancho').value='';
+    document.getElementById('area').value='';
+    document.getElementById('resultado').style.display='none';
 }
 </script>
-
-</main>
 </body>
 </html>

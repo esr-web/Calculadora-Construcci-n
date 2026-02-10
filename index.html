@@ -5,40 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Construcción</title>
 <link rel="stylesheet" href="css/style.css">
+<!-- Font Awesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* BODY */
+body {
+    background: #f4f4f4;
+    color: #1f2937;
+    font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/* HEADER */
+.header {
+    background: #1f2937;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* TARJETA DE DESCRIPCIÓN */
+.description-card {
+    background: #fff;
+    max-width: 900px;
+    margin: -50px auto 2rem auto;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    text-align: center;
+}
+.description-card h2 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+.description-card p {
+    font-weight: 400;
+    color: #4b5563;
+    font-size: 1rem;
+}
+
+/* BOTONES PRINCIPALES */
+.button-container {
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.main-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+}
+
+.main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 14px rgba(0,0,0,0.2);
+}
+
+/* COLORES BOTONES */
+.main-btn.blue {
+    background: #2563eb;
+}
+.main-btn.green {
+    background: #16a34a;
+}
+
+/* ICONOS 3D */
+.main-btn i {
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+/* PIE DE PÁGINA */
+footer {
+    text-align: center;
+    padding: 1rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+</style>
 </head>
 <body>
 
 <header class="header">
     <h1>Calculadora de Construcción</h1>
-    <nav class="nav-menu">
-        <a href="muro.html" class="nav-link">Muro</a>
-        <a href="piso.html" class="nav-link">Piso</a>
-        <a href="cubierta.html" class="nav-link">Cubierta</a>
-        <a href="cimentacion.html" class="nav-link">Cimentación</a>
-        <a href="estructura.html" class="nav-link">Estructura</a>
-        <a href="falso-techo.html" class="nav-link">Falso Techo</a>
-        <a href="pintura.html" class="nav-link">Pintura</a>
-        <a href="precios.html" class="nav-link">Precios</a>
-    </nav>
 </header>
 
-<main class="container">
-    <div class="card">
-        <h2>Bienvenido a la Calculadora de Construcción</h2>
-        <p>Esta herramienta te permite calcular los materiales y costos necesarios para construir muros, pisos, cubiertas, cimentaciones, estructuras, falsos techos y pintura.</p>
-        <p>Selecciona una de las áreas a continuación para comenzar a calcular:</p>
-        <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;">
-            <a href="muro.html" class="btn-primary">Muro</a>
-            <a href="piso.html" class="btn-primary">Piso</a>
-            <a href="cubierta.html" class="btn-primary">Cubierta</a>
-            <a href="cimentacion.html" class="btn-primary">Cimentación</a>
-            <a href="estructura.html" class="btn-primary">Estructura</a>
-            <a href="falso-techo.html" class="btn-primary">Falso Techo</a>
-            <a href="pintura.html" class="btn-primary">Pintura</a>
-            <a href="precios.html" class="btn-primary">Precios</a>
-        </div>
-    </div>
-</main>
+<div class="description-card">
+    <h2>Bienvenido a la Calculadora de Construcción</h2>
+    <p>Calcula materiales y costos necesarios para construir muros, pisos, cubiertas, cimentaciones, estructuras, falsos techos y pintura. Selecciona la sección que deseas calcular haciendo clic en los botones abajo.</p>
+</div>
+
+<div class="button-container">
+    <a href="muro.html" class="main-btn blue"><i class="fa-solid fa-border-all"></i> Muro</a>
+    <a href="piso.html" class="main-btn blue"><i class="fa-solid fa-square-full"></i> Piso</a>
+    <a href="cubierta.html" class="main-btn blue"><i class="fa-solid fa-house"></i> Cubierta</a>
+    <a href="cimentacion.html" class="main-btn blue"><i class="fa-solid fa-dungeon"></i> Cimentación</a>
+    <a href="estructura.html" class="main-btn blue"><i class="fa-solid fa-shapes"></i> Estructura</a>
+    <a href="falso-techo.html" class="main-btn blue"><i class="fa-solid fa-th-large"></i> Falso Techo</a>
+    <a href="pintura.html" class="main-btn blue"><i class="fa-solid fa-paint-roller"></i> Pintura</a>
+    <a href="precios.html" class="main-btn green"><i class="fa-solid fa-dollar-sign"></i> Precios</a>
+</div>
 
 <footer>Arq. Emanuel Silva Riambaut</footer>
 

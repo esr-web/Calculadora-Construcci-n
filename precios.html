@@ -365,6 +365,40 @@ document.getElementById('guardarPrecios').addEventListener('click', ()=>{
     <input type="number" id="losa60" placeholder="Precio CUP/m²">
     <small>Losa registrable para falso techo modular</small>
 </div>
+<div class="card">
+    <label>Pintura Vinil</label>
+    <input type="number" id="precioVinil" placeholder="Precio por litro" value="0">
+</div>
+<div class="card">
+    <label>Pintura Esmalte</label>
+    <input type="number" id="precioEsmalte" placeholder="Precio por litro" value="0">
+</div>
+<div class="card">
+    <label>Pintura Epóxica</label>
+    <input type="number" id="precioEpoxica" placeholder="Precio por litro" value="0">
+</div>
+<div class="card">
+    <label>Pintura Doble Componente</label>
+    <input type="number" id="precioDobleComponente" placeholder="Precio por litro" value="0">
+</div>
+<div class="card">
+    <label>Pintura Impermeable</label>
+    <input type="number" id="precioImpermeable" placeholder="Precio por litro" value="0">
+</div>
+
+<script>
+// Guardar precios de pintura
+document.getElementById('guardarPrecios').addEventListener('click', ()=>{
+    let precios = JSON.parse(localStorage.getItem('precios'))||{};
+    precios['vinil'] = parseFloat(document.getElementById('precioVinil').value)||0;
+    precios['esmalte'] = parseFloat(document.getElementById('precioEsmalte').value)||0;
+    precios['epoxica'] = parseFloat(document.getElementById('precioEpoxica').value)||0;
+    precios['dobleComponente'] = parseFloat(document.getElementById('precioDobleComponente').value)||0;
+    precios['impermeable'] = parseFloat(document.getElementById('precioImpermeable').value)||0;
+    localStorage.setItem('precios', JSON.stringify(precios));
+    alert('Precios de pintura guardados');
+});
+</script>
 
 <h2>Monedas</h2>
 <div class="card">

@@ -43,7 +43,7 @@
 <div class="card" id="formaLadrilloCard" style="display:none;">
 <label>Forma de colocación del ladrillo</label>
 <select id="formaLadrillo">
-<option value="citar">Citara</option>
+<option value="citar">Citar</option>
 <option value="citaron">Citarón</option>
 <option value="alicatado">Alicatado</option>
 </select>
@@ -72,122 +72,126 @@ const precios = JSON.parse(localStorage.getItem('precios')) || {};
 const monedas = precios.monedas || {CUP:1, USD:350, EUR:380};
 
 tipoMuro.addEventListener('change',()=>{
-materialMuro.innerHTML='';
-materialCard.style.display='block';
-formaLadrilloCard.style.display='none';
+    materialMuro.innerHTML='';
+    materialCard.style.display='block';
+    formaLadrilloCard.style.display='none';
+    
+    labelAlto.style.display = alto.style.display =
+        (tipoMuro.value==='hormigon') ? 'block' : 'none';
 
-labelAlto.style.display = alto.style.display =
-(tipoMuro.value==='hormigon') ? 'block' : 'none';
+    if(tipoMuro.value==='bloque'){
+        // BLOQUES FIJOS
+        ['Bloque 10','Bloque 15','Bloque 20'].forEach(b=>{
+            let o=document.createElement('option');
+            o.value=b; o.textContent=b;
+            materialMuro.appendChild(o);
+        });
+    }
 
-if(tipoMuro.value==='bloque'){
-(precios.bloques||[]).forEach(b=>{
-let o=document.createElement('option');
-o.value=b.nombre;
-o.textContent=b.nombre;
-materialMuro.appendChild(o);
-});
-}
+    if(tipoMuro.value==='ladrillo'){
+        formaLadrilloCard.style.display='block';
+        ['Ladrillo común','Ladrillo hueco'].forEach(l=>{
+            let o=document.createElement('option');
+            o.value=l;o.textContent=l;
+            materialMuro.appendChild(o);
+        });
+    }
 
-if(tipoMuro.value==='ladrillo'){
-formaLadrilloCard.style.display='block';
-['Ladrillo común','Ladrillo hueco'].forEach(l=>{
-let o=document.createElement('option');
-o.value=l;o.textContent=l;
-materialMuro.appendChild(o);
-});
-}
-
-if(tipoMuro.value==='hormigon'){
-let o=document.createElement('option');
-o.value='Hormigón armado';
-o.textContent='Hormigón armado';
-materialMuro.appendChild(o);
-}
+    if(tipoMuro.value==='hormigon'){
+        let o=document.createElement('option');
+        o.value='Hormigón armado';
+        o.textContent='Hormigón armado';
+        materialMuro.appendChild(o);
+    }
 });
 
 ['largo','ancho','alto'].forEach(id=>{
-document.getElementById(id).addEventListener('input',()=>{
-area.value = tipoMuro.value==='hormigon'
-? (largo.value*ancho.value*alto.value||0).toFixed(2)
-: (largo.value*ancho.value||0).toFixed(2);
-});
+    document.getElementById(id).addEventListener('input',()=>{
+        area.value = tipoMuro.value==='hormigon'
+            ? (largo.value*ancho.value*alto.value||0).toFixed(2)
+            : (largo.value*ancho.value||0).toFixed(2);
+    });
 });
 
 function calcularMuro(){
-if(!tipoMuro.value||area.value<=0){alert('Complete los datos');return;}
+    if(!tipoMuro.value||area.value<=0){alert('Complete los datos');return;}
+    let a=+area.value;
 
-let a=+area.value;
-let r=`<h3>Dimensiones</h3>
-Largo: ${largo.value} m<br>
-Ancho: ${ancho.value} m<br>
-${alto.style.display==='block'?'Alto: '+alto.value+' m<br>':''}
-`;
+    let r=`<h3>Dimensiones</h3>
+    Largo: ${largo.value} m<br>
+    Ancho: ${ancho.value} m<br>
+    ${alto.style.display==='block'?'Alto: '+alto.value+' m<br>':''}
+    `;
 
-let totalCUP=0;
+    let totalCUP=0;
 
-// ===== MURO =====
-r+='<h3>Muro (estructura)</h3>';
+    // ===== MURO =====
+    r+='<h3>Muro (estructura)</h3>';
 
-if(tipoMuro.value==='ladrillo'){
-let factor={citar:50,citaron:60,alicatado:70}[formaLadrillo.value];
-let cant=a*factor;
-let precio=precios.ladrillo||0;
-let costo=cant*precio;
-totalCUP+=costo;
+    if(tipoMuro.value==='bloque'){
+        let cant = a*12; // aprox 12 bloques/m²
+        let precioBloque = 0; // si tienes precios diferentes, puedes ajustarlo aquí
+        totalCUP += cant*precioBloque;
+        r+=`Bloques: ${cant.toFixed(0)} → ${ (cant*precioBloque).toFixed(2) } CUP<br>`;
+    }
 
-r+=`
-Forma de colocación: ${formaLadrillo.options[formaLadrillo.selectedIndex].text}<br>
-Ladrillos: ${cant.toFixed(0)} → ${costo.toFixed(2)} CUP<br>
-`;
-}
+    if(tipoMuro.value==='ladrillo'){
+        let factor={citar:50,citaron:60,alicatado:70}[formaLadrillo.value];
+        let cant=a*factor;
+        let precio=precios.ladrillo||0;
+        let costo=cant*precio;
+        totalCUP+=costo;
 
-let cem=a*0.02, arena=a*0.04, agua=a*10;
-totalCUP+=cem*(precios.cemento||0)+arena*(precios.arena||0)+agua*(precios.agua||0);
+        r+=`
+        Forma de colocación: ${formaLadrillo.options[formaLadrillo.selectedIndex].text}<br>
+        Ladrillos: ${cant.toFixed(0)} → ${costo.toFixed(2)} CUP<br>
+        `;
+    }
 
-r+=`
-Cemento: ${cem.toFixed(2)} sacos<br>
-Arena: ${arena.toFixed(2)} m³<br>
-Agua: ${agua.toFixed(0)} L<br>
-`;
+    if(tipoMuro.value==='hormigon'){
+        let v=a;
+        let cem=v*7, arena=v*0.5, grav=v*0.8, acero=v*80, agua=v*180;
+        totalCUP+=cem*(precios.cemento||0)+arena*(precios.arena||0)+grav*(precios.gravilla||0)+acero*(precios.acero||0)+agua*(precios.agua||0);
+        r+=`Volumen: ${v} m³<br>
+        Cemento: ${cem} sacos<br>
+        Arena: ${arena} m³<br>
+        Gravilla: ${grav} m³<br>
+        Acero: ${acero} kg<br>
+        Agua: ${agua} L<br>`;
+    }
 
-// ===== REPELLO =====
-r+='<h3>Repello</h3>';
-let cemR=a*0.015, arenaR=a*0.03, aguaR=a*8;
-totalCUP+=cemR*(precios.cemento||0)+arenaR*(precios.arena||0)+aguaR*(precios.agua||0);
+    // ===== REPELLO =====
+    let cemR=a*0.015, arenaR=a*0.03, aguaR=a*8;
+    totalCUP+=cemR*(precios.cemento||0)+arenaR*(precios.arena||0)+aguaR*(precios.agua||0);
+    r+='<h3>Repello</h3>';
+    r+=`Cemento: ${cemR.toFixed(2)} sacos → ${(cemR*(precios.cemento||0)).toFixed(2)} CUP<br>
+        Arena: ${arenaR.toFixed(2)} m³ → ${(arenaR*(precios.arena||0)).toFixed(2)} CUP<br>
+        Agua: ${aguaR.toFixed(0)} L → ${(aguaR*(precios.agua||0)).toFixed(2)} CUP<br>`;
 
-r+=`
-Cemento: ${cemR.toFixed(2)} sacos<br>
-Arena: ${arenaR.toFixed(2)} m³<br>
-Agua: ${aguaR.toFixed(0)} L<br>
-`;
+    // ===== FINO =====
+    let cemF=a*0.01, arenaF=a*0.02, aguaF=a*5;
+    totalCUP+=cemF*(precios.cemento||0)+arenaF*(precios.arena||0)+aguaF*(precios.agua||0);
+    r+='<h3>Fino</h3>';
+    r+=`Cemento: ${cemF.toFixed(2)} sacos → ${(cemF*(precios.cemento||0)).toFixed(2)} CUP<br>
+        Arena fina: ${arenaF.toFixed(2)} m³ → ${(arenaF*(precios.arena||0)).toFixed(2)} CUP<br>
+        Agua: ${aguaF.toFixed(0)} L → ${(aguaF*(precios.agua||0)).toFixed(2)} CUP<br>`;
 
-// ===== FINO =====
-r+='<h3>Fino</h3>';
-let cemF=a*0.01, arenaF=a*0.02, aguaF=a*5;
-totalCUP+=cemF*(precios.cemento||0)+arenaF*(precios.arena||0)+aguaF*(precios.agua||0);
+    // ===== TOTAL =====
+    r+=`<h3>Total general</h3>
+    CUP: ${totalCUP.toFixed(2)}<br>
+    USD: ${(totalCUP/monedas.USD).toFixed(2)}<br>
+    EUR: ${(totalCUP/monedas.EUR).toFixed(2)}
+    `;
 
-r+=`
-Cemento: ${cemF.toFixed(2)} sacos<br>
-Arena fina: ${arenaF.toFixed(2)} m³<br>
-Agua: ${aguaF.toFixed(0)} L<br>
-`;
-
-// ===== TOTAL =====
-r+=`<h3>Total general</h3>
-CUP: ${totalCUP.toFixed(2)}<br>
-USD: ${(totalCUP/monedas.USD).toFixed(2)}<br>
-EUR: ${(totalCUP/monedas.EUR).toFixed(2)}
-`;
-
-resultado.innerHTML=r;
-resultado.style.display='block';
+    resultado.innerHTML=r;
+    resultado.style.display='block';
 }
 
 function borrarMuro(){
-document.querySelectorAll('input').forEach(i=>i.value='');
-resultado.style.display='none';
-materialCard.style.display='none';
-formaLadrilloCard.style.display='none';
+    document.querySelectorAll('input').forEach(i=>i.value='');
+    resultado.style.display='none';
+    materialCard.style.display='none';
+    formaLadrilloCard.style.display='none';
 }
 </script>
 

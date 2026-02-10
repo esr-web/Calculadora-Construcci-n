@@ -19,11 +19,11 @@ body {
     color: white;
     padding: 1rem;
     text-align: center;
-    position: sticky; /* header fijo */
+    position: sticky; /* fijo al hacer scroll */
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* poco relieve */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* sombra suave */
 }
 
 /* MENU DE NAVEGACIÓN */
@@ -35,21 +35,21 @@ body {
     margin-top: 0.5rem;
 }
 
-/* BOTONES DEL MENU (MINIMALISTA CON POCO RELIEVE) */
+/* BOTONES DEL HEADER (minimalista con sombra suave) */
 .nav-link {
     background: #f0f0f0;
     color: #1f2937;
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.08); /* poco relieve */
-    transition: all 0.15s ease;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.08); /* sombra ligera */
+    transition: all 0.2s ease;
 }
 .nav-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.12);
     background: #e8e8e8;
 }
 
@@ -60,13 +60,13 @@ body {
     padding: 0 1rem;
 }
 
-/* TARJETAS */
+/* TARJETAS (cards) */
 .card {
     background: #fff;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* minimalista */
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* sombra ligera para minimalismo */
 }
 
 /* LABELS */
@@ -86,7 +86,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* BOTONES */
+/* BOTONES PRINCIPALES */
 .btn-primary {
     display: block;
     margin: 1rem auto;
@@ -94,16 +94,16 @@ body {
     background-color: #1f2937;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.08);
     transition: 0.2s;
 }
 .btn-primary:hover {
     background-color: #374151;
     transform: translateY(-1px);
-    box-shadow: 1px 1px 4px rgba(0,0,0,0.12);
+    box-shadow: 1px 3px 8px rgba(0,0,0,0.12);
 }
 
 /* RESULTADOS */
@@ -112,7 +112,7 @@ body {
     padding: 1rem;
     border-radius: 12px;
     margin-top: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 /* PIE DE PÁGINA */

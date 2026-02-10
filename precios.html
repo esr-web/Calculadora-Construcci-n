@@ -218,7 +218,21 @@ function guardarPrecios(){
     };
     localStorage.setItem('precios', JSON.stringify(precios));
     alert('Precios guardados correctamente');
+
 }
+    localStorage.setItem('precios', JSON.stringify({
+  monedas: { CUP:1, USD:350, EUR:380 },
+  bloques: [
+    { nombre:'Bloque 20x20x40', precio:350 },
+    { nombre:'Bloque 15x20x40', precio:320 }
+  ],
+  cemento: 260,
+  arena: 900,
+  gravilla: 1100,
+  acero: 180,
+  agua: 0.02
+}));
+
 </script>
 
 </body>

@@ -40,6 +40,15 @@
 <select id="materialMuro"></select>
 </div>
 
+<div class="card" id="formaLadrilloCard" style="display:none;">
+<label>Forma de colocación del ladrillo</label>
+<select id="formaLadrillo">
+<option value="citar">Citar</option>
+<option value="citaron">Citarón</option>
+<option value="alicatado">Alicatado</option>
+</select>
+</div>
+
 <div class="card">
 <label>Largo (m)</label><input type="number" id="largo">
 <label>Ancho (m)</label><input type="number" id="ancho">
@@ -65,6 +74,7 @@ const monedas = precios.monedas || {CUP:1, USD:350, EUR:380};
 tipoMuro.addEventListener('change',()=>{
 materialMuro.innerHTML='';
 materialCard.style.display='block';
+formaLadrilloCard.style.display='none';
 
 labelAlto.style.display = alto.style.display =
 (tipoMuro.value==='hormigon') ? 'block' : 'none';
@@ -79,6 +89,7 @@ materialMuro.appendChild(o);
 }
 
 if(tipoMuro.value==='ladrillo'){
+formaLadrilloCard.style.display='block';
 ['Ladrillo común','Ladrillo hueco'].forEach(l=>{
 let o=document.createElement('option');
 o.value=l;o.textContent=l;
@@ -114,25 +125,20 @@ ${alto.style.display==='block'?'Alto: '+alto.value+' m<br>':''}
 
 let totalCUP=0;
 
-// ================= MURO =================
+// ===== MURO =====
 r+='<h3>Muro (estructura)</h3>';
 
-if(tipoMuro.value==='bloque'){
-let bloque=precios.bloques.find(b=>b.nombre===materialMuro.value);
-let cantBloques=a*12.5;
-let costoBloques=cantBloques*(bloque?.precio||0);
-totalCUP+=costoBloques;
-
-r+=`Bloques: ${cantBloques.toFixed(0)} → ${costoBloques.toFixed(2)} CUP<br>`;
-}
-
 if(tipoMuro.value==='ladrillo'){
-let cant=a*60;
+let factor={citar:50,citaron:60,alicatado:70}[formaLadrillo.value];
+let cant=a*factor;
 let precio=precios.ladrillo||0;
 let costo=cant*precio;
 totalCUP+=costo;
 
-r+=`Ladrillos: ${cant.toFixed(0)} → ${costo.toFixed(2)} CUP<br>`;
+r+=`
+Forma de colocación: ${formaLadrillo.options[formaLadrillo.selectedIndex].text}<br>
+Ladrillos: ${cant.toFixed(0)} → ${costo.toFixed(2)} CUP<br>
+`;
 }
 
 let cem=a*0.02, arena=a*0.04, agua=a*10;
@@ -144,7 +150,7 @@ Arena: ${arena.toFixed(2)} m³<br>
 Agua: ${agua.toFixed(0)} L<br>
 `;
 
-// ================= REPELLO =================
+// ===== REPELLO =====
 r+='<h3>Repello</h3>';
 let cemR=a*0.015, arenaR=a*0.03, aguaR=a*8;
 totalCUP+=cemR*(precios.cemento||0)+arenaR*(precios.arena||0)+aguaR*(precios.agua||0);
@@ -155,7 +161,7 @@ Arena: ${arenaR.toFixed(2)} m³<br>
 Agua: ${aguaR.toFixed(0)} L<br>
 `;
 
-// ================= FINO =================
+// ===== FINO =====
 r+='<h3>Fino</h3>';
 let cemF=a*0.01, arenaF=a*0.02, aguaF=a*5;
 totalCUP+=cemF*(precios.cemento||0)+arenaF*(precios.arena||0)+aguaF*(precios.agua||0);
@@ -166,7 +172,7 @@ Arena fina: ${arenaF.toFixed(2)} m³<br>
 Agua: ${aguaF.toFixed(0)} L<br>
 `;
 
-// ================= TOTALES =================
+// ===== TOTAL =====
 r+=`<h3>Total general</h3>
 CUP: ${totalCUP.toFixed(2)}<br>
 USD: ${(totalCUP/monedas.USD).toFixed(2)}<br>
@@ -181,6 +187,7 @@ function borrarMuro(){
 document.querySelectorAll('input').forEach(i=>i.value='');
 resultado.style.display='none';
 materialCard.style.display='none';
+formaLadrilloCard.style.display='none';
 }
 </script>
 

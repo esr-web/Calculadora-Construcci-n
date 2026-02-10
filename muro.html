@@ -5,19 +5,6 @@
 <title>Muro - Calculadora</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
-<style>
-.header {background:#1f2937;color:white;padding:1rem;text-align:center;position:sticky;top:0;z-index:1000}
-.nav-menu{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.5rem}
-.nav-link{background:#f0f0f0;color:#1f2937;padding:.5rem 1rem;border-radius:10px;text-decoration:none;font-weight:500}
-.container{max-width:900px;margin:2rem auto;padding:0 1rem}
-.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,.05)}
-.card label{font-weight:500;display:block;margin-top:.5rem}
-.card input,.card select{width:100%;padding:.5rem;margin-top:.2rem;border-radius:8px;border:1px solid #ccc}
-.btn-primary{display:block;margin:1rem auto;padding:.7rem 2rem;background:#1f2937;color:white;border:none;border-radius:10px}
-.result{background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem}
-footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:.9rem}
-h4{margin-top:1rem}
-</style>
 </head>
 
 <body>
@@ -54,10 +41,8 @@ h4{margin-top:1rem}
 </div>
 
 <div class="card">
-<label>Largo (m)</label>
-<input type="number" id="largo">
-<label>Ancho (m)</label>
-<input type="number" id="ancho">
+<label>Largo (m)</label><input type="number" id="largo">
+<label>Ancho (m)</label><input type="number" id="ancho">
 <label id="labelAlto" style="display:none;">Alto (m)</label>
 <input type="number" id="alto" style="display:none;">
 <label>Área / Volumen</label>
@@ -65,127 +50,128 @@ h4{margin-top:1rem}
 </div>
 
 <button class="btn-primary" onclick="calcularMuro()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444" onclick="borrarMuro()">Borrar</button>
+<button class="btn-primary" style="background:#ef4444;" onclick="borrarMuro()">Borrar</button>
 
-<div id="resultado" class="result" style="display:none"></div>
+<div id="resultado" class="result" style="display:none;"></div>
 
 </main>
 
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
-let precios = JSON.parse(localStorage.getItem('precios')) || {};
-let bloquesPrecio = JSON.parse(localStorage.getItem('preciosBloques')) || [];
+const precios = JSON.parse(localStorage.getItem('precios')) || {};
+const monedas = precios.monedas || {CUP:1, USD:350, EUR:380};
 
-document.getElementById('tipoMuro').addEventListener('change',function(){
-const tipo=this.value;
-const sel=document.getElementById('materialMuro');
-sel.innerHTML='';
-document.getElementById('materialCard').style.display='block';
+tipoMuro.addEventListener('change',()=>{
+materialMuro.innerHTML='';
+materialCard.style.display='block';
 
-alto.style.display = tipo==='hormigon'?'block':'none';
-labelAlto.style.display = tipo==='hormigon'?'block':'none';
+labelAlto.style.display = alto.style.display =
+(tipoMuro.value==='hormigon') ? 'block' : 'none';
 
-if(tipo==='bloque'){
-bloquesPrecio.forEach(b=>{
+if(tipoMuro.value==='bloque'){
+(precios.bloques||[]).forEach(b=>{
 let o=document.createElement('option');
 o.value=b.nombre;
 o.textContent=b.nombre;
-sel.appendChild(o);
+materialMuro.appendChild(o);
 });
 }
-if(tipo==='ladrillo'){
+
+if(tipoMuro.value==='ladrillo'){
 ['Ladrillo común','Ladrillo hueco'].forEach(l=>{
 let o=document.createElement('option');
-o.value=l; o.textContent=l;
-sel.appendChild(o);
+o.value=l;o.textContent=l;
+materialMuro.appendChild(o);
 });
 }
-if(tipo==='hormigon'){
+
+if(tipoMuro.value==='hormigon'){
 let o=document.createElement('option');
 o.value='Hormigón armado';
 o.textContent='Hormigón armado';
-sel.appendChild(o);
+materialMuro.appendChild(o);
 }
 });
 
 ['largo','ancho','alto'].forEach(id=>{
 document.getElementById(id).addEventListener('input',()=>{
-let l=+largo.value||0,a=+ancho.value||0,h=+alto.value||0;
-area.value=(tipoMuro.value==='hormigon'?l*a*h:l*a).toFixed(2);
+area.value = tipoMuro.value==='hormigon'
+? (largo.value*ancho.value*alto.value||0).toFixed(2)
+: (largo.value*ancho.value||0).toFixed(2);
 });
 });
 
 function calcularMuro(){
-const tipo=tipoMuro.value;
-const l=+largo.value||0,a=+ancho.value||0,h=+alto.value||0;
-const medida=+area.value||0;
-if(!tipo||medida<=0){alert('Complete los datos');return;}
+if(!tipoMuro.value||area.value<=0){alert('Complete los datos');return;}
 
-let usd=precios.usd||1, eur=precios.eur||1;
-let totalMuro=0,totalRepello=0,totalFino=0;
-let r=`<h3>Resultados</h3>
-<strong>Dimensiones:</strong><br>
-Largo: ${l} m | Ancho: ${a} m ${tipo==='hormigon'?`| Alto: ${h} m`:''}<br>
-${tipo==='hormigon'?`Volumen:`:`Área:`} ${medida.toFixed(2)} ${tipo==='hormigon'?'m³':'m²'}<br>`;
+let a=+area.value;
+let r=`<h3>Dimensiones</h3>
+Largo: ${largo.value} m<br>
+Ancho: ${ancho.value} m<br>
+${alto.style.display==='block'?'Alto: '+alto.value+' m<br>':''}
+`;
 
-r+='<h4>Muro (sin repello ni fino)</h4>';
+let totalCUP=0;
 
-if(tipo==='bloque'){
-let bloques=medida*12;
-let pBloque=bloquesPrecio.find(b=>b.nombre===materialMuro.value)?.precio||0;
-let cem=medida*0.02, arena=medida*0.04, agua=medida*10;
-let cBloque=bloques*pBloque;
-let cCem=cem*(precios.P250||0);
-let cArena=arena*(precios.arena||0);
-totalMuro=cBloque+cCem+cArena;
+// ================= MURO =================
+r+='<h3>Muro (estructura)</h3>';
 
-r+=`Bloques: ${bloques.toFixed(0)} = ${cBloque.toFixed(2)} CUP<br>
-Cemento: ${cem.toFixed(2)} sacos = ${cCem.toFixed(2)} CUP<br>
-Arena: ${arena.toFixed(2)} m³ = ${cArena.toFixed(2)} CUP<br>
-Agua: ${agua.toFixed(0)} L<br>`;
+if(tipoMuro.value==='bloque'){
+let bloque=precios.bloques.find(b=>b.nombre===materialMuro.value);
+let cantBloques=a*12.5;
+let costoBloques=cantBloques*(bloque?.precio||0);
+totalCUP+=costoBloques;
+
+r+=`Bloques: ${cantBloques.toFixed(0)} → ${costoBloques.toFixed(2)} CUP<br>`;
 }
 
-if(tipo==='hormigon'){
-let v=medida;
-let cem=v*7, arena=v*0.5, grav=v*0.8, acero=v*80, agua=v*180;
-let cCem=cem*(precios.P350||0);
-let cArena=arena*(precios.arena||0);
-let cGrav=grav*(precios.gravilla||0);
-let cAcero=acero*(precios.acero10||0);
-totalMuro=cCem+cArena+cGrav+cAcero;
+if(tipoMuro.value==='ladrillo'){
+let cant=a*60;
+let precio=precios.ladrillo||0;
+let costo=cant*precio;
+totalCUP+=costo;
 
-r+=`Cemento: ${cem} sacos = ${cCem.toFixed(2)} CUP<br>
-Arena: ${arena} m³ = ${cArena.toFixed(2)} CUP<br>
-Gravilla: ${grav} m³ = ${cGrav.toFixed(2)} CUP<br>
-Acero: ${acero} kg = ${cAcero.toFixed(2)} CUP<br>
-Agua: ${agua} L<br>`;
+r+=`Ladrillos: ${cant.toFixed(0)} → ${costo.toFixed(2)} CUP<br>`;
 }
 
-let cemR=medida*0.015, arenaR=medida*0.03, aguaR=medida*8;
-totalRepello=cemR*(precios.P250||0)+arenaR*(precios.arena||0);
+let cem=a*0.02, arena=a*0.04, agua=a*10;
+totalCUP+=cem*(precios.cemento||0)+arena*(precios.arena||0)+agua*(precios.agua||0);
 
-r+=`<h4>Repello</h4>
+r+=`
+Cemento: ${cem.toFixed(2)} sacos<br>
+Arena: ${arena.toFixed(2)} m³<br>
+Agua: ${agua.toFixed(0)} L<br>
+`;
+
+// ================= REPELLO =================
+r+='<h3>Repello</h3>';
+let cemR=a*0.015, arenaR=a*0.03, aguaR=a*8;
+totalCUP+=cemR*(precios.cemento||0)+arenaR*(precios.arena||0)+aguaR*(precios.agua||0);
+
+r+=`
 Cemento: ${cemR.toFixed(2)} sacos<br>
 Arena: ${arenaR.toFixed(2)} m³<br>
 Agua: ${aguaR.toFixed(0)} L<br>
-Costo: ${totalRepello.toFixed(2)} CUP<br>`;
+`;
 
-let cemF=medida*0.01, arenaF=medida*0.02, aguaF=medida*5;
-totalFino=cemF*(precios.P250||0)+arenaF*(precios.arenaFina||0);
+// ================= FINO =================
+r+='<h3>Fino</h3>';
+let cemF=a*0.01, arenaF=a*0.02, aguaF=a*5;
+totalCUP+=cemF*(precios.cemento||0)+arenaF*(precios.arena||0)+aguaF*(precios.agua||0);
 
-r+=`<h4>Fino</h4>
+r+=`
 Cemento: ${cemF.toFixed(2)} sacos<br>
 Arena fina: ${arenaF.toFixed(2)} m³<br>
 Agua: ${aguaF.toFixed(0)} L<br>
-Costo: ${totalFino.toFixed(2)} CUP<br>`;
+`;
 
-let total=totalMuro+totalRepello+totalFino;
-r+=`<h4>Resumen de precios</h4>
-Muro: ${totalMuro.toFixed(2)} CUP<br>
-Muro + Repello: ${(totalMuro+totalRepello).toFixed(2)} CUP<br>
-Total general: <strong>${total.toFixed(2)} CUP</strong><br>
-USD: ${(total/usd).toFixed(2)} | EUR: ${(total/eur).toFixed(2)}`;
+// ================= TOTALES =================
+r+=`<h3>Total general</h3>
+CUP: ${totalCUP.toFixed(2)}<br>
+USD: ${(totalCUP/monedas.USD).toFixed(2)}<br>
+EUR: ${(totalCUP/monedas.EUR).toFixed(2)}
+`;
 
 resultado.innerHTML=r;
 resultado.style.display='block';

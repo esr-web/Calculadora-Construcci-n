@@ -123,3 +123,49 @@ footer {
     color: #6b7280;
     font-size: 0.9rem;
 }
+/* NAVEGACIÓN EN PRECIOS */
+.price-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+}
+
+.nav-btn.blue {
+    background: #2563eb;
+}
+
+.nav-btn.green {
+    background: #16a34a;
+}
+
+/* Página activa */
+.nav-btn.active {
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+    opacity: 0.95;
+}
+
+/* Iconos con efecto 3D */
+.nav-btn i {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}

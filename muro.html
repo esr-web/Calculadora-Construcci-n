@@ -6,16 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
-.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
-.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);}
-.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
-.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
-.card label {font-weight:500; display:block;margin-top:0.5rem;}
-.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
-.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;}
-.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;}
-footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
+.header {background:#1f2937;color:#fff;padding:1rem;text-align:center;position:sticky;top:0;z-index:1000}
+.nav-menu{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.5rem}
+.nav-link{background:#f0f0f0;color:#1f2937;padding:.5rem 1rem;border-radius:10px;text-decoration:none;font-weight:500}
+.container{max-width:900px;margin:2rem auto;padding:0 1rem}
+.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+.card label{font-weight:500;display:block;margin-top:.5rem}
+.card input,.card select{width:100%;padding:.5rem;margin-top:.2rem;border-radius:8px;border:1px solid #ccc}
+.btn-primary{display:block;margin:1rem auto;padding:.7rem 2rem;background:#1f2937;color:#fff;border:none;border-radius:10px}
+.result{background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:.9rem}
+h4{margin-top:1rem}
 </style>
 </head>
 
@@ -63,25 +64,10 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <input type="number" id="area" readonly>
 </div>
 
-<div class="card">
-<label>Tipo de cemento</label>
-<select id="tipoCemento">
-<option value="P250">P-250</option>
-<option value="P350">P-350</option>
-</select>
-
-<label>Dosificación</label>
-<select id="dosificacion">
-<option value="1:3">1:3</option>
-<option value="1:4">1:4</option>
-<option value="1:5">1:5</option>
-</select>
-</div>
-
 <button class="btn-primary" onclick="calcularMuro()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444;" onclick="borrarMuro()">Borrar</button>
+<button class="btn-primary" style="background:#ef4444" onclick="borrarMuro()">Borrar</button>
 
-<div id="resultado" class="result" style="display:none;"></div>
+<div id="resultado" class="result" style="display:none"></div>
 
 </main>
 
@@ -89,95 +75,117 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 
 <script>
 let precios = JSON.parse(localStorage.getItem('precios')) || {};
-let bloquesPrecio = JSON.parse(localStorage.getItem('preciosBloques')) || [
-    {nombre:'Bloque 20x20x40', precio:0}
-];
+let bloques = JSON.parse(localStorage.getItem('preciosBloques')) || [];
 
 document.getElementById('tipoMuro').addEventListener('change',function(){
-    const tipo=this.value;
-    const select=document.getElementById('materialMuro');
-    select.innerHTML='';
-    document.getElementById('materialCard').style.display='block';
+const tipo=this.value;
+const sel=document.getElementById('materialMuro');
+sel.innerHTML='';
+document.getElementById('materialCard').style.display='block';
+document.getElementById('alto').style.display=tipo==='hormigon'?'block':'none';
+document.getElementById('labelAlto').style.display=tipo==='hormigon'?'block':'none';
 
-    document.getElementById('alto').style.display = tipo==='hormigon'?'block':'none';
-    document.getElementById('labelAlto').style.display = tipo==='hormigon'?'block':'none';
-
-    if(tipo==='bloque'){
-        bloquesPrecio.forEach(b=>{
-            let o=document.createElement('option');
-            o.value=b.nombre;
-            o.textContent=b.nombre;
-            select.appendChild(o);
-        });
-    }
-    if(tipo==='ladrillo'){
-        ['Ladrillo común','Ladrillo hueco'].forEach(l=>{
-            let o=document.createElement('option');
-            o.value=l; o.textContent=l;
-            select.appendChild(o);
-        });
-    }
-    if(tipo==='hormigon'){
-        let o=document.createElement('option');
-        o.value='Hormigón armado';
-        o.textContent='Hormigón armado';
-        select.appendChild(o);
-    }
+if(tipo==='bloque'){
+bloques.forEach(b=>{
+let o=document.createElement('option');
+o.value=b.nombre; o.textContent=b.nombre;
+sel.appendChild(o);
+});
+}
+if(tipo==='ladrillo'){
+['Ladrillo común','Ladrillo hueco'].forEach(l=>{
+let o=document.createElement('option');
+o.value=l; o.textContent=l;
+sel.appendChild(o);
+});
+}
+if(tipo==='hormigon'){
+let o=document.createElement('option');
+o.value='Hormigón armado'; o.textContent='Hormigón armado';
+sel.appendChild(o);
+}
 });
 
 ['largo','ancho','alto'].forEach(id=>{
 document.getElementById(id).addEventListener('input',()=>{
-    const l=+largo.value||0,a=+ancho.value||0,h=+alto.value||0;
-    area.value=(document.getElementById('tipoMuro').value==='hormigon'
-        ?(l*a*h):(l*a)).toFixed(2);
+let l=+largo.value||0,a=+ancho.value||0,h=+alto.value||0;
+area.value=(tipoMuro.value==='hormigon'?l*a*h:l*a).toFixed(2);
 });
 });
 
 function calcularMuro(){
 const tipo=tipoMuro.value;
-const areaVal=parseFloat(area.value)||0;
-if(!tipo||areaVal<=0){alert('Complete los datos');return;}
+const a=+area.value||0;
+if(!tipo||a<=0){alert('Complete los datos');return;}
 
 let r='<h3>Resultados</h3>';
 let total=0;
 
-// ===== MURO =====
+// === MURO ===
 r+='<h4>Muro</h4>';
-if(tipo==='bloque'){
-let cantBloque=areaVal*12;
-let costoBloque=cantBloque*(bloquesPrecio.find(b=>b.nombre===materialMuro.value)?.precio||0);
-let cem=areaVal*0.02, arena=areaVal*0.04, agua=areaVal*10;
-total+=costoBloque;
-r+=`Bloques: ${cantBloque.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${arena.toFixed(2)} m³<br>Agua: ${agua.toFixed(0)} L<br>`;
-}
 
-if(tipo==='ladrillo'){
-let cant=areaVal*60;
-let cem=areaVal*0.025, arena=areaVal*0.05, agua=areaVal*12;
-r+=`Ladrillos: ${cant.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${arena.toFixed(2)} m³<br>Agua: ${agua.toFixed(0)} L<br>`;
+if(tipo==='bloque'){
+let cant=a*12;
+let pBloque=bloques.find(b=>b.nombre===materialMuro.value)?.precio||0;
+let cBloque=cant*pBloque;
+
+let cem=a*0.02, arena=a*0.04, agua=a*10;
+let cCem=cem*(precios.cemento||0);
+let cArena=arena*(precios.arena||0);
+
+total+=cBloque+cCem+cArena;
+
+r+=`Bloques: ${cant.toFixed(0)} u × ${pBloque} = ${cBloque.toFixed(2)} CUP<br>
+Cemento: ${cem.toFixed(2)} sacos = ${cCem.toFixed(2)} CUP<br>
+Arena: ${arena.toFixed(2)} m³ = ${cArena.toFixed(2)} CUP<br>
+Agua: ${agua.toFixed(0)} L<br>`;
 }
 
 if(tipo==='hormigon'){
-let v=areaVal;
-let cem=v*7, arena=v*0.5, grav=v*0.8, acero=v*80, agua=v*180;
-r+=`Volumen: ${v} m³<br>
-Cemento: ${cem} sacos<br>
-Arena: ${arena} m³<br>
-Gravilla: ${grav} m³<br>
-Acero: ${acero} kg<br>
+let v=a;
+let cem=v*7, arena=v*.5, grav=v*.8, acero=v*80, agua=v*180;
+let cCem=cem*(precios.cemento||0);
+let cArena=arena*(precios.arena||0);
+let cGrav=grav*(precios.gravilla||0);
+let cAcero=acero*(precios.acero||0);
+
+total+=cCem+cArena+cGrav+cAcero;
+
+r+=`Cemento: ${cem} sacos = ${cCem.toFixed(2)} CUP<br>
+Arena: ${arena} m³ = ${cArena.toFixed(2)} CUP<br>
+Gravilla: ${grav} m³ = ${cGrav.toFixed(2)} CUP<br>
+Acero: ${acero} kg = ${cAcero.toFixed(2)} CUP<br>
 Agua: ${agua} L<br>`;
 }
 
-// ===== REPELLO =====
-let cemR=areaVal*0.015, arenaR=areaVal*0.03, aguaR=areaVal*8;
-r+=`<h4>Repello</h4>Cemento: ${cemR.toFixed(2)} sacos<br>Arena: ${arenaR.toFixed(2)} m³<br>Agua: ${aguaR.toFixed(0)} L<br>`;
+// === REPELLO ===
+let cemR=a*0.015, arenaR=a*0.03;
+let cRep=cemR*(precios.cemento||0)+arenaR*(precios.arena||0);
+total+=cRep;
 
-// ===== FINO =====
-let cemF=areaVal*0.01, arenaF=areaVal*0.02, aguaF=areaVal*5;
-r+=`<h4>Fino</h4>Cemento: ${cemF.toFixed(2)} sacos<br>Arena fina: ${arenaF.toFixed(2)} m³<br>Agua: ${aguaF.toFixed(0)} L<br>`;
+r+=`<h4>Repello</h4>
+Cemento: ${cemR.toFixed(2)} sacos<br>
+Arena: ${arenaR.toFixed(2)} m³<br>
+Costo: ${cRep.toFixed(2)} CUP<br>`;
 
-document.getElementById('resultado').style.display='block';
-document.getElementById('resultado').innerHTML=r;
+// === FINO ===
+let cemF=a*0.01, arenaF=a*0.02;
+let cF=cemF*(precios.cemento||0)+arenaF*(precios.arenaFina||0);
+total+=cF;
+
+r+=`<h4>Fino</h4>
+Cemento: ${cemF.toFixed(2)} sacos<br>
+Arena fina: ${arenaF.toFixed(2)} m³<br>
+Costo: ${cF.toFixed(2)} CUP<br>`;
+
+// === RESUMEN ===
+r+=`<h4>Resumen total</h4>
+<strong>${total.toFixed(2)} CUP</strong><br>
+USD: ${(total/(precios.usd||1)).toFixed(2)} |
+EUR: ${(total/(precios.eur||1)).toFixed(2)}`;
+
+resultado.innerHTML=r;
+resultado.style.display='block';
 }
 
 function borrarMuro(){

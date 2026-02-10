@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Calculadora de Construcción</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Construcción</title>
+<link rel="stylesheet" href="css/style.css">
+<!-- Puedes usar iconos de Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <header class="header">
     <h1>Calculadora de Construcción</h1>
-    <p>Herramienta práctica para estimar materiales, costos y tiempo de obra</p>
+    <nav class="nav-menu">
+        <a href="muro.html" class="nav-link"><i class="fa-solid fa-border-all"></i> Muro</a>
+        <a href="piso.html" class="nav-link"><i class="fa-solid fa-square-full"></i> Piso</a>
+        <a href="cubierta.html" class="nav-link"><i class="fa-solid fa-house"></i> Cubierta</a>
+        <a href="cimentacion.html" class="nav-link"><i class="fa-solid fa-dungeon"></i> Cimentación</a>
+        <a href="estructura.html" class="nav-link"><i class="fa-solid fa-shapes"></i> Estructura</a>
+        <a href="falso-techo.html" class="nav-link"><i class="fa-solid fa-th-large"></i> Falso Techo</a>
+        <a href="pintura.html" class="nav-link"><i class="fa-solid fa-paint-roller"></i> Pintura</a>
+        <a href="precios.html" class="nav-link"><i class="fa-solid fa-dollar-sign"></i> Precios</a>
+    </nav>
 </header>
 
 <main class="container">
-
-    <!-- DESCRIPCIÓN -->
     <div class="card">
-        <h3>¿Cómo funciona?</h3>
-        <p>
-            Esta calculadora permite estimar de forma rápida y sencilla
-            los <b>materiales</b>, <b>costos</b>, <b>mano de obra</b> y
-            <b>tiempo de ejecución</b> de los principales elementos constructivos.
-        </p>
-        <p>
-            Todos los precios y tasas de cambio se configuran en la sección
-            <b>Precios</b>, y son utilizados automáticamente en cada cálculo.
-        </p>
-        <p>
-            La herramienta está diseñada para uso profesional, optimizada
-            para <b>móviles</b> y <b>ordenadores</b>.
-        </p>
+        <h2>Bienvenido a la Calculadora de Construcción</h2>
+        <p>Esta herramienta te permite calcular los materiales y costos necesarios para construir muros, pisos, cubiertas, cimentaciones, estructuras, falsos techos y pintura.</p>
+        <p>Selecciona una de las áreas a continuación para comenzar a calcular:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;">
+            <a href="muro.html" class="btn-primary"><i class="fa-solid fa-border-all"></i> Muro</a>
+            <a href="piso.html" class="btn-primary"><i class="fa-solid fa-square-full"></i> Piso</a>
+            <a href="cubierta.html" class="btn-primary"><i class="fa-solid fa-house"></i> Cubierta</a>
+            <a href="cimentacion.html" class="btn-primary"><i class="fa-solid fa-dungeon"></i> Cimentación</a>
+            <a href="estructura.html" class="btn-primary"><i class="fa-solid fa-shapes"></i> Estructura</a>
+            <a href="falso-techo.html" class="btn-primary"><i class="fa-solid fa-th-large"></i> Falso Techo</a>
+            <a href="pintura.html" class="btn-primary"><i class="fa-solid fa-paint-roller"></i> Pintura</a>
+            <a href="precios.html" class="btn-primary"><i class="fa-solid fa-dollar-sign"></i> Precios</a>
+        </div>
     </div>
-
-    <!-- BOTONES DE NAVEGACIÓN -->
-    <div class="card">
-        <h3>Selecciona el cálculo</h3>
-
-        <a href="muro.html" class="nav-button">🧱 Muro</a>
-        <a href="piso.html" class="nav-button">⬜ Piso</a>
-        <a href="cubierta.html" class="nav-button">🏠 Cubierta</a>
-        <a href="cimentacion.html" class="nav-button">🏗️ Cimentación</a>
-        <a href="falso-techo.html" class="nav-button">📐 Falso techo</a>
-        <a href="precios.html" class="nav-button secondary">💲 Precios</a>
-
-    </div>
-
 </main>
 
-<footer class="footer">
-    <p>© Calculadora de Construcción · Arq. Emanuel Silva Riambaut</p>
-</footer>
+<footer>Arq. Emanuel Silva Riambaut</footer>
 
 </body>
 </html>

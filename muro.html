@@ -6,26 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
-.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
-.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
-.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
-.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
-.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
-.card label {font-weight:500; display:block;margin-top:0.5rem;}
-.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
-.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
-.btn-primary:hover{background-color:#374151;}
-.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05); flex:1;}
-footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
+.header {background:#1f2937;color:white;padding:1rem;text-align:center;position:sticky;top:0;z-index:1000}
+.nav-menu{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.5rem}
+.nav-link{background:#f0f0f0;color:#1f2937;padding:.5rem 1rem;border-radius:10px;text-decoration:none;font-weight:500;font-size:.95rem;box-shadow:2px 2px 5px rgba(0,0,0,.08),-2px -2px 5px rgba(255,255,255,.7)}
+.container{max-width:900px;margin:2rem auto;padding:0 1rem}
+.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+.card label{font-weight:500;display:block;margin-top:.5rem}
+.card input,.card select{width:100%;padding:.5rem;margin-top:.2rem;border-radius:8px;border:1px solid #ccc}
+.btn-primary{display:block;margin:1rem auto;padding:.7rem 2rem;background:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer}
+.result{background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:.9rem}
 </style>
 </head>
+
 <body>
+
 <header class="header">
-<h1>Calculadora de Piso</h1>
+<h1>Calculadora de Muro</h1>
 <nav class="nav-menu">
 <a href="index.html" class="nav-link">Inicio</a>
-<a href="muro.html" class="nav-link">Muro</a>
+<a href="piso.html" class="nav-link">Piso</a>
 <a href="cubierta.html" class="nav-link">Cubierta</a>
 <a href="cimentacion.html" class="nav-link">Cimentación</a>
 <a href="estructura.html" class="nav-link">Estructura</a>
@@ -41,10 +41,10 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <label>Tipo de muro</label>
 <select id="tipoMuro">
 <option value="">-- Selecciona --</option>
-<option value="bloque">Bloque</option>
-<option value="ladrillo">Ladrillo</option>
+<option value="bloque">Bloques</option>
+<option value="ladrillo">Ladrillos</option>
+<option value="pladur">Pladur</option>
 <option value="hormigon">Hormigón armado</option>
-<option value="paneleria">Panelería ligera</option>
 </select>
 </div>
 
@@ -53,142 +53,145 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <select id="materialMuro"></select>
 </div>
 
-<div class="card" id="formaLadrilloCard" style="display:none">
-<label>Forma de colocación</label>
-<select id="formaLadrillo">
-<option value="citara">Citara</option>
-<option value="citaron">Citarón</option>
-<option value="alicatado">Alicatado</option>
+<div class="card" id="opcionPladur" style="display:none">
+<label>Configuración</label>
+<select id="pladurTipo">
+<option value="una">A una cara</option>
+<option value="dos">A dos caras</option>
+</select>
+</div>
+
+<div class="card" id="opcionRepello" style="display:none">
+<label>Terminación</label>
+<select id="repello">
+<option value="si">Con repello y fino</option>
+<option value="no">Sin repello y fino</option>
+</select>
+</div>
+
+<div class="card" id="aceroCard" style="display:none">
+<label>Tipo de acero</label>
+<select id="tipoAcero">
+<option value="6">6 mm</option>
+<option value="8">8 mm</option>
+<option value="10">10 mm</option>
+<option value="12">12 mm</option>
 </select>
 </div>
 
 <div class="card">
-<label>Largo (m)</label><input id="largo" type="number">
-<label>Ancho (m)</label><input id="ancho" type="number">
-<label id="labelAlto" style="display:none">Alto (m)</label>
-<input id="alto" type="number" style="display:none">
-<label>Área / Volumen</label>
-<input id="area" readonly>
+<label>Largo (m)</label>
+<input type="number" id="largo">
+<label>Ancho (m)</label>
+<input type="number" id="ancho">
+<label>Área (m²)</label>
+<input type="number" id="area" readonly>
 </div>
 
 <button class="btn-primary" onclick="calcularMuro()">Calcular</button>
-<button class="btn-primary" style="background:#ef4444" onclick="borrarMuro()">Borrar</button>
 
-<div style="display:flex;gap:1rem;flex-wrap:wrap">
 <div id="resultado" class="result" style="display:none"></div>
-<div id="tarjetaTecnica" class="card" style="flex:1;display:none"></div>
-</div>
 
 </main>
 
-<footer style="text-align:center;padding:1rem">Arq. Emanuel Silva Riambaut</footer>
+<footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
 const precios = JSON.parse(localStorage.getItem('precios')) || {};
+const desperdicio = 0.05;
 
-const bloques = [
- {n:'Bloque 10',e:0.10,c:12},
- {n:'Bloque 15',e:0.15,c:12},
- {n:'Bloque 20',e:0.20,c:12}
-];
+tipoMuro.onchange = () => {
+materialCard.style.display='block';
+materialMuro.innerHTML='';
+opcionPladur.style.display='none';
+opcionRepello.style.display='none';
+aceroCard.style.display='none';
 
-tipoMuro.onchange=()=>{
- materialMuro.innerHTML='';
- materialCard.style.display='block';
- formaLadrilloCard.style.display='none';
- alto.style.display=labelAlto.style.display = tipoMuro.value==='hormigon'?'block':'none';
-
- if(tipoMuro.value==='bloque'){
-  bloques.forEach(b=>{
-   materialMuro.innerHTML+=`<option value="${b.n}">${b.n}</option>`;
-  });
- }
- if(tipoMuro.value==='ladrillo'){
-  materialMuro.innerHTML+=`<option>Ladrillo macizo</option><option>Ladrillo hueco</option>`;
-  formaLadrilloCard.style.display='block';
- }
- if(tipoMuro.value==='hormigon'){
-  materialMuro.innerHTML+=`<option>Hormigón armado</option>`;
- }
-};
-if(tipoMuro.value === 'paneleria'){
-  let o = document.createElement('option');
-  o.value = 'pladur';
-  o.textContent = 'Placas de pladur';
-  materialMuro.appendChild(o);
-  // No necesita forma de colocación ni alto extra
+if(tipoMuro.value==='bloque'){
+['Bloque 10','Bloque 15','Bloque 20'].forEach(b=>materialMuro.add(new Option(b,b)));
+opcionRepello.style.display='block';
 }
+if(tipoMuro.value==='ladrillo'){
+['Ladrillo tradicional','Ladrillo hueco'].forEach(l=>materialMuro.add(new Option(l,l)));
+opcionRepello.style.display='block';
+}
+if(tipoMuro.value==='pladur'){
+materialMuro.add(new Option('Placas de pladur','pladur'));
+opcionPladur.style.display='block';
+}
+if(tipoMuro.value==='hormigon'){
+materialMuro.add(new Option('Hormigón armado','hormigon'));
+aceroCard.style.display='block';
+}
+};
 
-['largo','ancho','alto'].forEach(i=>{
- document.getElementById(i).oninput=()=>{
-  area.value = tipoMuro.value==='hormigon'
-  ? (largo.value*ancho.value*alto.value||0).toFixed(2)
-  : (largo.value*ancho.value||0).toFixed(2);
- };
+['largo','ancho'].forEach(i=>document.getElementById(i).oninput=()=>{
+area.value=((+largo.value||0)*(+ancho.value||0)).toFixed(2);
 });
 
 function calcularMuro(){
- if(!tipoMuro.value||area.value<=0){alert('Datos incompletos');return;}
- let a=+area.value, total=0, html='<h3>Materiales</h3>';
+const a=+area.value||0;
+if(a<=0){alert('Complete los datos');return;}
+let html='<h3>Materiales necesarios</h3>';
+let total=0;
 
- let hombres=0, dias=0;
+if(tipoMuro.value==='bloque'){
+let bloques=a*12*(1+desperdicio);
+let cemento=a*0.02*(1+desperdicio);
+let arena=a*0.04*(1+desperdicio);
 
- if(tipoMuro.value==='bloque'){
-  let cant=a*12, cem=a*0.02, ar=a*0.04;
-  hombres=2; dias=(a/(12*hombres)).toFixed(1);
-  total+=cem*precios.P350+ar*precios.arena+cant*precios.bloque15;
-  html+=`Bloques: ${cant.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${ar.toFixed(2)} m³`;
- }
+let pb=precios[materialMuro.value.replace(' ','')]||0;
+let pc=precios.P350||0;
+let pa=precios.arena||0;
 
- if(tipoMuro.value==='ladrillo'){
-  let cant=a*60, cem=a*0.025, ar=a*0.05;
-  hombres=2; dias=(a/(10*hombres)).toFixed(1);
-  total+=cem*precios.P350+ar*precios.arena;
-  html+=`Ladrillos: ${cant.toFixed(0)}<br>Cemento: ${cem.toFixed(2)} sacos<br>Arena: ${ar.toFixed(2)} m³`;
- }
+html+=`<p><strong>${materialMuro.value}</strong>: ${bloques.toFixed(0)} uds → CUP ${(bloques*pb).toFixed(2)}</p>`;
+html+=`<p>Cemento: ${cemento.toFixed(2)} sacos → CUP ${(cemento*pc).toFixed(2)}</p>`;
+html+=`<p>Arena: ${arena.toFixed(2)} m³ → CUP ${(arena*pa).toFixed(2)}</p>`;
 
- if(tipoMuro.value==='hormigon'){
-  let v=a, cem=v*7, ar=v*.5, gr=v*.8, ac=v*80;
-  hombres=3; dias=(v/3).toFixed(1);
-  total+=cem*precios.P350+ar*precios.arena+gr*precios.gravilla+ac*precios.acero6;
-  html+=`Volumen: ${v} m³<br>Cemento:${cem}<br>Arena:${ar}<br>Gravilla:${gr}<br>Acero:${ac} kg`;
- }
-if(tipoMuro.value==='paneleria'){
-  // Cantidad de placas: 1 placa cubre 2 m² aprox
-  let placas = Math.ceil(area.value / 2);
-  let precioPlaca = precios.pladur || 0;
-  let costoPlaca = placas * precioPlaca;
-  totalBase += costoPlaca;
+total+=bloques*pb+cemento*pc+arena*pa;
 
-  html += `<p>Placas de pladur: ${placas} unidades → ${costoPlaca.toFixed(2)} CUP</p>`;
-
-  // Consideramos instalación y tiempo
-  let horas = area.value / 3; // rendimiento 3 m²/h aprox
-  html += `<p><strong>Tiempo de ejecución:</strong> ${horas.toFixed(1)} horas</p>`;
+if(repello.value==='si'){
+let cr=a*0.015, ar=a*0.03;
+html+=`<h4>Con repello y fino (ambas caras)</h4>`;
+html+=`<p>Cemento adicional: ${(cr).toFixed(2)} sacos</p>`;
+html+=`<p>Arena adicional: ${(ar).toFixed(2)} m³</p>`;
+total+=cr*pc+ar*pa;
+}
 }
 
- html+=`<h4>Total</h4>${total.toFixed(2)} CUP |
- ${(total/precios.usd).toFixed(2)} USD |
- ${(total/precios.eur).toFixed(2)} EUR
- <p><strong>Mano de obra:</strong> ${hombres} hombres<br>
- <strong>Tiempo:</strong> ${dias} días</p>`;
+if(tipoMuro.value==='pladur'){
+let placas=Math.ceil(a/2)*(pladurTipo.value==='dos'?2:1);
+let perfiles=Math.ceil((largo.value*2+ancho.value*2)/0.5);
+let pp=precios.pladur||0;
+let pf=precios.perfilMetal||0;
 
- resultado.innerHTML=html;
- resultado.style.display='block';
-
- tarjetaTecnica.innerHTML=`
- <h3>Ficha técnica</h3>
- <p>Uso: estructural / cerramiento</p>
- <p>Norma: mampostería tradicional</p>
- <p>Mortero recomendado: cemento-arena</p>
- <p>Incluye repello y fino</p>`;
- tarjetaTecnica.style.display='block';
+html+=`<p>Placas de pladur: ${placas} uds → CUP ${(placas*pp).toFixed(2)}</p>`;
+html+=`<p>Perfiles metálicos: ${perfiles} uds → CUP ${(perfiles*pf).toFixed(2)}</p>`;
+total+=placas*pp+perfiles*pf;
 }
 
-function borrarMuro(){
- document.querySelectorAll('input').forEach(i=>i.value='');
- resultado.style.display=tarjetaTecnica.style.display='none';
- materialCard.style.display=formaLadrilloCard.style.display='none';
+if(tipoMuro.value==='hormigon'){
+let v=a*0.15;
+let cemento=v*7;
+let arena=v*0.5;
+let grava=v*0.8;
+let acero=v*80;
+
+html+=`<p>Volumen: ${v.toFixed(2)} m³</p>`;
+html+=`<p>Cemento: ${cemento.toFixed(2)} sacos</p>`;
+html+=`<p>Arena: ${arena.toFixed(2)} m³</p>`;
+html+=`<p>Grava: ${grava.toFixed(2)} m³</p>`;
+html+=`<p>Acero ${tipoAcero.value} mm: ${acero.toFixed(2)} kg</p>`;
+
+total+=cemento*precios.P350+arena*precios.arena+grava*precios.gravilla+acero*precios['acero'+tipoAcero.value];
+}
+
+html+=`<h4>Total</h4>
+<p>${total.toFixed(2)} CUP | ${(total/(precios.usd||1)).toFixed(2)} USD | ${(total/(precios.eur||1)).toFixed(2)} EUR</p>
+<p>Desperdicio aplicado: ${(desperdicio*100)}%</p>`;
+
+resultado.innerHTML=html;
+resultado.style.display='block';
 }
 </script>
 

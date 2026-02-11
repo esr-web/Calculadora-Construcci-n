@@ -5,25 +5,26 @@
 <title>Muro - Calculadora</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
-
 <style>
+.header {background:#1f2937;color:white;padding:1rem;text-align:center;position:sticky;top:0;z-index:1000}
+.nav-menu{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.5rem}
+.nav-link{background:#f0f0f0;color:#1f2937;padding:.5rem 1rem;border-radius:10px;text-decoration:none}
 .container{max-width:900px;margin:2rem auto;padding:0 1rem}
-.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05)}
-.card label{font-weight:500;display:block;margin-top:0.5rem}
-.card select,.card input{width:100%;padding:0.5rem;border-radius:8px;border:1px solid #ccc}
-.btn-primary{display:block;margin:1rem auto;padding:0.7rem 2rem;background:#1f2937;color:#fff;border:none;border-radius:10px;cursor:pointer}
-.result{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
-.result-card{background:#f9f9f9;padding:1rem;border-radius:12px}
-h4{margin-top:1rem}
+.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+.card input,.card select{width:100%;padding:.5rem;border-radius:8px;border:1px solid #ccc}
+.btn-primary{display:block;margin:1rem auto;padding:.7rem 2rem;background:#1f2937;color:#fff;border:none;border-radius:10px}
+.result{background:#f9f9f9;padding:1rem;border-radius:12px}
+footer{text-align:center;padding:1rem;color:#6b7280}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-<h1>Calculadora de Muros</h1>
+<h1>Calculadora de Muro</h1>
 <nav class="nav-menu">
 <a href="index.html" class="nav-link">Inicio</a>
+<a href="piso.html" class="nav-link">Piso</a>
 <a href="cubierta.html" class="nav-link">Cubierta</a>
 <a href="cimentacion.html" class="nav-link">Cimentación</a>
 <a href="estructura.html" class="nav-link">Estructura</a>
@@ -33,168 +34,152 @@ h4{margin-top:1rem}
 </nav>
 </header>
 
-
-
 <main class="container">
 
-<!-- TIPO DE MURO -->
 <div class="card">
 <label>Tipo de muro</label>
-<select id="tipoMuro" onchange="actualizarMaterial()">
+<select id="tipoMuro">
 <option value="">-- Seleccione --</option>
 <option value="bloque">Bloques</option>
 <option value="ladrillo">Ladrillos</option>
-<option value="pladur">Pladur</option>
+<option value="pladur">Panelería ligera (Pladur)</option>
 <option value="hormigon">Hormigón armado</option>
 </select>
+</div>
 
+<div class="card" id="materialCard" style="display:none">
 <label>Material específico</label>
 <select id="material"></select>
+</div>
 
-<div id="extra"></div>
+<div class="card" id="carasCard" style="display:none">
+<label>Pladur</label>
+<select id="caras">
+<option value="1">Una cara</option>
+<option value="2">Dos caras</option>
+</select>
+</div>
 
+<div class="card" id="repelloCard" style="display:none">
+<label>Terminación</label>
+<select id="repello">
+<option value="no">Sin repello y fino</option>
+<option value="si">Con repello y fino (2 caras)</option>
+</select>
+</div>
+
+<div class="card">
 <label>Largo (m)</label>
 <input type="number" id="largo">
-
-<label>Altura (m)</label>
+<label>Alto (m)</label>
 <input type="number" id="alto">
-
 <label>Área (m²)</label>
 <input type="number" id="area" readonly>
 </div>
 
 <button class="btn-primary" onclick="calcular()">Calcular</button>
 
-<div id="resultado" class="result"></div>
+<div style="display:flex;gap:1rem;flex-wrap:wrap">
+<div id="resultado" class="result" style="flex:1"></div>
+<div id="tecnica" class="card" style="flex:1"></div>
+</div>
 
 </main>
 
+<footer>Arq. Emanuel Silva Riambaut</footer>
+
 <script>
 const precios = JSON.parse(localStorage.getItem("precios")) || {};
+const usd = precios.usd || 1;
+const eur = precios.eur || 1;
+const desperdicio = 0.05;
 
-document.getElementById("largo").addEventListener("input", calcArea);
-document.getElementById("alto").addEventListener("input", calcArea);
+tipoMuro.onchange = () => {
+material.innerHTML="";
+materialCard.style.display="block";
+repelloCard.style.display="none";
+carasCard.style.display="none";
 
-function calcArea(){
-  const l=+largo.value||0;
-  const h=+alto.value||0;
-  area.value=(l*h).toFixed(2);
+if(tipoMuro.value==="bloque"){
+["Bloque 10","Bloque 15","Bloque 20"].forEach(b=>{
+material.innerHTML+=`<option value="${b}">${b}</option>`;
+});
+repelloCard.style.display="block";
 }
-
-function actualizarMaterial(){
-  material.innerHTML="";
-  extra.innerHTML="";
-  const t=tipoMuro.value;
-
-  if(t==="bloque"){
-    material.innerHTML+=`
-      <option value="b10">Bloque 10 cm</option>
-      <option value="b15">Bloque 15 cm</option>
-      <option value="b20">Bloque 20 cm</option>`;
-    extra.innerHTML=`
-      <label>Terminación</label>
-      <select id="repello">
-        <option value="no">Sin repello</option>
-        <option value="si">Con repello y fino</option>
-      </select>`;
-  }
-
-  if(t==="ladrillo"){
-    material.innerHTML+=`
-      <option value="lt">Ladrillo tradicional</option>
-      <option value="lh">Ladrillo hueco</option>`;
-    extra.innerHTML=`
-      <label>Terminación</label>
-      <select id="repello">
-        <option value="no">Sin repello</option>
-        <option value="si">Con repello y fino</option>
-      </select>`;
-  }
-
-  if(t==="pladur"){
-    material.innerHTML+=`<option value="pladur">Placas de pladur</option>`;
-    extra.innerHTML=`
-      <label>Configuración</label>
-      <select id="caras">
-        <option value="1">Una cara</option>
-        <option value="2">Dos caras</option>
-      </select>`;
-  }
-
-  if(t==="hormigon"){
-    material.innerHTML+=`<option value="hormigon">Hormigón armado</option>`;
-    extra.innerHTML=`
-      <label>Acero</label>
-      <select id="acero">
-        <option value="6">Ø6 mm</option>
-        <option value="8">Ø8 mm</option>
-        <option value="10">Ø10 mm</option>
-        <option value="12">Ø12 mm</option>
-      </select>`;
-  }
+if(tipoMuro.value==="ladrillo"){
+["Ladrillo tradicional","Ladrillo hueco"].forEach(l=>{
+material.innerHTML+=`<option value="${l}">${l}</option>`;
+});
+repelloCard.style.display="block";
 }
+if(tipoMuro.value==="pladur"){
+material.innerHTML=`<option>Placas de pladur</option>`;
+carasCard.style.display="block";
+}
+if(tipoMuro.value==="hormigon"){
+material.innerHTML=`<option>Hormigón armado</option>`;
+}
+};
+
+[largo,alto].forEach(i=>i.oninput=()=>area.value=(+largo.value*+alto.value||0).toFixed(2));
 
 function calcular(){
-  const A=+area.value;
-  if(A<=0)return alert("Datos incompletos");
+const A=+area.value;
+let html="",total=0;
 
-  let htmlMat="",total=0;
-  const desperdicio=0.05;
+function fila(n,c,u,p){
+const q=c*(1+desperdicio);
+const cost=q*p;
+total+=cost;
+return `<p>${n}: ${q.toFixed(2)} ${u} → ${cost.toFixed(2)} CUP</p>`;
+}
 
-  function add(nombre,unidad,cant,precio){
-    cant*=1+desperdicio;
-    const cost=cant*precio;
-    total+=cost;
-    htmlMat+=`<p>${nombre}: ${cant.toFixed(2)} ${unidad} → ${cost.toFixed(2)} CUP</p>`;
-  }
+html+="<h3>Materiales</h3>";
 
-  if(tipoMuro.value==="bloque"){
-    const b=material.value==="b10"?12:material.value==="b15"?13:15;
-    add("Bloques","uds",A*b,precios[material.value]||0);
-    add("Cemento","sacos",A*0.24,precios.cemento||0);
-    add("Arena","m³",A*0.04,precios.arena||0);
+if(tipoMuro.value==="bloque"){
+const b=A*12;
+html+=fila(material.value,"uds",b,precios[material.value]||0);
+html+=fila("Cemento","sacos",A*0.25,precios.cemento||0);
+html+=fila("Arena","m³",A*0.04,precios.arena||0);
+}
 
-    if(document.getElementById("repello").value==="si"){
-      add("Cemento repello","sacos",A*0.18,precios.cemento||0);
-      add("Arena fina","m³",A*0.03,precios.arena||0);
-    }
-  }
+if(tipoMuro.value==="ladrillo"){
+html+=fila("Ladrillo","uds",A*50,precios.ladrillo||0);
+html+=fila("Cemento","sacos",A*0.30,precios.cemento||0);
+html+=fila("Arena","m³",A*0.05,precios.arena||0);
+}
 
-  if(tipoMuro.value==="ladrillo"){
-    add("Ladrillos","uds",A*50,precios.ladrillo||0);
-    add("Cemento","sacos",A*0.3,precios.cemento||0);
-    add("Arena","m³",A*0.05,precios.arena||0);
-  }
+if(tipoMuro.value==="pladur"){
+const c=+caras.value;
+html+=fila("Placas de pladur","uds",(A/3)*c,precios.pladur||0);
+html+=fila("Perfiles metálicos","m",A*2,precios.perfil||0);
+html+=fila("Tornillos","uds",A*25,precios.tornillo||0);
+}
 
-  if(tipoMuro.value==="pladur"){
-    const caras=+document.getElementById("caras").value;
-    add("Placas pladur","uds",A*caras/3,precios.pladur||0);
-    add("Perfiles metálicos","m",A*2,precios.perfil||0);
-    add("Tornillos","uds",A*25,precios.tornillo||0);
-    add("Masilla","kg",A*0.6,precios.masilla||0);
-  }
+if(repello.value==="si"){
+html+="<h4>Repello y fino (2 caras)</h4>";
+html+=fila("Cemento","sacos",A*0.18,precios.cemento||0);
+html+=fila("Arena fina","m³",A*0.03,precios.arenaFina||precios.arena||0);
+}
 
-  if(tipoMuro.value==="hormigon"){
-    add("Hormigón","m³",A*0.15,precios.hormigon||0);
-    add("Acero","kg",A*8,precios.acero||0);
-  }
+resultado.innerHTML=html+`
+<hr>
+<p><strong>Total:</strong> ${total.toFixed(2)} CUP</p>
+<p>${(total/usd).toFixed(2)} USD</p>
+<p>${(total/eur).toFixed(2)} EUR</p>
+<p>Desperdicio aplicado: 5%</p>
+`;
 
-  resultado.innerHTML=`
-  <div class="result-card">
-    <h4>Materiales</h4>
-    ${htmlMat}
-    <h4>Total</h4>
-    <p>${total.toFixed(2)} CUP</p>
-    <p>${(total/(precios.usd||1)).toFixed(2)} USD</p>
-    <p>${(total/(precios.eur||1)).toFixed(2)} EUR</p>
-  </div>
-
-  <div class="result-card">
-    <h4>Ficha técnica</h4>
-    <p>Tipo: ${tipoMuro.options[tipoMuro.selectedIndex].text}</p>
-    <p>Área: ${A} m²</p>
-    <p>Desperdicio aplicado: 5%</p>
-  </div>`;
+tecnica.innerHTML=`
+<h3>Ficha técnica</h3>
+<p>Tipo de muro: ${tipoMuro.options[tipoMuro.selectedIndex].text}</p>
+<p>Material: ${material.value}</p>
+<p>Área: ${A} m²</p>
+<p>Espesor típico: 10–20 cm</p>
+<p>Junta de mortero: 10 mm</p>
+<p>Resistencia: según material</p>
+<p>Uso: cerramiento / división</p>
+`;
 }
 </script>
 

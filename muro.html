@@ -6,24 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.header {background:#1f2937;color:white;padding:1rem;text-align:center;position:sticky;top:0;z-index:1000}
-.nav-menu{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-.nav-link{background:#f0f0f0;color:#1f2937;padding:.5rem 1rem;border-radius:10px;text-decoration:none}
-.container{max-width:900px;margin:2rem auto;padding:0 1rem}
-.card{background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,.05)}
-.card label{font-weight:500;display:block;margin-top:.5rem}
-.card input,.card select{width:100%;padding:.5rem;border-radius:8px;border:1px solid #ccc}
-.btn-primary{display:block;margin:1rem auto;padding:.7rem 2rem;background:#1f2937;color:#fff;border:none;border-radius:10px}
-.result{background:#f9f9f9;padding:1rem;border-radius:12px;flex:1}
+.header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
+.nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
+.nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
+.nav-link:hover {transform: translateY(-1px);box-shadow: 1px 1px 3px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.8);background: #e8e8e8;}
+.container {max-width:900px;margin:2rem auto;padding:0 1rem;}
+.card {background:#fff;padding:1rem;margin-bottom:1rem;border-radius:14px;box-shadow:0 4px 8px rgba(0,0,0,0.05);}
+.card label {font-weight:500; display:block;margin-top:0.5rem;}
+.card input, .card select {width:100%;padding:0.5rem;margin-top:0.2rem;border-radius:8px;border:1px solid #ccc;}
+.btn-primary {display:block;margin:1rem auto;padding:0.7rem 2rem;background-color:#1f2937;color:white;border:none;border-radius:10px;font-size:1rem;cursor:pointer;transition:0.2s;}
+.btn-primary:hover{background-color:#374151;}
+.result {background:#f9f9f9;padding:1rem;border-radius:12px;margin-top:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.05); flex:1;}
+footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.9rem;}
 </style>
 </head>
-
 <body>
-
 <header class="header">
-<h1>Calculadora de Muro</h1>
+<h1>Calculadora de Piso</h1>
 <nav class="nav-menu">
 <a href="index.html" class="nav-link">Inicio</a>
+<a href="muro.html" class="nav-link">Muro</a>
+<a href="cubierta.html" class="nav-link">Cubierta</a>
+<a href="cimentacion.html" class="nav-link">Cimentación</a>
+<a href="estructura.html" class="nav-link">Estructura</a>
+<a href="falso-techo.html" class="nav-link">Falso Techo</a>
+<a href="pintura.html" class="nav-link">Pintura</a>
 <a href="precios.html" class="nav-link">Precios</a>
 </nav>
 </header>

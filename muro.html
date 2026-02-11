@@ -44,6 +44,7 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <option value="bloque">Bloque</option>
 <option value="ladrillo">Ladrillo</option>
 <option value="hormigon">Hormigón armado</option>
+<option value="paneleria">Panelería ligera</option>
 </select>
 </div>
 
@@ -110,6 +111,13 @@ tipoMuro.onchange=()=>{
   materialMuro.innerHTML+=`<option>Hormigón armado</option>`;
  }
 };
+if(tipoMuro.value === 'paneleria'){
+  let o = document.createElement('option');
+  o.value = 'pladur';
+  o.textContent = 'Placas de pladur';
+  materialMuro.appendChild(o);
+  // No necesita forma de colocación ni alto extra
+}
 
 ['largo','ancho','alto'].forEach(i=>{
  document.getElementById(i).oninput=()=>{
@@ -145,6 +153,19 @@ function calcularMuro(){
   total+=cem*precios.P350+ar*precios.arena+gr*precios.gravilla+ac*precios.acero6;
   html+=`Volumen: ${v} m³<br>Cemento:${cem}<br>Arena:${ar}<br>Gravilla:${gr}<br>Acero:${ac} kg`;
  }
+if(tipoMuro.value==='paneleria'){
+  // Cantidad de placas: 1 placa cubre 2 m² aprox
+  let placas = Math.ceil(area.value / 2);
+  let precioPlaca = precios.pladur || 0;
+  let costoPlaca = placas * precioPlaca;
+  totalBase += costoPlaca;
+
+  html += `<p>Placas de pladur: ${placas} unidades → ${costoPlaca.toFixed(2)} CUP</p>`;
+
+  // Consideramos instalación y tiempo
+  let horas = area.value / 3; // rendimiento 3 m²/h aprox
+  html += `<p><strong>Tiempo de ejecución:</strong> ${horas.toFixed(1)} horas</p>`;
+}
 
  html+=`<h4>Total</h4>${total.toFixed(2)} CUP |
  ${(total/precios.usd).toFixed(2)} USD |

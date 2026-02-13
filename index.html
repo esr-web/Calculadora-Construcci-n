@@ -72,12 +72,36 @@
 
   <label>Cuantía de acero (kg/m³)</label>
   <input type="number" id="h_acero" value="120">
+<div class="card">
+  <h3>Precios Hormigón Armado (CUP)</h3>
+
+  <label>Cemento (CUP por saco)</label>
+  <input type="number" id="precio_cemento_ha" value="150" step="1">
+
+  <label>Arena (CUP por m³)</label>
+  <input type="number" id="precio_arena_ha" value="200" step="1">
+
+  <label>Grava (CUP por m³)</label>
+  <input type="number" id="precio_grava_ha" value="250" step="1">
+
+  <label>Acero (CUP por kg)</label>
+  <input type="number" id="precio_acero_ha" value="50" step="1">
+
+  <h3>Tipo de cambio</h3>
+  <label>CUP → USD</label>
+  <input type="number" id="cambio_usd_ha" value="25" step="0.01">
+
+  <label>CUP → EUR</label>
+  <input type="number" id="cambio_eur_ha" value="30" step="0.01">
+
+  <button onclick="actualizarPreciosHA()">Actualizar precios</button>
+</div>
 
   <button onclick="calcularHormigon()">Calcular hormigón</button>
 </div>
 
 <div id="resultadoHormigon" class="card"></div>
-<h1>Hormigón armado – Plantilla rápida</h1>
+<h1>Elementos Estructurales</h1>
 
 <div class="card">
   <label>Tipo de elemento</label>
@@ -95,6 +119,29 @@
 
   <label>Alto / Espesor (m)</label>
   <input type="number" id="ha_alto" step="0.01">
+<div class="card">
+  <h3>Precios Plantilla Rápida (CUP)</h3>
+
+  <label>Tipo de elemento</label>
+  <select id="ha_tipo_precio">
+    <option value="viga">Viga</option>
+    <option value="columna">Columna</option>
+    <option value="zapata">Zapata</option>
+  </select>
+
+  <div id="materiales_ha">
+    <!-- Aquí se mostrarán inputs dinámicos según el tipo -->
+  </div>
+
+  <h3>Tipo de cambio</h3>
+  <label>CUP → USD</label>
+  <input type="number" id="cambio_usd_ha_plantilla" value="25" step="0.01">
+
+  <label>CUP → EUR</label>
+  <input type="number" id="cambio_eur_ha_plantilla" value="30" step="0.01">
+
+  <button onclick="actualizarPreciosHAPlantilla()">Actualizar precios</button>
+</div>
 
   <button onclick="calcularHA()">Calcular</button>
 </div>
@@ -120,6 +167,36 @@
     navigator.serviceWorker.register('sw.js');
   }
 </script>
+  <script>
+const materialesHA = {
+  viga: ["cemento", "arena", "grava", "acero"],
+  columna: ["cemento", "arena", "acero"],
+  zapata: ["cemento", "arena", "grava", "acero"]
+};
+
+function mostrarMaterialesHA() {
+  const tipo = document.getElementById("ha_tipo_precio").value;
+  const container = document.getElementById("materiales_ha");
+  container.innerHTML = "";
+
+  materialesHA[tipo].forEach(mat => {
+    let label = document.createElement("label");
+    label.textContent = mat.charAt(0).toUpperCase() + mat.slice(1) + " (CUP por " + (mat==="acero"?"kg": mat==="cemento"?"saco":"m³") + ")";
+    let input = document.createElement("input");
+    input.type = "number";
+    input.id = `precio_${mat}_ha`;
+    input.value = mat==="cemento"?150:mat==="arena"?200:mat==="grava"?250:50;
+    input.step = 1;
+    container.appendChild(label);
+    container.appendChild(input);
+  });
+}
+
+// Ejecutar al cargar la página y al cambiar el tipo
+document.getElementById("ha_tipo_precio").addEventListener("change", mostrarMaterialesHA);
+mostrarMaterialesHA();
+</script>
+
 </body>
 </html>
 

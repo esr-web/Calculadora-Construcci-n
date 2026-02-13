@@ -1,5 +1,10 @@
 const PRECIOS = {
-  bloque_15: 1.20,      // USD / unidad
-  cemento: 8.50,        // USD / saco
-  arena: 25.00          // USD / m3
+  bloque_15: 1.20,   // USD
+  cemento: 8.50,
+  arena: 25.00
+};
+
+const MONEDAS = {
+  USD: 1,
+  EUR: 0.92
 };

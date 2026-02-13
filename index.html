@@ -36,6 +36,25 @@
 </div>
 
 <div id="resultado" class="card"></div>
+<h1>Hormigón Armado</h1>
+
+<div class="card">
+  <label>Largo (m)</label>
+  <input type="number" id="h_largo" step="0.01">
+
+  <label>Ancho (m)</label>
+  <input type="number" id="h_ancho" step="0.01">
+
+  <label>Alto (m)</label>
+  <input type="number" id="h_alto" step="0.01">
+
+  <label>Cuantía de acero (kg/m³)</label>
+  <input type="number" id="h_acero" value="120">
+
+  <button onclick="calcularHormigon()">Calcular hormigón</button>
+</div>
+
+<div id="resultadoHormigon" class="card"></div>
 
 <script src="js/precios.js"></script>
 <script src="js/core.js"></script>

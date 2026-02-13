@@ -1,3 +1,18 @@
+function mostrarPresupuesto() {
+  const moneda = document.getElementById("moneda").value;
+  const total = convertirMoneda(PRESUPUESTO.totalUSD, moneda);
+
+  document.getElementById("presupuesto").innerHTML = `
+    <h3>Resumen acumulado</h3>
+    <ul>
+      <li>Cemento: ${redondear(PRESUPUESTO.cemento)} sacos</li>
+      <li>Arena: ${redondear(PRESUPUESTO.arena, 3)} m³</li>
+      <li>Grava: ${redondear(PRESUPUESTO.grava, 3)} m³</li>
+      <li>Acero: ${redondear(PRESUPUESTO.acero)} kg</li>
+    </ul>
+    <h3>Total: ${moneda} ${redondear(total)}</h3>
+  `;
+}
 function redondear(valor, decimales = 2) {
   return Number(valor.toFixed(decimales));
 }

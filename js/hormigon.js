@@ -44,7 +44,10 @@ function calcularHormigon() {
   document.getElementById("resultadoHormigon").innerHTML = `
     <h3>Resultados Hormigón Armado</h3>
     <p><b>Volumen:</b> ${redondear(volumen)} m³</p>
-
+const pCemento = parseFloat(document.getElementById("precio_cemento_ha").value);
+const pArena   = parseFloat(document.getElementById("precio_arena_ha").value);
+const pGrava   = parseFloat(document.getElementById("precio_grava_ha").value);
+const pAcero   = parseFloat(document.getElementById("precio_acero_ha").value);
     <table>
       <tr><th>Material</th><th>Cantidad</th><th>Unidad</th><th>Costo</th></tr>
       <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${moneda} ${redondear(cCemento)}</td></tr>

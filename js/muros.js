@@ -25,6 +25,15 @@ function calcularMuro() {
   cemento = redondear(aplicarDesperdicio(cemento, desperdicio));
   arena = redondear(aplicarDesperdicio(arena, desperdicio), 3);
 
+  // Precios base en CUP
+  const precioBloqueCUP = PRECIOS.bloque_15;
+  const precioCementoCUP = PRECIOS.cemento;
+  const precioArenaCUP = PRECIOS.arena;
+
+  // Tipo de cambio
+  const cambioUSD = Number(document.getElementById("cambio_usd_muro").value);
+  const cambioEUR = Number(document.getElementById("cambio_eur_muro").value);
+
   let html = `
     <h3>Resultados</h3>
     <p><b>Área:</b> ${redondear(area)} m²</p>
@@ -37,19 +46,30 @@ function calcularMuro() {
       </tr>
   `;
 
-  let total = 0;
+  let totalCUP = 0;
 
   if (usarCostos) {
-    const cBloque = convertirMoneda(costo(bloques, PRECIOS.bloque_15), moneda);
-    const cCemento = convertirMoneda(costo(cemento, PRECIOS.cemento), moneda);
-    const cArena = convertirMoneda(costo(arena, PRECIOS.arena), moneda);
+    const costoBloquesCUP = bloques * precioBloqueCUP;
+    const costoCementoCUP = cemento * precioCementoCUP;
+    const costoArenaCUP = arena * precioArenaCUP;
 
-    total = cBloque + cCemento + cArena;
+    totalCUP = costoBloquesCUP + costoCementoCUP + costoArenaCUP;
+
+    // Conversión para mostrar
+    const costoBloquesUSD = (costoBloquesCUP / cambioUSD).toFixed(2);
+    const costoCementoUSD = (costoCementoCUP / cambioUSD).toFixed(2);
+    const costoArenaUSD = (costoArenaCUP / cambioUSD).toFixed(2);
+    const totalUSD = (totalCUP / cambioUSD).toFixed(2);
+
+    const costoBloquesEUR = (costoBloquesCUP / cambioEUR).toFixed(2);
+    const costoCementoEUR = (costoCementoCUP / cambioEUR).toFixed(2);
+    const costoArenaEUR = (costoArenaCUP / cambioEUR).toFixed(2);
+    const totalEUR = (totalCUP / cambioEUR).toFixed(2);
 
     html += `
-      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>${moneda} ${redondear(cBloque)}</td></tr>
-      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${moneda} ${redondear(cCemento)}</td></tr>
-      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${moneda} ${redondear(cArena)}</td></tr>
+      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>${costoBloquesCUP} CUP / ${costoBloquesUSD} USD / ${costoBloquesEUR} EUR</td></tr>
+      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${costoCementoCUP} CUP / ${costoCementoUSD} USD / ${costoCementoEUR} EUR</td></tr>
+      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${costoArenaCUP} CUP / ${costoArenaUSD} USD / ${costoArenaEUR} EUR</td></tr>
     `;
   } else {
     html += `
@@ -61,7 +81,7 @@ function calcularMuro() {
 
   html += `
     </table>
-    <h3>Total: ${moneda} ${redondear(total)}</h3>
+    ${usarCostos ? `<h3>Total: ${totalCUP} CUP / ${totalUSD} USD / ${totalEUR} EUR</h3>` : ""}
   `;
 
   document.getElementById("resultado").innerHTML = html;

@@ -1,7 +1,3 @@
-// ===============================
-// MUROS.JS – DISEÑO UNIFICADO
-// ===============================
-
 function calcularMuro() {
 
   const largo = parseFloat(document.getElementById("largo").value);
@@ -16,9 +12,14 @@ function calcularMuro() {
     return;
   }
 
+  // ======================
+  // CÁLCULO GEOMÉTRICO
+  // ======================
   const area = largo * alto;
 
-  // --- CONSUMOS SEGÚN BLOQUE ---
+  // ======================
+  // CONSUMOS POR BLOQUE
+  // ======================
   let bloquesPorM2 = 12.5;
   let cementoPorM2, arenaPorM2;
 
@@ -42,10 +43,12 @@ function calcularMuro() {
   arena *= (1 + desperdicio / 100);
 
   bloques = Math.ceil(bloques);
-  cemento = cemento.toFixed(2);
-  arena = arena.toFixed(3);
+  cemento = Number(cemento.toFixed(2));
+  arena = Number(arena.toFixed(3));
 
-  // --- PRECIOS CUP ---
+  // ======================
+  // PRECIOS (CUP BASE)
+  // ======================
   const pBloque = parseFloat(document.getElementById("precio_bloque_muro").value);
   const pCemento = parseFloat(document.getElementById("precio_cemento_muro").value);
   const pArena = parseFloat(document.getElementById("precio_arena_muro").value);
@@ -53,27 +56,34 @@ function calcularMuro() {
   const cambioUSD = parseFloat(document.getElementById("cambio_usd_muro").value);
   const cambioEUR = parseFloat(document.getElementById("cambio_eur_muro").value);
 
-  // --- COSTOS CUP ---
+  // ======================
+  // COSTOS CUP
+  // ======================
   let cBloques = bloques * pBloque;
   let cCemento = cemento * pCemento;
   let cArena = arena * pArena;
 
   let totalCUP = cBloques + cCemento + cArena;
 
-  // --- CONVERSIÓN ---
-  function convertir(valorCUP) {
-    if (moneda === "USD") return valorCUP / cambioUSD;
-    if (moneda === "EUR") return valorCUP / cambioEUR;
-    return valorCUP;
+  // ======================
+  // CONVERSIÓN
+  // ======================
+  function convertir(valor) {
+    if (moneda === "USD") return valor / cambioUSD;
+    if (moneda === "EUR") return valor / cambioEUR;
+    return valor;
   }
 
   function simbolo() {
     return moneda === "USD" ? "USD" : moneda === "EUR" ? "EUR" : "CUP";
   }
 
-  // --- SALIDA (MISMO DISEÑO QUE HORMIGÓN) ---
+  // ======================
+  // SALIDA (MISMO DISEÑO
+  // QUE HORMIGÓN ARMADO)
+  // ======================
   let html = `
-    <h3>Resultados – Muro de Bloques ${tipoBloque} cm</h3>
+    <h3>Resultados Muro de Bloques</h3>
     <p><b>Área:</b> ${area.toFixed(2)} m²</p>
 
     <table>
@@ -110,14 +120,13 @@ function calcularMuro() {
   if (usarCostos) {
     html += `
       <h3>Total: ${convertir(totalCUP).toFixed(2)} ${simbolo()}</h3>
-      <p>Total base: ${totalCUP.toFixed(2)} CUP</p>
     `;
   }
 
   document.getElementById("resultado").innerHTML = html;
 }
 
-// Compatibilidad
+// Mantener compatibilidad
 function actualizarPreciosMuro() {
-  alert("Precios actualizados");
+  alert("Precios de muros actualizados");
 }

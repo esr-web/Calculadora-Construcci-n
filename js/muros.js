@@ -1,107 +1,85 @@
 function calcularMuro() {
 
-  const largo = Number(document.getElementById("largo").value);
-  const alto = Number(document.getElementById("alto").value);
-  const desperdicio = Number(document.getElementById("desperdicio").value) || 0;
-  const moneda = document.getElementById("moneda").value;
-  const usarCostos = document.getElementById("costos").checked;
+    const largo = parseFloat(document.getElementById("largo").value);
+    const alto = parseFloat(document.getElementById("alto").value);
+    const desperdicio = parseFloat(document.getElementById("desperdicio").value) || 0;
+    const tipoBloque = document.getElementById("tipo_bloque").value;
+    const calcularCostos = document.getElementById("costos").checked;
+    const moneda = document.getElementById("moneda").value;
 
-  if (largo <= 0 || alto <= 0) {
-    alert("Ingrese dimensiones válidas");
-    return;
-  }
-
-  const area = largo * alto;
-
-  /* === DATOS TÉCNICOS === */
-  const bloquesPorM2 = 12.5;
-  const cementoPorM2 = 0.25;
-  const arenaPorM2 = 0.018;
-
-  /* === CANTIDADES === */
-  let bloques = aplicarDesperdicio(area * bloquesPorM2, desperdicio);
-  let cemento = aplicarDesperdicio(area * cementoPorM2, desperdicio);
-  let arena = aplicarDesperdicio(area * arenaPorM2, desperdicio);
-
-  bloques = redondear(bloques);
-  cemento = redondear(cemento);
-  arena = redondear(arena, 3);
-
-  /* === PRECIOS (SIEMPRE EN CUP) === */
-  const precioBloqueCUP = Number(document.getElementById("precio_bloque_muro").value) || 0;
-  const precioCementoCUP = Number(document.getElementById("precio_cemento_muro").value) || 0;
-  const precioArenaCUP = Number(document.getElementById("precio_arena_muro").value) || 0;
-
-  /* === TIPOS DE CAMBIO === */
-  const cambioUSD = Number(document.getElementById("cambio_usd_muro").value) || 1;
-  const cambioEUR = Number(document.getElementById("cambio_eur_muro").value) || 1;
-
-  /* === COSTOS EN CUP === */
-  const costoBloquesCUP = usarCostos ? bloques * precioBloqueCUP : 0;
-  const costoCementoCUP = usarCostos ? cemento * precioCementoCUP : 0;
-  const costoArenaCUP = usarCostos ? arena * precioArenaCUP : 0;
-
-  const totalCUP = costoBloquesCUP + costoCementoCUP + costoArenaCUP;
-
-  /* === FUNCIÓN PARA MOSTRAR COSTOS === */
-  function mostrarCosto(costoCUP) {
-    if (!usarCostos) return "-";
-
-    switch (moneda) {
-      case "USD":
-        return `
-          ${(costoCUP / cambioUSD).toFixed(2)} USD<br>
-          ${costoCUP.toFixed(2)} CUP<br>
-          ${(costoCUP / cambioEUR).toFixed(2)} EUR
-        `;
-      case "EUR":
-        return `
-          ${(costoCUP / cambioEUR).toFixed(2)} EUR<br>
-          ${costoCUP.toFixed(2)} CUP<br>
-          ${(costoCUP / cambioUSD).toFixed(2)} USD
-        `;
-      default: // CUP
-        return `
-          ${costoCUP.toFixed(2)} CUP<br>
-          ${(costoCUP / cambioUSD).toFixed(2)} USD<br>
-          ${(costoCUP / cambioEUR).toFixed(2)} EUR
-        `;
+    if (largo <= 0 || alto <= 0) {
+        alert("Introduzca dimensiones válidas");
+        return;
     }
-  }
 
-  /* === RESULTADO === */
-  let html = `
-    <h3>Resultados</h3>
-    <p><b>Área del muro:</b> ${redondear(area)} m²</p>
+    // ÁREA
+    const area = largo * alto;
+    const factorDesperdicio = 1 + (desperdicio / 100);
 
-    <table>
-      <tr>
-        <th>Material</th>
-        <th>Cantidad</th>
-        <th>Unidad</th>
-        <th>Costo</th>
-      </tr>
+    // BLOQUES (40x20 cm + junta)
+    const bloquesPorM2 = 12.5;
+    const bloques = Math.ceil(area * bloquesPorM2 * factorDesperdicio);
 
-      <tr>
-        <td>Bloques 15 cm</td>
-        <td>${bloques}</td>
-        <td>u</td>
-        <td>${mostrarCosto(costoBloquesCUP)}</td>
-      </tr>
+    // MORTERO (promedio técnico)
+    const morteroPorM2 = 0.02; // m³/m²
+    const mortero = area * morteroPorM2 * factorDesperdicio;
 
-      <tr>
-        <td>Cemento</td>
-        <td>${cemento}</td>
-        <td>sacos</td>
-        <td>${mostrarCosto(costoCementoCUP)}</td>
-      </tr>
+    // DOSIFICACIÓN 1:4
+    const cemento_m3 = mortero * (1 / 5);
+    const arena_m3 = mortero * (4 / 5);
 
-      <tr>
-        <td>Arena</td>
-        <td>${arena}</td>
-        <td>m³</td>
-        <td>${mostrarCosto(costoArenaCUP)}</td>
-      </tr>
-    </table>
+    // CONVERSIÓN CEMENTO
+    const densidadCemento = 1440; // kg/m³
+    const sacosCemento = Math.ceil((cemento_m3 * densidadCemento) / 42.5);
 
-    ${usarCostos ? `<h3>Total</h3><p>${mostrarCosto(totalCUP)}</p>`
+    // RESULTADO BASE
+    let html = `
+        <h3>Resultado – Muro de Bloques</h3>
+        <p><strong>Área del muro:</strong> ${area.toFixed(2)} m²</p>
+        <p><strong>Bloque seleccionado:</strong> ${tipoBloque} cm</p>
+        <p><strong>Bloques:</strong> ${bloques} unidades</p>
+        <p><strong>Mortero:</strong> ${mortero.toFixed(3)} m³</p>
+        <p><strong>Cemento:</strong> ${sacosCemento} sacos</p>
+        <p><strong>Arena:</strong> ${arena_m3.toFixed(3)} m³</p>
+    `;
+
+    // COSTOS
+    if (calcularCostos) {
+
+        const precioBloque = precios.muro.bloque;
+        const precioCemento = precios.muro.cemento;
+        const precioArena = precios.muro.arena;
+
+        let costoBloques = bloques * precioBloque;
+        let costoCemento = sacosCemento * precioCemento;
+        let costoArena = arena_m3 * precioArena;
+
+        let totalCUP = costoBloques + costoCemento + costoArena;
+
+        let totalConvertido = totalCUP;
+        let simbolo = "CUP";
+
+        if (moneda === "USD") {
+            totalConvertido = totalCUP / precios.muro.cambioUSD;
+            simbolo = "USD";
+        }
+
+        if (moneda === "EUR") {
+            totalConvertido = totalCUP / precios.muro.cambioEUR;
+            simbolo = "EUR";
+        }
+
+        html += `
+            <hr>
+            <h4>Costos</h4>
+            <p>Bloques: ${costoBloques.toFixed(2)} CUP</p>
+            <p>Cemento: ${costoCemento.toFixed(2)} CUP</p>
+            <p>Arena: ${costoArena.toFixed(2)} CUP</p>
+            <p><strong>Total:</strong> ${totalConvertido.toFixed(2)} ${simbolo}</p>
+        `;
+
+        agregarPresupuesto("Muro de bloques", totalCUP);
+    }
+
+    document.getElementById("resultado").innerHTML = html;
+}

@@ -55,6 +55,29 @@
 </div>
 
 <div id="resultadoHormigon" class="card"></div>
+<h1>Hormigón armado – Plantilla rápida</h1>
+
+<div class="card">
+  <label>Tipo de elemento</label>
+  <select id="ha_tipo">
+    <option value="zapata">Zapata</option>
+    <option value="columna">Columna</option>
+    <option value="viga">Viga</option>
+  </select>
+
+  <label>Largo (m)</label>
+  <input type="number" id="ha_largo" step="0.01">
+
+  <label>Ancho (m)</label>
+  <input type="number" id="ha_ancho" step="0.01">
+
+  <label>Alto / Espesor (m)</label>
+  <input type="number" id="ha_alto" step="0.01">
+
+  <button onclick="calcularHA()">Calcular</button>
+</div>
+
+<div id="resHA" class="card"></div>
 
 <script src="js/precios.js"></script>
 <script src="js/core.js"></script>

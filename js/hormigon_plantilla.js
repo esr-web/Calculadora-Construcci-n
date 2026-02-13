@@ -46,6 +46,7 @@ agregarPresupuesto(
   convertirMoneda(total, "USD")
 );
 mostrarPresupuesto();
+guardarPresupuesto();
 
   document.getElementById("resHA").innerHTML = `
     <h3>Resultado – ${tipo.toUpperCase()}</h3>

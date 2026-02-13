@@ -53,9 +53,17 @@ function calcularMuro() {
 
   // Función auxiliar para mostrar costos según la moneda seleccionada
   function mostrarCosto(costoCUP) {
-    if (moneda === "USD") return `${(costoCUP / cambioUSD).toFixed(2)} USD / ${costoCUP} CUP / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
-    else if (moneda === "EUR") return `${(costoCUP / cambioEUR).toFixed(2)} EUR / ${costoCUP} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD`;
-    else return `${costoCUP} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
+    if (!usarCostos) return "-";
+    // Siempre mostrar CUP primero si es moneda base
+    switch (moneda) {
+      case "USD":
+        return `${(costoCUP / cambioUSD).toFixed(2)} USD / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
+      case "EUR":
+        return `${(costoCUP / cambioEUR).toFixed(2)} EUR / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD`;
+      case "CUP":
+      default:
+        return `${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
+    }
   }
 
   // Construir HTML de resultados
@@ -69,9 +77,9 @@ function calcularMuro() {
         <th>Unidad</th>
         <th>Costo</th>
       </tr>
-      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>${usarCostos ? mostrarCosto(costoBloquesCUP) : '-'}</td></tr>
-      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${usarCostos ? mostrarCosto(costoCementoCUP) : '-'}</td></tr>
-      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${usarCostos ? mostrarCosto(costoArenaCUP) : '-'}</td></tr>
+      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>${mostrarCosto(costoBloquesCUP)}</td></tr>
+      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${mostrarCosto(costoCementoCUP)}</td></tr>
+      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${mostrarCosto(costoArenaCUP)}</td></tr>
     </table>
     ${usarCostos ? `<h3>Total: ${mostrarCosto(totalCUP)}</h3>` : ""}
   `;

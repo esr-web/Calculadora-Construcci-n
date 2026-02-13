@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Mantiene tu estilo existente */
 .header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
 .nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
 .nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08);transition: all 0.15s ease;}
@@ -48,11 +47,10 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <option value="bloqueCeramico">Bloque cerámico</option>
 </select>
 
-<!-- Tipo de colocación solo para ladrillo -->
 <label id="colocacionLabel" style="display:none;">Tipo de colocación (solo ladrillo)</label>
 <select id="tipoColocacion" style="display:none;">
 <option value="citaron">Citara</option>
-<option value="citaron">Citaron</option>
+<option value="citaron2">Citaron</option>
 <option value="alicatado">Alicatado</option>
 </select>
 
@@ -141,12 +139,12 @@ function calcularMuro(){
     let ladrillos=0, cemento=0, arena=0, gravilla=0, agua=0;
 
     if(tipo==='ladrillo'){
-        // Cantidad por m² según repello/fino
-        ladrillos = area * 50; // unidades
+        // Correcto según norma, con/sin repello
+        ladrillos = area * 50;
         if(acabado==='repello'){
-            cemento = area * 0.02; // m³
-            arena = area * 0.03;   // m³
-            agua = area * 0.01;    // m³ (10 litros)
+            cemento = area * 0.02;
+            arena = area * 0.03;
+            agua = area * 0.01;
         } else {
             cemento = area * 0.015;
             arena = area * 0.02;
@@ -154,21 +152,21 @@ function calcularMuro(){
         }
     }
     else if(tipo==='hormigon'){
-        // Cantidad por m³, considerando altura*largo*0.2m grosor promedio
-        const volumen = area*0.2; // m³
-        cemento = volumen * 300/1000; // 300kg ≈ 0.3 m³ (aprox 6 sacos)
+        const grosor = 0.2;
+        const volumen = area*grosor;
+        cemento = volumen * 0.3;
         arena = volumen * 0.45;
         gravilla = volumen * 0.8;
         agua = volumen * 0.18;
-        ladrillos = 0; // no aplica
+        ladrillos = 0;
     }
     else if(tipo==='bloqueHormigon'){
-        ladrillos = area * 12; // bloques/m²
+        ladrillos = area * 12;
         cemento = area * 0.012;
         arena = area * 0.02;
     }
     else if(tipo==='bloqueCeramico'){
-        ladrillos = area * 10; // bloques/m²
+        ladrillos = area * 10;
         cemento = area * 0.01;
         arena = area * 0.015;
     }
@@ -195,7 +193,6 @@ function calcularMuro(){
     if(agua>0) resultadoHtml += `<p>Agua: ${agua.toFixed(3)} m³ (CUP ${costoAgua.toFixed(2)})</p>`;
     resultadoHtml += `<h4>Total: ${totalCUP.toFixed(2)} CUP</h4>`;
 
-    // Características técnicas
     resultadoHtml += `<h4>Características técnicas:</h4>`;
     if(tipo==='ladrillo') resultadoHtml += `<p>Grosor de la junta: 1 cm, altura ladrillo: 0.06 m, largo: 0.24 m</p>`;
     if(tipo==='hormigon') resultadoHtml += `<p>Grosor promedio: 0.2 m, resistencia según diseño</p>`;

@@ -1,60 +1,68 @@
-const precios = JSON.parse(localStorage.getItem('precios')) || {};
+function calcularMuro() {
+  const largo = Number(document.getElementById("largo").value);
+  const alto = Number(document.getElementById("alto").value);
+  const desperdicio = Number(document.getElementById("desperdicio").value);
+  const moneda = document.getElementById("moneda").value;
+  const usarCostos = document.getElementById("costos").checked;
 
-const bloqueSelect = document.getElementById("tipoBloque");
-bloqueSelect.innerHTML = `<option value="15">Bloque 15</option>`;
+  if (largo <= 0 || alto <= 0) {
+    alert("Ingrese dimensiones válidas");
+    return;
+  }
 
-const largo = document.getElementById("largo");
-const alto = document.getElementById("alto");
-const area = document.getElementById("area");
+  const area = largo * alto;
 
-largo.addEventListener("input", calcularArea);
-alto.addEventListener("input", calcularArea);
+  // Datos técnicos estándar
+  const bloquesPorM2 = 12.5;
+  const cementoPorM2 = 0.25;
+  const arenaPorM2 = 0.018;
 
-function calcularArea(){
-    area.value = (largo.value * alto.value || 0).toFixed(2);
-}
+  let bloques = area * bloquesPorM2;
+  let cemento = area * cementoPorM2;
+  let arena = area * arenaPorM2;
 
-function calcularMuro(){
-    const A = parseFloat(area.value);
-    if(!A) return;
+  bloques = redondear(aplicarDesperdicio(bloques, desperdicio));
+  cemento = redondear(aplicarDesperdicio(cemento, desperdicio));
+  arena = redondear(aplicarDesperdicio(arena, desperdicio), 3);
 
-    const bloquesPorM2 = 12.5;
-    const bloques = A * bloquesPorM2;
+  let html = `
+    <h3>Resultados</h3>
+    <p><b>Área:</b> ${redondear(area)} m²</p>
+    <table>
+      <tr>
+        <th>Material</th>
+        <th>Cantidad</th>
+        <th>Unidad</th>
+        <th>Costo</th>
+      </tr>
+  `;
 
-    const mortero_m3 = A * 0.02;
-    const sacosCemento = mortero_m3 * 7;
-    const arena_m3 = mortero_m3 * 0.8;
+  let total = 0;
 
-    const costoBloques = bloques * precios.bloque15;
-    const costoCemento = sacosCemento * precios.p250;
-    const costoArena = arena_m3 * precios.arena;
+  if (usarCostos) {
+    const cBloque = convertirMoneda(costo(bloques, PRECIOS.bloque_15), moneda);
+    const cCemento = convertirMoneda(costo(cemento, PRECIOS.cemento), moneda);
+    const cArena = convertirMoneda(costo(arena, PRECIOS.arena), moneda);
 
-    const totalCUP = costoBloques + costoCemento + costoArena;
-    const totalUSD = totalCUP / precios.usd;
-    const totalEUR = totalCUP / precios.eur;
+    total = cBloque + cCemento + cArena;
 
-    const hombres = Math.ceil(A / 10);
-    const dias = (A / 8).toFixed(1);
-
-    resultado.classList.remove("hidden");
-    resultado.innerHTML = `
-        <h3>Resultados</h3>
-        <p><b>Bloques:</b> ${bloques.toFixed(0)}</p>
-        <p><b>Cemento:</b> ${sacosCemento.toFixed(1)} sacos</p>
-        <p><b>Arena:</b> ${arena_m3.toFixed(2)} m³</p>
-
-        <h4>Costos</h4>
-        <p>CUP: ${totalCUP.toFixed(2)}</p>
-        <p>USD: ${totalUSD.toFixed(2)}</p>
-        <p>EUR: ${totalEUR.toFixed(2)}</p>
-
-        <h4>Mano de obra</h4>
-        <p>Hombres: ${hombres}</p>
-        <p>Tiempo estimado: ${dias} días</p>
+    html += `
+      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>${moneda} ${redondear(cBloque)}</td></tr>
+      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${moneda} ${redondear(cCemento)}</td></tr>
+      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${moneda} ${redondear(cArena)}</td></tr>
     `;
-}
+  } else {
+    html += `
+      <tr><td>Bloques 15 cm</td><td>${bloques}</td><td>u</td><td>-</td></tr>
+      <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>-</td></tr>
+      <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>-</td></tr>
+    `;
+  }
 
-function borrar(){
-    document.querySelectorAll("input").forEach(i => i.value = "");
-    resultado.classList.add("hidden");
+  html += `
+    </table>
+    <h3>Total: ${moneda} ${redondear(total)}</h3>
+  `;
+
+  document.getElementById("resultado").innerHTML = html;
 }

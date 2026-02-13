@@ -18,8 +18,19 @@
   <label>Alto del muro (m)</label>
   <input type="number" id="alto" step="0.01">
 
-  <label>Precio activado</label>
-  <input type="checkbox" id="costos" checked>
+  <label>Desperdicio (%)</label>
+  <input type="number" id="desperdicio" value="5">
+
+  <label>Moneda</label>
+  <select id="moneda">
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="costos" checked>
+    Calcular costos
+  </label>
 
   <button onclick="calcularMuro()">Calcular</button>
 </div>

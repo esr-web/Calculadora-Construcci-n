@@ -52,19 +52,23 @@ function calcularMuro() {
   const totalEUR = (totalCUP / cambioEUR).toFixed(2);
 
   // Función auxiliar para mostrar costos según la moneda seleccionada
-  function mostrarCosto(costoCUP) {
-    if (!usarCostos) return "-";
-    // Siempre mostrar CUP primero si es moneda base
+  
+      function mostrarCosto(costoCUP) {
+    if (!document.getElementById("costos").checked) return "-";
+    const moneda = document.getElementById("moneda").value;
+    const cambioUSD = Number(document.getElementById("cambio_usd_muro").value) || 1;
+    const cambioEUR = Number(document.getElementById("cambio_eur_muro").value) || 1;
+
     switch (moneda) {
-      case "USD":
-        return `${(costoCUP / cambioUSD).toFixed(2)} USD / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
-      case "EUR":
-        return `${(costoCUP / cambioEUR).toFixed(2)} EUR / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD`;
-      case "CUP":
-      default:
-        return `${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
+        case "USD":
+            return `${(costoCUP / cambioUSD).toFixed(2)} USD / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
+        case "EUR":
+            return `${(costoCUP / cambioEUR).toFixed(2)} EUR / ${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD`;
+        case "CUP":
+        default:
+            return `${costoCUP.toFixed(2)} CUP / ${(costoCUP / cambioUSD).toFixed(2)} USD / ${(costoCUP / cambioEUR).toFixed(2)} EUR`;
     }
-  }
+}
 
   // Construir HTML de resultados
   let html = `

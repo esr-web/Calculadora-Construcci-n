@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Mantener el mismo diseño */
+/* Mantener el diseño existente */
 .header {background: #1f2937;color: white;padding: 1rem;text-align: center;position: sticky;top: 0; z-index: 1000;box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
 .nav-menu {display: flex;flex-wrap: wrap;gap: 0.5rem;justify-content: center;margin-top: 0.5rem;}
 .nav-link {background: #f0f0f0;color: #1f2937;padding: 0.5rem 1rem;border-radius: 10px;text-decoration: none;font-weight: 500;font-size: 0.95rem;box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.7);transition: all 0.15s ease;}
@@ -75,18 +75,9 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
     <input type="number" id="area" readonly>
   </div>
 
-  <!-- TARJETA 2: Precios de materiales -->
-  <div class="card flex-col">
-    <label>Ladrillo (CUP)</label>
-    <input type="number" id="precioLadrillo" placeholder="Precio por unidad">
-    <label>Bloque (CUP)</label>
-    <input type="number" id="precioBloque" placeholder="Precio por unidad">
-    <label>Cemento (CUP)</label>
-    <input type="number" id="precioCemento" placeholder="Precio por saco">
-    <label>Arena (CUP)</label>
-    <input type="number" id="precioArena" placeholder="Precio por m³">
-    <label>Agua (CUP)</label>
-    <input type="number" id="precioAgua" placeholder="Precio por litro">
+  <!-- TARJETA 2: Precios de materiales según tipo de muro -->
+  <div class="card flex-col" id="materialesCard">
+    <!-- Materiales se generan dinámicamente según el tipo de muro -->
   </div>
 </div>
 
@@ -99,14 +90,42 @@ footer{text-align:center;padding:1rem;margin-top:2rem;color:#6b7280;font-size:0.
 <footer>Arq. Emanuel Silva Riambaut</footer>
 
 <script>
+const materialesPorMuro = {
+  ladrillo: ['ladrillo','cemento','arena','agua'],
+  bloque: ['bloque','cemento','arena','agua'],
+  hormigon: ['cemento','arena','gravilla','agua'],
+  piedra: ['piedra','cemento','arena','agua'],
+  adobe: ['adobe','cemento','arena','agua'],
+  tabique: ['tabique','cemento','arena','agua']
+};
+
 document.getElementById('tipoMuro').addEventListener('change', function(){
-    if(this.value==='ladrillo'){
+    const tipo=this.value;
+    const materialesCard=document.getElementById('materialesCard');
+    materialesCard.innerHTML='';
+    
+    // Mostrar colocación solo para ladrillo
+    if(tipo==='ladrillo'){
         document.getElementById('tipoColocacion').style.display='block';
         document.getElementById('labelColocacion').style.display='block';
     } else {
         document.getElementById('tipoColocacion').style.display='none';
         document.getElementById('labelColocacion').style.display='none';
     }
+
+    if(!tipo) return;
+
+    // Crear inputs para precios según materiales del muro
+    materialesPorMuro[tipo].forEach(mat=>{
+        const label=document.createElement('label');
+        label.textContent=mat.charAt(0).toUpperCase()+mat.slice(1)+' (CUP)';
+        const input=document.createElement('input');
+        input.type='number';
+        input.id='precio_'+mat;
+        input.placeholder='Precio por unidad o m³';
+        materialesCard.appendChild(label);
+        materialesCard.appendChild(input);
+    });
 });
 
 // Calcular área
@@ -120,80 +139,86 @@ document.getElementById('tipoMuro').addEventListener('change', function(){
 
 function calcularMuro(){
     const tipo=document.getElementById('tipoMuro').value;
-    const colocacion=document.getElementById('tipoColocacion').value;
     const repello=document.getElementById('repello').value;
     const area=parseFloat(document.getElementById('area').value)||0;
     if(!tipo || area<=0){alert("Complete todos los datos"); return;}
 
     // Precios
-    const precios={
-        ladrillo: parseFloat(document.getElementById('precioLadrillo').value)||0,
-        bloque: parseFloat(document.getElementById('precioBloque').value)||0,
-        cemento: parseFloat(document.getElementById('precioCemento').value)||0,
-        arena: parseFloat(document.getElementById('precioArena').value)||0,
-        agua: parseFloat(document.getElementById('precioAgua').value)||0
-    };
+    const precios={};
+    materialesPorMuro[tipo].forEach(mat=>{
+        precios[mat]=parseFloat(document.getElementById('precio_'+mat).value)||0;
+    });
 
-    // Calcular cantidades (aproximadas)
-    let ladrillos=0, bloques=0, cemento=0, arena=0, agua=0;
-    if(tipo==='ladrillo'){
-        ladrillos=area*50; // aprox 50 ladrillos/m²
-        cemento=repello==='con'?Math.ceil(area*0.02):Math.ceil(area*0.015); // sacos/m²
-        arena=repello==='con'?Math.ceil(area*0.03):Math.ceil(area*0.02); // m³
-        agua=repello==='con'?Math.ceil(area*0.01):Math.ceil(area*0.005); // litros
-    } else if(tipo==='bloque'){
-        bloques=area*10; // aprox 10 bloques/m²
-        cemento=Math.ceil(area*0.02);
-        arena=Math.ceil(area*0.025);
-        agua=Math.ceil(area*0.008);
-    } else if(tipo==='hormigon'){
-        cemento=Math.ceil(area*0.03);
-        arena=Math.ceil(area*0.04);
-        agua=Math.ceil(area*0.01);
-    } else if(tipo==='piedra'){
-        arena=Math.ceil(area*0.03);
-        cemento=Math.ceil(area*0.025);
-        agua=Math.ceil(area*0.01);
-    } else if(tipo==='adobe'){
-        ladrillos=area*20;
-        cemento=Math.ceil(area*0.01);
-        arena=Math.ceil(area*0.02);
-        agua=Math.ceil(area*0.005);
-    } else if(tipo==='tabique'){
-        ladrillos=area*30;
-        cemento=Math.ceil(area*0.015);
-        arena=Math.ceil(area*0.02);
-        agua=Math.ceil(area*0.005);
+    // Calcular cantidades aproximadas según normas de construcción
+    let cantidades={};
+    switch(tipo){
+        case 'ladrillo':
+            cantidades.ladrillo=Math.round(area*50);
+            cantidades.cemento=Math.ceil(area*(repello==='con'?0.02:0.015));
+            cantidades.arena=Math.ceil(area*(repello==='con'?0.03:0.02));
+            cantidades.agua=Math.ceil(area*(repello==='con'?0.01:0.005));
+            break;
+        case 'bloque':
+            cantidades.bloque=Math.round(area*10);
+            cantidades.cemento=Math.ceil(area*0.02);
+            cantidades.arena=Math.ceil(area*0.025);
+            cantidades.agua=Math.ceil(area*0.008);
+            break;
+        case 'hormigon':
+            cantidades.cemento=Math.ceil(area*0.03);
+            cantidades.arena=Math.ceil(area*0.04);
+            cantidades.gravilla=Math.ceil(area*0.05);
+            cantidades.agua=Math.ceil(area*0.01);
+            break;
+        case 'piedra':
+            cantidades.piedra=Math.round(area*15);
+            cantidades.cemento=Math.ceil(area*0.025);
+            cantidades.arena=Math.ceil(area*0.03);
+            cantidades.agua=Math.ceil(area*0.01);
+            break;
+        case 'adobe':
+            cantidades.adobe=Math.round(area*20);
+            cantidades.cemento=Math.ceil(area*0.01);
+            cantidades.arena=Math.ceil(area*0.02);
+            cantidades.agua=Math.ceil(area*0.005);
+            break;
+        case 'tabique':
+            cantidades.tabique=Math.round(area*30);
+            cantidades.cemento=Math.ceil(area*0.015);
+            cantidades.arena=Math.ceil(area*0.02);
+            cantidades.agua=Math.ceil(area*0.005);
+            break;
     }
 
-    // Costos
-    const totalCUP = ladrillos*precios.ladrillo + bloques*precios.bloque + cemento*precios.cemento + arena*precios.arena + agua*precios.agua;
-
-    // Resultado
-    let resultadoHtml=`<h3>Materiales necesarios</h3>`;
-    if(ladrillos>0) resultadoHtml+=`<p>Ladrillos: ${ladrillos} unidades (CUP ${(ladrillos*precios.ladrillo).toFixed(2)})</p>`;
-    if(bloques>0) resultadoHtml+=`<p>Bloques: ${bloques} unidades (CUP ${(bloques*precios.bloque).toFixed(2)})</p>`;
-    if(cemento>0) resultadoHtml+=`<p>Cemento: ${cemento} sacos (CUP ${(cemento*precios.cemento).toFixed(2)})</p>`;
-    if(arena>0) resultadoHtml+=`<p>Arena: ${arena} m³ (CUP ${(arena*precios.arena).toFixed(2)})</p>`;
-    if(agua>0) resultadoHtml+=`<p>Agua: ${agua} litros (CUP ${(agua*precios.agua).toFixed(2)})</p>`;
+    // Calcular costos
+    let totalCUP=0;
+    let resultadoHtml='<h3>Materiales necesarios</h3>';
+    for(const mat in cantidades){
+        const costo=cantidades[mat]*precios[mat];
+        totalCUP+=costo;
+        resultadoHtml+=`<p>${mat.charAt(0).toUpperCase()+mat.slice(1)}: ${cantidades[mat]} ${mat==='cemento'?'sacos':mat==='agua'?'litros':mat==='arena'||mat==='gravilla'?'m³':'unidades'} (CUP ${costo.toFixed(2)})</p>`;
+    }
     resultadoHtml+=`<h4>Total: ${totalCUP.toFixed(2)} CUP</h4>`;
     resultadoHtml+=`<h4>Características técnicas</h4>`;
     resultadoHtml+=`<p>Área: ${area.toFixed(2)} m²</p>`;
     if(tipo==='ladrillo') resultadoHtml+=`<p>Grosor junta mortero: 1 cm</p>`;
     if(repello==='con') resultadoHtml+=`<p>Incluye repello y fino</p>`;
+    
     document.getElementById('resultado').style.display='block';
     document.getElementById('resultado').innerHTML=resultadoHtml;
 }
 
 function borrarMuro(){
-    ['tipoMuro','tipoColocacion','repello','largo','alto','area',
-    'precioLadrillo','precioBloque','precioCemento','precioArena','precioAgua'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el) el.value='';
-    });
+    document.getElementById('tipoMuro').value='';
+    document.getElementById('tipoColocacion').value='';
+    document.getElementById('repello').value='con';
+    document.getElementById('largo').value='';
+    document.getElementById('alto').value='';
+    document.getElementById('area').value='';
+    document.getElementById('materialesCard').innerHTML='';
+    document.getElementById('resultado').style.display='none';
     document.getElementById('tipoColocacion').style.display='none';
     document.getElementById('labelColocacion').style.display='none';
-    document.getElementById('resultado').style.display='none';
 }
 </script>
 </body>

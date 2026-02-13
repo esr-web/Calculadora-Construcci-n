@@ -38,6 +38,14 @@ function calcularHA() {
   const cAcero   = convertirMoneda(costo(acero, 1.20), moneda);
 
   const total = redondear(cCemento + cArena + cGrava + cAcero);
+agregarPresupuesto(
+  cemento,
+  arena,
+  grava,
+  acero,
+  convertirMoneda(total, "USD")
+);
+mostrarPresupuesto();
 
   document.getElementById("resHA").innerHTML = `
     <h3>Resultado – ${tipo.toUpperCase()}</h3>

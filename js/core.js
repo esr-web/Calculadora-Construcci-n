@@ -53,3 +53,16 @@ function limpiarPresupuesto() {
   };
   mostrarPresupuesto();
 }
+// Guardar presupuesto en localStorage
+function guardarPresupuesto() {
+  localStorage.setItem("presupuestoConstruccion", JSON.stringify(PRESUPUESTO));
+}
+
+// Cargar presupuesto desde localStorage
+function cargarPresupuesto() {
+  const datos = localStorage.getItem("presupuestoConstruccion");
+  if (datos) {
+    PRESUPUESTO = JSON.parse(datos);
+    mostrarPresupuesto();
+  }
+}

@@ -104,8 +104,4 @@ function calcularMuro() {
       </tr>
     </table>
 
-    ${usarCostos ? `<h3>Total</h3><p>${mostrarCosto(totalCUP)}</p>` : ""}
-  `;
-
-  document.getElementById("resultado").innerHTML = html;
-}
+    ${usarCostos ? `<h3>Total</h3><p>${mostrarCosto(totalCUP)}</p>`

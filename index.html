@@ -51,8 +51,7 @@
 <div id="resultado" class="card"></div>
 
 
-
-  <h1>Muros de Ladrillos</h1>
+<h1>Muros de Ladrillos</h1>
 
 <div class="card">
 
@@ -91,11 +90,23 @@
     <input type="number" id="precio_arena_l" value="200">
   </div>
 
-  <button onclick="calcularMuroLadrillo()">Calcular</button>
+  <button id="btnCalcularLadrillo">Calcular</button>
 
 </div>
 
 <div id="resultadoLadrillo" class="card"></div>
+
+<!-- Incluye al final de tu index -->
+<script src="js/ladrillos.js"></script>
+<script>
+  // Esto asegura que el botón llame a la función correctamente
+  document.getElementById("btnCalcularLadrillo").addEventListener("click", calcularMuroLadrillo);
+</script>
+  
+
+  
+
+    
 <!-- ========================= -->
 <!-- HORMIGÓN ARMADO -->
 <!-- ========================= -->

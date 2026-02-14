@@ -1,8 +1,21 @@
 {
   "name": "Calculadora de Construcción",
-  "short_name": "ConstruCalc",
-  "start_url": "index.html",
+  "short_name": "CalcConstrucción",
+  "description": "Calculadora para estimar materiales y costos de muros, ladrillos y hormigón.",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1976d2"
+  "background_color": "#2c3e50",
+  "theme_color": "#2c3e50",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

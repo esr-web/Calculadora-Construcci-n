@@ -80,3 +80,28 @@ function calcularPladur() {
     <h3>Total: ${costoTotal.toFixed(2)} CUP</h3>
   `;
 }
+function mostrarMaterialesPladur() {
+  const contenedor = document.getElementById("pld_materiales");
+
+  contenedor.innerHTML = `
+    <h3>Precios Muro de Pladur (CUP)</h3>
+
+    <label>Placa de pladur (1.20 × 2.40 m)</label>
+    <input type="number" id="precio_placa" value="500">
+
+    <label>Tornillo (por unidad)</label>
+    <input type="number" id="precio_tornillo" value="2">
+
+    <label>Masilla (saco 25 kg)</label>
+    <input type="number" id="precio_masilla" value="600">
+
+    <label>Cinta para juntas (rollo 30 m)</label>
+    <input type="number" id="precio_cinta" value="350">
+
+    <label>Perfil metálico (CUP por metro)</label>
+    <input type="number" id="precio_perfil" value="120">
+  `;
+}
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarMaterialesPladur();
+});

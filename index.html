@@ -5,16 +5,17 @@
   <title>Calculadora de Construcción</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
-
 <body>
 
-<h1>Calculadora de Muro de Bloques</h1>
+<h1>Calculadora de Construcción</h1>
 
+<!-- ========================= -->
+<!-- MUROS DE BLOQUES -->
+<!-- ========================= -->
 <div class="card">
+  <h2>Muro de Bloques</h2>
 
-  <!-- TIPO DE BLOQUE (AL INICIO, CORREGIDO) -->
   <label>Tipo de bloque</label>
   <select id="tipo_bloque">
     <option value="10">Bloque 10 cm</option>
@@ -31,16 +32,8 @@
   <label>Desperdicio (%)</label>
   <input type="number" id="desperdicio" value="5">
 
-  <label>Moneda</label>
-  <select id="moneda">
-    <option value="CUP">CUP</option>
-    <option value="USD">USD</option>
-    <option value="EUR">EUR</option>
-  </select>
-
-  <!-- PRECIOS -->
   <div class="card">
-    <h3>Precios Muro de Bloques (CUP)</h3>
+    <h3>Precios (CUP)</h3>
 
     <label>Bloque (CUP / unidad)</label>
     <input type="number" id="precio_bloque_muro" value="10">
@@ -50,97 +43,54 @@
 
     <label>Arena (CUP / m³)</label>
     <input type="number" id="precio_arena_muro" value="200">
-
-    <h3>Tipo de cambio</h3>
-
-    <label>CUP → USD</label>
-    <input type="number" id="cambio_usd_muro" value="25">
-
-    <label>CUP → EUR</label>
-    <input type="number" id="cambio_eur_muro" value="30">
-
-    <button type="button" onclick="actualizarPreciosMuro()">Actualizar precios</button>
   </div>
 
-  <label>
-    <input type="checkbox" id="costos" checked>
-    Calcular costos
-  </label>
-
-  <!-- BOTÓN CALCULAR (FUNCIONAL) -->
-  <button type="button" onclick="calcularMuro()">Calcular</button>
+  <button onclick="calcularMuro()">Calcular muro</button>
 </div>
 
 <div id="resultado" class="card"></div>
 
-<hr>
-
-<h1>Hormigón Armado</h1>
-
+<!-- ========================= -->
+<!-- HORMIGÓN ARMADO -->
+<!-- ========================= -->
 <div class="card">
+  <h2>Hormigón Armado</h2>
+
   <label>Largo (m)</label>
-  <input type="number" id="h_largo">
+  <input type="number" id="h_largo" step="0.01">
 
   <label>Ancho (m)</label>
-  <input type="number" id="h_ancho">
+  <input type="number" id="h_ancho" step="0.01">
 
   <label>Alto (m)</label>
-  <input type="number" id="h_alto">
+  <input type="number" id="h_alto" step="0.01">
 
   <label>Cuantía de acero (kg/m³)</label>
   <input type="number" id="h_acero" value="120">
-<div class="card">
-  <h3>Precios Hormigón Armado (CUP)</h3>
 
-  <label>Cemento (CUP por saco)</label>
-  <input type="number" id="precio_cemento_ha" value="150" step="1">
+  <div class="card">
+    <h3>Precios (CUP)</h3>
 
-  <label>Arena (CUP por m³)</label>
-  <input type="number" id="precio_arena_ha" value="200" step="1">
+    <label>Cemento (CUP / saco)</label>
+    <input type="number" id="precio_cemento_ha" value="150">
 
-  <label>Grava (CUP por m³)</label>
-  <input type="number" id="precio_grava_ha" value="250" step="1">
+    <label>Arena (CUP / m³)</label>
+    <input type="number" id="precio_arena_ha" value="200">
 
-  <label>Acero (CUP por kg)</label>
-  <input type="number" id="precio_acero_ha" value="50" step="1">
+    <label>Grava (CUP / m³)</label>
+    <input type="number" id="precio_grava_ha" value="250">
 
-  <h3>Tipo de cambio</h3>
+    <label>Acero (CUP / kg)</label>
+    <input type="number" id="precio_acero_ha" value="50">
+  </div>
 
-  <label>CUP → USD</label>
-  <input type="number" id="cambio_usd_ha" value="25" step="0.01">
-
-  <label>CUP → EUR</label>
-  <input type="number" id="cambio_eur_ha" value="30" step="0.01">
-</div>
-  <button type="button" onclick="calcularHormigon()">Calcular hormigón</button>
+  <button onclick="calcularHormigon()">Calcular hormigón</button>
 </div>
 
 <div id="resultadoHormigon" class="card"></div>
 
-<hr>
-
-<h1>Presupuesto General</h1>
-
-<div class="card">
-  <button type="button" onclick="limpiarPresupuesto()">Limpiar presupuesto</button>
-</div>
-
-<div id="presupuesto" class="card"></div>
-
-<button type="button" onclick="cargarPresupuesto()">Recuperar presupuesto guardado</button>
-
-<!-- SCRIPTS (ORDEN CORRECTO, CLAVE) -->
-<script src="js/precios.js"></script>
-<script src="js/core.js"></script>
 <script src="js/muros.js"></script>
 <script src="js/hormigon.js"></script>
-
-<!-- SERVICE WORKER -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
 
 </body>
 </html>

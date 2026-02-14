@@ -199,7 +199,6 @@
 <div class="card">
   <h2>Muro de Pladur</h2>
   <div class="card-content">
-
     <label>Largo del muro (m)</label>
     <input type="number" id="pld_largo" step="0.01" oninput="calcularAreaPladur()">
 
@@ -214,33 +213,17 @@
       <option value="doble">Doble cara</option>
     </select>
 
-    <h3>Precios (CUP)</h3>
-
-    <label>Precio plancha de pladur (CUP / unidad)</label>
-<input type="number" id="precio_pladur" value="350">
-
-<label>Precio perfil metálico (CUP / metro)</label>
-<input type="number" id="precio_perfil" value="120">
-
-<label>Tornillos por caja (unidades)</label>
-<input type="number" id="tornillos_por_caja" value="1000">
-
-<label>Precio caja de tornillos (CUP)</label>
-<input type="number" id="precio_tornillos" value="800">
-
-<label>Kg de masilla por saco</label>
-<input type="number" id="kg_masilla_saco" value="25">
-
-<label>Precio saco de masilla (CUP)</label>
-<input type="number" id="precio_masilla" value="600">
-
-
-    <button onclick="calcularPladur()">Calcular</button>
-
+    <div id="pld_materiales">
+      <!-- Inputs de materiales se generan desde JS -->
+    </div>
   </div>
-</div>
 
-<div id="resultadoPladur" class="card"></div>
+  <!-- Botón de calcular fuera de card-content para evitar conflictos -->
+  <button onclick="calcularPladur()">Calcular</button>
+
+  <!-- Resultados también fuera de card-content -->
+  <div id="resultadoPladur" class="card"></div>
+</div>
 
 
 <!-- Scripts -->

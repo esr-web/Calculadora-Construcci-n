@@ -160,7 +160,37 @@
 </div>
 
 <div id="resultadoHormigon" class="card"></div>
+<h1>Muros de Panelería Ligera</h1>
 
+<div class="card">
+  <label>Largo del muro (m)</label>
+  <input type="number" id="pl_largo" step="0.01" oninput="calcularAreaPanel()">
+
+  <label>Alto del muro (m)</label>
+  <input type="number" id="pl_alto" step="0.01" oninput="calcularAreaPanel()">
+
+  <p><b>Área del muro:</b> <span id="pl_area">0</span> m²</p>
+
+  <label>Tipo de material</label>
+  <select id="pl_tipo" onchange="mostrarMaterialesPanel()">
+    <option value="pladur">Pladur</option>
+    <option value="madera">Madera</option>
+  </select>
+
+  <div id="pl_materiales" class="card">
+    <h3>Precios Panelería Ligera (CUP)</h3>
+    <!-- Inputs dinámicos de materiales se generan desde JS -->
+  </div>
+
+  <label>
+    <input type="checkbox" id="pl_costos" checked>
+    Calcular costos
+  </label>
+
+  <button onclick="calcularPanel()">Calcular</button>
+</div>
+
+<div id="resultadoPanel" class="card"></div>
 <script src="js/muros.js"></script>
 <script src="js/hormigon.js"></script>
 <script src="js/ladrillos.js"></script>

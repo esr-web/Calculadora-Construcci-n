@@ -1,20 +1,21 @@
 // Precios por defecto en CUP
 const PRECIOS_PLADUR = {
-  placas: 120,       // precio por m²
-  vigas: 50,         // precio por unidad
-  masilla: 15,       // precio por m²
-  cinta: 5            // precio por m²
+  placas: 120,   // precio por m²
+  vigas: 50,     // precio por unidad
+  masilla: 15,   // precio por m²
+  cinta: 5       // precio por m²
 };
 
 // Materiales disponibles
 const MATERIALES_PLADUR = ["placas", "vigas", "masilla", "cinta"];
 
-// Mostrar inputs de materiales
+// Generar inputs de materiales
 function mostrarMaterialesPladur() {
   const container = document.getElementById("pld_materiales");
   container.innerHTML = "<h3>Precios Muro de Pladur (CUP)</h3>";
 
   MATERIALES_PLADUR.forEach(mat => {
+    // Solo mostrar vigas si hay placas (siempre hay placas, pero se deja lógico)
     let label = document.createElement("label");
     label.textContent = mat.charAt(0).toUpperCase() + mat.slice(1) + 
       (mat === "vigas" ? " (CUP por unidad)" : " (CUP por m²)");
@@ -30,14 +31,14 @@ function mostrarMaterialesPladur() {
   });
 }
 
-// Inicializar al cargar
+// Ejecutar al cargar la página
 mostrarMaterialesPladur();
 
 // Calcular área automáticamente
 function calcularAreaPladur() {
   const largo = Number(document.getElementById("pld_largo").value);
   const alto = Number(document.getElementById("pld_alto").value);
-  const area = largo > 0 && alto > 0 ? largo * alto : 0;
+  const area = (largo > 0 && alto > 0) ? largo * alto : 0;
   document.getElementById("pld_area").textContent = area.toFixed(2);
 }
 
@@ -54,8 +55,7 @@ function calcularPladur() {
     return;
   }
 
-  // Factor si es doble cara
-  const factor = cara === "doble" ? 2 : 1;
+  const factor = (cara === "doble") ? 2 : 1;
 
   let html = `
     <h3>Resultados</h3>
@@ -73,20 +73,21 @@ function calcularPladur() {
 
   MATERIALES_PLADUR.forEach(mat => {
     let cantidad, unidad, costo;
+    const precio = Number(document.getElementById(`precio_${mat}_pld`).value);
 
     if (mat === "placas" || mat === "masilla" || mat === "cinta") {
       cantidad = area * factor;
       unidad = "m²";
-      costo = PRECIOS_PLADUR[mat] * cantidad;
+      costo = precio * cantidad;
     } else if (mat === "vigas") {
-      cantidad = Math.ceil(area / 3); // Una viga cada 3 m²
+      cantidad = Math.ceil(area / 3); // Una viga cada 3 m² aprox
       unidad = "u";
-      costo = PRECIOS_PLADUR[mat] * cantidad;
+      costo = precio * cantidad;
     }
 
     if (!usarCostos) costo = "-";
 
-    total += typeof costo === "number" ? costo : 0;
+    total += (typeof costo === "number") ? costo : 0;
 
     html += `
       <tr>

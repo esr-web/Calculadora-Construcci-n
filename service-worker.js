@@ -1,37 +1,51 @@
-const CACHE_NAME = 'calculadora-construccion-v1';
+const CACHE_NAME = 'calculadora-cache-v1';
 const urlsToCache = [
-  './',
-  './index.html',
-  './css/style.css',
-  './js/muros.js',
-  './js/ladrillos.js',
-  './js/hormigon.js',
-  './js/pladur.js',
-  './manifest.json'
+  '/',
+  '/index.html',
+  '/css/style.css',
+  '/js/muros.js',
+  '/js/ladrillos.js',
+  '/js/hormigon.js',
+  '/js/pladur.js'
 ];
 
-// Instalación
+// Instalación del service worker y cache inicial
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activación
+// Activación del service worker
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      }))
-    )
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+      );
+    })
   );
+  self.clients.claim();
 });
 
-// Interceptar requests
+// Fetch: caching dinámico
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request)
+      .then(response => {
+        // Devuelve cache si existe
+        if (response) return response;
+
+        // Si no, busca en la red y guarda en cache
+        return fetch(event.request).then(fetchResponse => {
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, fetchResponse.clone());
+            return fetchResponse;
+          });
+        });
+      })
   );
 });

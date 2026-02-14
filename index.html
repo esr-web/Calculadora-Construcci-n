@@ -51,8 +51,11 @@
 <div id="resultado" class="card"></div>
 
 
+
+  <h1>Muros de Ladrillos</h1>
+
 <div class="card">
-<h1>Muros de Ladrillos</h1>
+
   <label>Largo del muro (m)</label>
   <input type="number" id="l_largo" step="0.01">
 
@@ -60,16 +63,16 @@
   <input type="number" id="l_alto" step="0.01">
 
   <label>Tipo de ladrillo</label>
-  <select id="l_tipo_ladrillo">
+  <select id="tipo_ladrillo">
     <option value="macizo">Ladrillo macizo</option>
     <option value="hueco">Ladrillo hueco</option>
   </select>
 
-  <label>Forma de colocación</label>
-  <select id="l_colocacion">
-    <option value="citara">Citara (½ ladrillo)</option>
+  <label>Tipo de colocación</label>
+  <select id="tipo_colocacion">
+    <option value="citara">A citara</option>
     <option value="citara_y_media">Citara y media</option>
-    <option value="aparejo">Aparejo / aplicativo</option>
+    <option value="aparejo">Aparejo normal</option>
   </select>
 
   <label>Desperdicio (%)</label>
@@ -79,7 +82,7 @@
     <h3>Precios (CUP)</h3>
 
     <label>Ladrillo (CUP por unidad)</label>
-    <input type="number" id="precio_ladrillo" value="12">
+    <input type="number" id="precio_ladrillo" value="15">
 
     <label>Cemento (CUP por saco)</label>
     <input type="number" id="precio_cemento_l" value="150">
@@ -89,6 +92,7 @@
   </div>
 
   <button onclick="calcularMuroLadrillo()">Calcular</button>
+
 </div>
 
 <div id="resultadoLadrillo" class="card"></div>

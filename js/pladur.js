@@ -1,4 +1,9 @@
-// pladur.js definitivo
+// pladur.js definitivo y funcional
+
+// Crear los inputs de materiales al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+  mostrarMaterialesPladur();
+});
 
 function calcularAreaPladur() {
   const largo = parseFloat(document.getElementById("pld_largo").value);
@@ -13,7 +18,6 @@ function calcularAreaPladur() {
 
 function mostrarMaterialesPladur() {
   const materialesDiv = document.getElementById("pld_materiales");
-  
   materialesDiv.innerHTML = `
     <h3>Precios Muro de Pladur (CUP)</h3>
     <label>Planchas de pladur (1.2 x 2.4 m)</label>
@@ -46,14 +50,13 @@ function calcularPladur() {
   const area = largo * alto;
   const factorCara = (tipoCara === "doble") ? 2 : 1;
 
-  // ====== CONSUMOS PROPORCIONALES ======
+  // ====== CONSUMOS ======
   const placaM2 = 2.88; // 1.2 x 2.4 m
   const placas = (area / placaM2) * factorCara;
   const tornillos = 25 * area * factorCara;
   const sacosMasilla = (0.6 * area * factorCara) / 25;
   const rollosCinta = (1.2 * area * factorCara) / 30;
 
-  // Perfiles (NO se duplican)
   const perfilesVerticales = 2.5 * area;
   const perfilesHorizontales = 1 * area;
 
@@ -73,7 +76,7 @@ function calcularPladur() {
 
   const costoTotal = costoPlaca + costoTornillos + costoMasilla + costoCinta + costoPerfiles;
 
-  // ====== TABLA DE RESULTADOS ======
+  // ====== RESULTADOS ======
   const resultado = `
   <table class="tabla-resultados">
     <thead>

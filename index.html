@@ -170,7 +170,6 @@
   <label>Alto del muro (m)</label>
   <input type="number" id="pld_alto" step="0.01" oninput="calcularAreaPladur()">
 
-  <p><b>Área del muro:</b> <span id="pld_area">0</span> m²</p>
 
   <label>Tipo de construcción</label>
   <select id="pld_cara" onchange="mostrarMaterialesPladur()">
@@ -184,7 +183,6 @@
   </div>
 
   <label>
-    <input type="checkbox" id="pld_costos" checked>
     Calcular costos
   </label>
 
@@ -193,10 +191,11 @@
 
 <div id="resultadoPladur" class="card"></div>
 
-<div id="resultadoPanel" class="card"></div>
+
 <script src="js/muros.js"></script>
 <script src="js/hormigon.js"></script>
 <script src="js/ladrillos.js"></script>
+<script src="js/panel.js"></script>
 
 <!-- Pie de página -->
 <footer class="footer-calculadora">

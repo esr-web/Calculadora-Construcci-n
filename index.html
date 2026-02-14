@@ -86,25 +86,20 @@
     <label>Desperdicio (%)</label>
     <input type="number" id="desperdicio" value="5">
 
-    <div class="card">
-      <div class="card-content">
-        <h3>Precios (CUP)</h3>
-        <label>Bloque (CUP / unidad)</label>
-        <input type="number" id="precio_bloque_muro" value="10">
+    <h3>Precios (CUP)</h3>
+    <label>Bloque (CUP / unidad)</label>
+    <input type="number" id="precio_bloque_muro" value="10">
 
-        <label>Cemento (CUP / saco)</label>
-        <input type="number" id="precio_cemento_muro" value="150">
+    <label>Cemento (CUP / saco)</label>
+    <input type="number" id="precio_cemento_muro" value="150">
 
-        <label>Arena (CUP / m³)</label>
-        <input type="number" id="precio_arena_muro" value="200">
-      </div>
-    </div>
+    <label>Arena (CUP / m³)</label>
+    <input type="number" id="precio_arena_muro" value="200">
 
     <button onclick="calcularMuro()">Calcular muro</button>
-<div id="resultado" class="card"></div>
   </div>
 </div>
-
+<div id="resultado" class="card"></div>
 
 <!-- ========================= -->
 <!-- MUROS DE LADRILLOS -->
@@ -134,24 +129,20 @@
     <label>Desperdicio (%)</label>
     <input type="number" id="l_desperdicio" value="5">
 
-    <div class="card">
-      <div class="card-content">
-        <h3>Precios (CUP)</h3>
-        <label>Ladrillo (CUP por unidad)</label>
-        <input type="number" id="precio_ladrillo" value="15">
+    <h3>Precios (CUP)</h3>
+    <label>Ladrillo (CUP por unidad)</label>
+    <input type="number" id="precio_ladrillo" value="15">
 
-        <label>Cemento (CUP por saco)</label>
-        <input type="number" id="precio_cemento_l" value="150">
+    <label>Cemento (CUP por saco)</label>
+    <input type="number" id="precio_cemento_l" value="150">
 
-        <label>Arena (CUP por m³)</label>
-        <input type="number" id="precio_arena_l" value="200">
-      </div>
-    </div>
+    <label>Arena (CUP por m³)</label>
+    <input type="number" id="precio_arena_l" value="200">
 
     <button id="btnCalcularLadrillo">Calcular</button>
-<div id="resultadoLadrillo" class="card"></
   </div>
 </div>
+<div id="resultadoLadrillo" class="card"></div>
 
 <!-- ========================= -->
 <!-- HORMIGÓN ARMADO -->
@@ -181,27 +172,23 @@
       <option value="25">Ø 25 mm</option>
     </select>
 
-    <div class="card">
-      <div class="card-content">
-        <h3>Precios (CUP)</h3>
-        <label>Cemento (CUP / saco)</label>
-        <input type="number" id="precio_cemento_ha" value="150">
+    <h3>Precios (CUP)</h3>
+    <label>Cemento (CUP / saco)</label>
+    <input type="number" id="precio_cemento_ha" value="150">
 
-        <label>Arena (CUP / m³)</label>
-        <input type="number" id="precio_arena_ha" value="200">
+    <label>Arena (CUP / m³)</label>
+    <input type="number" id="precio_arena_ha" value="200">
 
-        <label>Grava (CUP / m³)</label>
-        <input type="number" id="precio_grava_ha" value="250">
+    <label>Grava (CUP / m³)</label>
+    <input type="number" id="precio_grava_ha" value="250">
 
-        <label>Acero (CUP / kg)</label>
-        <input type="number" id="precio_acero_ha" value="50">
-      </div>
-    </div>
+    <label>Acero (CUP / kg)</label>
+    <input type="number" id="precio_acero_ha" value="50">
 
     <button onclick="calcularHormigon()">Calcular hormigón</button>
-<div id="resultadoHormigon" class="card"></
   </div>
 </div>
+<div id="resultadoHormigon" class="card"></div>
 
 <!-- ========================= -->
 <!-- MURO DE PLADUR -->
@@ -223,18 +210,13 @@
       <option value="doble">Doble cara</option>
     </select>
 
-    <div id="pld_materiales" class="card">
-      <div class="card-content">
-        <h3>Precios Muro de Pladur (CUP)</h3>
-        <!-- Inputs de materiales se generan desde JS -->
-      </div>
-    </div>
+    <h3>Precios Muro de Pladur (CUP)</h3>
+    <!-- Inputs de materiales se generan desde JS -->
 
     <button onclick="calcularPladur()">Calcular</button>
-<div id="resultadoPladur" class="card"></div>
   </div>
 </div>
-
+<div id="resultadoPladur" class="card"></div>
 
 <!-- Scripts -->
 <script src="js/muros.js"></script>

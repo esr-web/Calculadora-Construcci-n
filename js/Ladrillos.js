@@ -1,61 +1,67 @@
-// ===============================
-// MURO DE LADRILLOS
-// ===============================
-
 function calcularMuroLadrillo() {
 
   const largo = Number(document.getElementById("l_largo").value);
   const alto = Number(document.getElementById("l_alto").value);
-  const tipoLadrillo = document.getElementById("l_tipo_ladrillo").value;
-  const colocacion = document.getElementById("l_colocacion").value;
-  const desperdicio = Number(document.getElementById("l_desperdicio").value) / 100;
+  const desperdicio = Number(document.getElementById("l_desperdicio").value);
 
-  if (!largo || !alto) {
-    alert("Complete todas las dimensiones");
-    return;
-  }
+  const tipoLadrillo = document.getElementById("tipo_ladrillo").value;
+  const tipoColocacion = document.getElementById("tipo_colocacion").value;
 
-  const area = largo * alto;
-
-  // Consumo de ladrillos por m²
-  const consumoLadrillo = {
-    macizo: {
-      citara: 50,
-      citara_y_media: 75,
-      aparejo: 60
-    },
-    hueco: {
-      citara: 40,
-      citara_y_media: 60,
-      aparejo: 50
-    }
-  };
-
-  const ladrillosBase = area * consumoLadrillo[tipoLadrillo][colocacion];
-  const ladrillos = ladrillosBase * (1 + desperdicio);
-
-  // Mortero (aproximaciones técnicas)
-  const mortero = area * (
-    colocacion === "citara" ? 0.02 :
-    colocacion === "citara_y_media" ? 0.03 : 0.025
-  );
-
-  const cemento = mortero * 7; // sacos
-  const arena = mortero;       // m³
-
-  // Precios
   const pLadrillo = Number(document.getElementById("precio_ladrillo").value);
   const pCemento = Number(document.getElementById("precio_cemento_l").value);
   const pArena = Number(document.getElementById("precio_arena_l").value);
 
+  if (largo <= 0 || alto <= 0) {
+    alert("Ingrese dimensiones válidas");
+    return;
+  }
+
+  // Área
+  const area = largo * alto;
+
+  // Consumos técnicos (por m²)
+  let ladrillosPorM2 = 0;
+  let cementoPorM2 = 0;
+  let arenaPorM2 = 0;
+
+  if (tipoLadrillo === "macizo") {
+    ladrillosPorM2 = 50;
+    cementoPorM2 = 0.22;
+    arenaPorM2 = 0.02;
+  } else {
+    ladrillosPorM2 = 25;
+    cementoPorM2 = 0.18;
+    arenaPorM2 = 0.018;
+  }
+
+  if (tipoColocacion === "citara_y_media") {
+    ladrillosPorM2 *= 1.5;
+    cementoPorM2 *= 1.4;
+    arenaPorM2 *= 1.4;
+  }
+
+  // Cantidades
+  let ladrillos = area * ladrillosPorM2;
+  let cemento = area * cementoPorM2;
+  let arena = area * arenaPorM2;
+
+  // Desperdicio
+  ladrillos *= (1 + desperdicio / 100);
+  cemento *= (1 + desperdicio / 100);
+  arena *= (1 + desperdicio / 100);
+
+  // Costos
   const cLadrillo = ladrillos * pLadrillo;
   const cCemento = cemento * pCemento;
   const cArena = arena * pArena;
 
   const total = cLadrillo + cCemento + cArena;
 
+  // Resultado (MISMO DISEÑO QUE HORMIGÓN)
   document.getElementById("resultadoLadrillo").innerHTML = `
-    <h3>Resultados Muro de Ladrillos</h3>
+    <h3>Resultados – Muro de Ladrillos</h3>
+
+    <p><b>Área del muro:</b> ${area.toFixed(2)} m²</p>
 
     <table>
       <tr>
@@ -66,7 +72,7 @@ function calcularMuroLadrillo() {
       </tr>
       <tr>
         <td>Ladrillos</td>
-        <td>${ladrillos.toFixed(0)}</td>
+        <td>${Math.round(ladrillos)}</td>
         <td>u</td>
         <td>${cLadrillo.toFixed(2)}</td>
       </tr>

@@ -9,7 +9,7 @@ const urlsToCache = [
   '/js/pladur.js'
 ];
 
-// Instalación del service worker y cache inicial
+// Instalación: cache inicial de todos los archivos esenciales
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activación del service worker
+// Activación: eliminar caches antiguos si los hay
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -31,20 +31,21 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch: caching dinámico
+// Fetch: primero busca en cache, si no está, busca en la red y guarda en cache
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Devuelve cache si existe
         if (response) return response;
 
-        // Si no, busca en la red y guarda en cache
         return fetch(event.request).then(fetchResponse => {
           return caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request, fetchResponse.clone());
             return fetchResponse;
           });
+        }).catch(() => {
+          // Opcional: aquí puedes poner un fallback si no hay conexión
+          // Por ejemplo, un offline.html
         });
       })
   );

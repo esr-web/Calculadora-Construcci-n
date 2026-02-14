@@ -313,6 +313,44 @@
     <div id="resultadoZinc" class="card"></div>
   </div>
 </div>
+<!-- ========================= -->
+<!-- COLUMNAS Y VIGAS -->
+<!-- ========================= -->
+<div class="card">
+  <h2>Columnas y Vigas</h2>
+  <div class="card-content">
+    <label>Tipo de elemento</label>
+    <select id="tipo_elemento">
+      <option value="columna">Columna</option>
+      <option value="viga">Viga</option>
+    </select>
+
+    <label>Largo (m)</label>
+    <input type="number" id="cv_largo" step="0.01">
+
+    <label>Ancho (m)</label>
+    <input type="number" id="cv_ancho" step="0.01">
+
+    <label>Alto (m)</label>
+    <input type="number" id="cv_alto" step="0.01">
+
+    <h3>Precios (CUP)</h3>
+    <label>Cemento (CUP / saco)</label>
+    <input type="number" id="precio_cemento_cv" value="150">
+
+    <label>Arena (CUP / m³)</label>
+    <input type="number" id="precio_arena_cv" value="200">
+
+    <label>Grava (CUP / m³)</label>
+    <input type="number" id="precio_grava_cv" value="250">
+
+    <label>Acero Ø 6 mm (CUP / kg)</label>
+    <input type="number" id="precio_acero_cv" value="50">
+
+    <button onclick="calcularColumnasVigas()">Calcular</button>
+    <div id="resultadoCV" class="card"></div>
+  </div>
+</div>
 
   
 <!-- Scripts -->
@@ -322,6 +360,7 @@
 <script src="js/pladur.js"></script>
 <script src="js/losa.js"></script>
 <script src="js/cubiertaZinc.js"></script>
+<script src="js/columnaVigas.js"></script>
   
 <script>
   // Acordeón funcional

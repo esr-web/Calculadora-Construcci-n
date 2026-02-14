@@ -1,4 +1,4 @@
-// pladur.js
+// pladur.js definitivo
 
 function calcularAreaPladur() {
   const largo = parseFloat(document.getElementById("pld_largo").value);
@@ -12,7 +12,6 @@ function calcularAreaPladur() {
 }
 
 function mostrarMaterialesPladur() {
-  const tipoCara = document.getElementById("pld_cara").value;
   const materialesDiv = document.getElementById("pld_materiales");
   
   materialesDiv.innerHTML = `
@@ -50,16 +49,15 @@ function calcularPladur() {
   // ====== CONSUMOS PROPORCIONALES ======
   const placaM2 = 2.88; // 1.2 x 2.4 m
   const placas = (area / placaM2) * factorCara;
-
   const tornillos = 25 * area * factorCara;
   const sacosMasilla = (0.6 * area * factorCara) / 25;
   const rollosCinta = (1.2 * area * factorCara) / 30;
 
-  // Perfiles (NO se duplican en doble cara)
+  // Perfiles (NO se duplican)
   const perfilesVerticales = 2.5 * area;
   const perfilesHorizontales = 1 * area;
 
-  // ====== PRECIOS ======
+  // ====== PRECIOS DESDE INPUTS ======
   const precioPlaca = parseFloat(document.getElementById("precio_placa").value);
   const precioTornillo = parseFloat(document.getElementById("precio_tornillo").value);
   const precioMasilla = parseFloat(document.getElementById("precio_masilla").value);

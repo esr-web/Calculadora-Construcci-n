@@ -1,5 +1,4 @@
 function calcularMuro() {
-
   const largo = parseFloat(document.getElementById("largo").value);
   const alto = parseFloat(document.getElementById("alto").value);
   const desperdicio = parseFloat(document.getElementById("desperdicio").value || 0);
@@ -43,9 +42,13 @@ function calcularMuro() {
   const pCemento = parseFloat(document.getElementById("precio_cemento_muro").value);
   const pArena = parseFloat(document.getElementById("precio_arena_muro").value);
 
-  const cBloques = bloques * pBloque;
-  const cCemento = cemento * pCemento;
-  const cArena = arena * pArena;
+  // Conversión a USD si corresponde
+  const tasaCambio = 120; // 1 USD = 120 CUP
+  const factorMoneda = moneda === "USD" ? 1 / tasaCambio : 1;
+
+  const cBloques = bloques * pBloque * factorMoneda;
+  const cCemento = cemento * pCemento * factorMoneda;
+  const cArena = arena * pArena * factorMoneda;
 
   const total = cBloques + cCemento + cArena;
 
@@ -83,9 +86,8 @@ function calcularMuro() {
     <h3>Total: ${total.toFixed(2)} ${moneda}</h3>
   `;
 }
+
+// Listener para cambiar moneda y recalcular automáticamente
 document.getElementById("moneda").addEventListener("change", function () {
-  const moneda = this.value;
-  
-    </select>
-  `;
+  calcularMuro();
 });

@@ -214,15 +214,27 @@
     </select>
 
     <div id="pld_materiales">
-      <!-- Inputs de materiales se generan desde JS -->
+      <h3>Precios Muro de Pladur (CUP)</h3>
+      <label>Planchas de pladur (1.2 x 2.40 m)</label>
+      <input type="number" id="precio_placa" value="12">
+
+      <label>Tornillos (por unidad)</label>
+      <input type="number" id="precio_tornillo" value="0.05">
+
+      <label>Masilla (saco de 25kg)</label>
+      <input type="number" id="precio_masilla" value="15">
+
+      <label>Cinta de juntas (rollo de 30 m)</label>
+      <input type="number" id="precio_cinta" value="6">
+
+      <label>Perfiles metálicos (m)</label>
+      <input type="number" id="precio_perfil" value="4">
     </div>
+
+    <button onclick="calcularPladur()">Calcular</button>
+
+    <div id="resultadoPladur" class="card"></div>
   </div>
-
-  <!-- Botón de calcular fuera de card-content para evitar conflictos -->
-  <button onclick="calcularPladur()">Calcular</button>
-
-  <!-- Resultados también fuera de card-content -->
-  <div id="resultadoPladur" class="card"></div>
 </div>
 
 

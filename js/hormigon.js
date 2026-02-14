@@ -1,3 +1,7 @@
+// ===============================
+// HORMIGÓN ARMADO - CALCULADORA
+// ===============================
+
 function calcularHormigon() {
 
   const largo = Number(document.getElementById("h_largo").value);
@@ -5,8 +9,8 @@ function calcularHormigon() {
   const alto  = Number(document.getElementById("h_alto").value);
   const diametro = Number(document.getElementById("h_diametro").value);
 
-  if (largo <= 0 || ancho <= 0 || alto <= 0) {
-    alert("Ingrese dimensiones válidas");
+  if (!largo || !ancho || !alto) {
+    alert("Complete todas las dimensiones");
     return;
   }
 
@@ -17,7 +21,7 @@ function calcularHormigon() {
   const arena   = volumen * 0.5;   // m³
   const grava   = volumen * 0.8;   // m³
 
-  // Peso del acero por metro según Ø (kg/m)
+  // Peso del acero por metro (kg/m)
   const pesoPorMetro = {
     6: 0.222,
     8: 0.395,
@@ -30,11 +34,11 @@ function calcularHormigon() {
     25: 3.85
   };
 
-  // Longitud estimada de acero (simplificado)
-  const longitudAcero = volumen * 80; // m
+  // Longitud estimada de acero
+  const longitudAcero = volumen * 80;
   const acero = longitudAcero * pesoPorMetro[diametro];
 
-  // Precios CUP
+  // Precios (CUP)
   const pCemento = Number(document.getElementById("precio_cemento_ha").value);
   const pArena   = Number(document.getElementById("precio_arena_ha").value);
   const pGrava   = Number(document.getElementById("precio_grava_ha").value);
@@ -47,10 +51,8 @@ function calcularHormigon() {
 
   const total = cCemento + cArena + cGrava + cAcero;
 
-  let html = `
+  document.getElementById("resultadoHormigon").innerHTML = `
     <h3>Resultados Hormigón Armado</h3>
-    <p><b>Volumen:</b> ${volumen.toFixed(2)} m³</p>
-
     <table>
       <tr>
         <th>Material</th>
@@ -86,6 +88,4 @@ function calcularHormigon() {
 
     <h3>Total: ${total.toFixed(2)} CUP</h3>
   `;
-
-  document.getElementById("resultadoHormigon").innerHTML = html;
 }

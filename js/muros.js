@@ -85,11 +85,7 @@ function calcularMuro() {
 }
 document.getElementById("moneda").addEventListener("change", function () {
   const moneda = this.value;
-  document.getElementById("tituloPrecios").innerHTML = `
-    Precios (${moneda})
-    <select id="moneda">
-      <option value="CUP" ${moneda === "CUP" ? "selected" : ""}>CUP</option>
-      <option value="USD" ${moneda === "USD" ? "selected" : ""}>USD</option>
+  
     </select>
   `;
 });

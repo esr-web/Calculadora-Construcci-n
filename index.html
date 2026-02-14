@@ -100,7 +100,15 @@
 
     <label>Arena (CUP / m³)</label>
     <input type="number" id="precio_arena_muro" value="200">
-
+<div class="currency-switch">
+    <span>CUP</span>
+    <label class="switch">
+      <input type="checkbox" id="monedaSwitch">
+      <span class="slider"></span>
+    </label>
+    <span>USD</span>
+  </div>
+</div>
     <button onclick="calcularMuro()">Calcular muro</button>
 <div id="resultado" class="card"></div>
   </div>

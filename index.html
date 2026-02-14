@@ -5,6 +5,9 @@
   <title>Calculadora de Construcción</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2c3e50">
+
   <style>
     /* Acordeón para tarjetas */
     .card > h2, .card > h1 {
@@ -261,5 +264,13 @@
     <p>Esta Calculadora permite estimar cantidades y costos de materiales para muros, hormigón armado y ladrillos, facilitando la planificación de obras de manera rápida y confiable.</p>
   </div>
 </footer>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker registrado'))
+      .catch(err => console.log('Error SW:', err));
+  }
+</script>
+
 </body>
 </html>

@@ -1,10 +1,16 @@
+// ===============================
+// CALCULADORA MURO DE BLOQUES
+// ===============================
+
 function calcularMuro() {
+  // Leer valores del formulario
   const largo = parseFloat(document.getElementById("largo").value);
   const alto = parseFloat(document.getElementById("alto").value);
   const desperdicio = parseFloat(document.getElementById("desperdicio").value || 0);
   const tipoBloque = document.getElementById("tipo_bloque").value;
   const moneda = document.getElementById("moneda").value;
 
+  // Validación
   if (isNaN(largo) || isNaN(alto) || largo <= 0 || alto <= 0) {
     alert("Ingrese dimensiones válidas");
     return;
@@ -14,7 +20,6 @@ function calcularMuro() {
 
   // Consumos normativos aproximados
   const bloquesPorM2 = 12.5;
-
   let cementoPorM2, arenaPorM2;
 
   if (tipoBloque === "10") {
@@ -32,30 +37,30 @@ function calcularMuro() {
   let cemento = area * cementoPorM2;
   let arena = area * arenaPorM2;
 
+  // Aplicar desperdicio
   const factor = 1 + desperdicio / 100;
-
   bloques = Math.ceil(bloques * factor);
   cemento = (cemento * factor).toFixed(2);
   arena = (arena * factor).toFixed(3);
 
+  // Precios
   const pBloque = parseFloat(document.getElementById("precio_bloque_muro").value);
   const pCemento = parseFloat(document.getElementById("precio_cemento_muro").value);
   const pArena = parseFloat(document.getElementById("precio_arena_muro").value);
 
-  // Conversión a USD si corresponde
+  // Conversión de moneda
   const tasaCambio = 120; // 1 USD = 120 CUP
   const factorMoneda = moneda === "USD" ? 1 / tasaCambio : 1;
 
   const cBloques = bloques * pBloque * factorMoneda;
   const cCemento = cemento * pCemento * factorMoneda;
   const cArena = arena * pArena * factorMoneda;
-
   const total = cBloques + cCemento + cArena;
 
+  // Mostrar resultados
   document.getElementById("resultado").innerHTML = `
     <h3>Resultados Muro de Bloques</h3>
     <p><b>Área:</b> ${area.toFixed(2)} m²</p>
-
     <table>
       <tr>
         <th>Material</th>
@@ -82,12 +87,18 @@ function calcularMuro() {
         <td>${cArena.toFixed(2)}</td>
       </tr>
     </table>
-
     <h3>Total: ${total.toFixed(2)} ${moneda}</h3>
   `;
 }
 
-// Listener para cambiar moneda y recalcular automáticamente
+// ===============================
+// EVENTOS DEL BOTÓN Y MONEDA
+// ===============================
+
+// Botón para calcular
+document.getElementById("btnCalcularMuro").addEventListener("click", calcularMuro);
+
+// Cambio de moneda recalcula automáticamente
 document.getElementById("moneda").addEventListener("change", function () {
   calcularMuro();
 });

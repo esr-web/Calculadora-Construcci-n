@@ -1,56 +1,56 @@
 function calcularAreaPladur() {
-  const largo = parseFloat(document.getElementById("pld_largo").value) || 0;
-  const alto = parseFloat(document.getElementById("pld_alto").value) || 0;
-
-  const area = largo * alto;
-  document.getElementById("pld_area").innerText = area.toFixed(2);
-}
-
-function mostrarMaterialesPladur() {
-  // Esta función se mantiene por compatibilidad
-  // (no hace falta generar inputs dinámicos)
+  const largo = Number(document.getElementById("pld_largo").value);
+  const alto = Number(document.getElementById("pld_alto").value);
+  const area = largo * alto || 0;
+  document.getElementById("pld_area").textContent = area.toFixed(2);
 }
 
 function calcularPladur() {
-  const largo = parseFloat(document.getElementById("pld_largo").value);
-  const alto = parseFloat(document.getElementById("pld_alto").value);
+  const largo = Number(document.getElementById("pld_largo").value);
+  const alto = Number(document.getElementById("pld_alto").value);
   const tipo = document.getElementById("pld_cara").value;
 
-  if (!largo || !alto) {
-    alert("Introduce el largo y el alto del muro");
+  if (largo <= 0 || alto <= 0) {
+    alert("Introduce largo y alto válidos");
     return;
   }
 
   const area = largo * alto;
   const caras = tipo === "doble" ? 2 : 1;
 
-  /* Rendimientos estándar */
-  const planchas = Math.ceil((area * caras) / 3); // plancha ≈ 3 m²
-  const perfiles = Math.ceil(area * 3);           // 3 m por m²
-  const tornillos = Math.ceil((area * caras * 25) / 1000); // cajas
-  const masilla = Math.ceil(area / 20);            // 1 saco / 20 m²
+  /* ===== RENDIMIENTOS TÉCNICOS ===== */
+  const planchas = Math.ceil((area * caras) / 3);          // placa 1.20 x 2.40
+  const perfiles = Math.ceil(area * 3);                    // m lineales
+  const tornillosNecesarios = Math.ceil(area * caras * 25); // 25 tornillos/m²
+  const masillaKg = area * caras * 0.5;                    // 0.5 kg/m²
 
-  /* Precios */
-  const pPladur = parseFloat(document.getElementById("precio_pladur").value);
-  const pPerfil = parseFloat(document.getElementById("precio_perfil").value);
-  const pTornillos = parseFloat(document.getElementById("precio_tornillos").value);
-  const pMasilla = parseFloat(document.getElementById("precio_masilla").value);
+  /* ===== DATOS DE EMPAQUE ===== */
+  const tornillosCaja = Number(document.getElementById("tornillos_por_caja").value);
+  const kgMasillaSaco = Number(document.getElementById("kg_masilla_saco").value);
 
-  const costoPladur = planchas * pPladur;
-  const costoPerfil = perfiles * pPerfil;
-  const costoTornillos = tornillos * pTornillos;
-  const costoMasilla = masilla * pMasilla;
+  const cajasTornillos = Math.ceil(tornillosNecesarios / tornillosCaja);
+  const sacosMasilla = Math.ceil(masillaKg / kgMasillaSaco);
 
-  const total = costoPladur + costoPerfil + costoTornillos + costoMasilla;
+  /* ===== PRECIOS ===== */
+  const pPladur = Number(document.getElementById("precio_pladur").value);
+  const pPerfil = Number(document.getElementById("precio_perfil").value);
+  const pTornillos = Number(document.getElementById("precio_tornillos").value);
+  const pMasilla = Number(document.getElementById("precio_masilla").value);
+
+  const total =
+    planchas * pPladur +
+    perfiles * pPerfil +
+    cajasTornillos * pTornillos +
+    sacosMasilla * pMasilla;
 
   document.getElementById("resultadoPladur").innerHTML = `
     <div class="card-content">
-      <h3>Resultado Muro de Pladur</h3>
+      <h3>Resultado – Muro de Pladur</h3>
       <p><b>Área:</b> ${area.toFixed(2)} m²</p>
-      <p><b>Planchas:</b> ${planchas} uds</p>
-      <p><b>Perfiles:</b> ${perfiles} m</p>
-      <p><b>Tornillos:</b> ${tornillos} cajas</p>
-      <p><b>Masilla:</b> ${masilla} sacos</p>
+      <p><b>Planchas:</b> ${planchas} unidades</p>
+      <p><b>Perfiles metálicos:</b> ${perfiles} m</p>
+      <p><b>Tornillos:</b> ${tornillosNecesarios} uds (${cajasTornillos} cajas)</p>
+      <p><b>Masilla:</b> ${masillaKg.toFixed(1)} kg (${sacosMasilla} sacos)</p>
       <hr>
       <p><b>Costo total:</b> ${total.toFixed(2)} CUP</p>
     </div>

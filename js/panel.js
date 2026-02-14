@@ -103,6 +103,5 @@ function calcularPladur() {
     </table>
     <h3>Total: ${usarCostos ? total.toFixed(2) : "-"} CUP</h3>
   `;
-
-  document.getElementById("resultadoPladur").innerHTML = html;
+ document.getElementById("resultadoPladur").innerHTML = html;
 }

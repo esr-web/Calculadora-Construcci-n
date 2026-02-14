@@ -1,4 +1,37 @@
-/* Reset básico */
+/* Encabezado minimalista */
+.header-calculadora {
+  background-color: #ffe5ec;  /* tono pastel rosa claro */
+  text-align: center;
+  padding: 1.5rem 0;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-calculadora h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Pie de página */
+.footer-calculadora {
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-family: 'Arial', sans-serif;
+  color: #555;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-calculadora p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.footer-calculadora b {
+  font-size: 1rem;
+  color: #333;
+}/* Reset básico */
 * {
   box-sizing: border-box;
   margin: 0;

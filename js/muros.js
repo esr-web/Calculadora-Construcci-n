@@ -58,7 +58,45 @@ function calcularMuro() {
       <tr><td>Cemento</td><td>${cemento}</td><td>sacos</td><td>${cCemento.toFixed(2)}</td></tr>
       <tr><td>Arena</td><td>${arena}</td><td>m³</td><td>${cArena.toFixed(2)}</td></tr>
     </table>
+<input type="number" class="precio-input" id="precio_cemento_ha" value="150">
 
     <h3>Total: ${total.toFixed(2)} CUP</h3>
   `;
+}
+document.getElementById("monedaSwitch").addEventListener("change", function () {
+  monedaActual = this.checked ? "USD" : "CUP";
+  convertirPrecios();
+  recalcularTodo();
+});
+let monedaActual = "CUP";
+const tasaCambio = 120; // 1 USD = 120 CUP (ajústalo cuando quieras)
+document.getElementById("monedaSwitch").addEventListener("change", function () {
+  monedaActual = this.checked ? "USD" : "CUP";
+  convertirPrecios();
+  recalcularTodo();
+});
+function convertirPrecios() {
+  const precios = document.querySelectorAll(".precio-input");
+
+  precios.forEach(input => {
+    let valor = parseFloat(input.value) || 0;
+
+    if (monedaActual === "USD") {
+      input.value = (valor / tasaCambio).toFixed(2);
+    } else {
+      input.value = (valor * tasaCambio).toFixed(0);
+    }
+  });
+}
+function formatearPrecio(valor) {
+  if (monedaActual === "USD") {
+    return `$${valor.toFixed(2)} USD`;
+  }
+  return `${valor.toFixed(0)} CUP`;
+}
+function recalcularTodo() {
+  if (typeof calcularHormigon === "function") calcularHormigon();
+  if (typeof calcularZinc === "function") calcularZinc();
+  if (typeof calcularColumnasVigas === "function") calcularColumnasVigas();
+  // agrega aquí los demás cálculos
 }

@@ -12,44 +12,49 @@ function calcularColumnasVigas() {
   const volumen = largo * ancho * alto;
 
   // ====== Consumos estándar por m³ ======
-  let cemento, arena, grava;
+  const cemento = volumen * 7;   // sacos
+  const arena   = volumen * 0.5; // m³
+  const grava   = volumen * 0.8; // m³
 
-  cemento = volumen * 7;   // sacos
-  arena   = volumen * 0.5; // m³
-  grava   = volumen * 0.8; // m³
+  // ====== Acero ======
+  let aceroPrincipal = 0; // Ø 12 mm
+  let aceroCercos    = 0; // Ø 6 mm
 
-  // ====== Cercos de acero Ø 6 mm ======
-  let acero;
+  const peso12mm = 0.888; // kg/m para Ø12 mm
+  const peso6mm  = 0.222; // kg/m para Ø6 mm
 
   if(tipo === "columna") {
-    // Columna: 4 cercos verticales, altura total
-    acero = 4 * alto * 1; // 1 m de perímetro por cercos, se ajusta a la altura
+    // Columna: 4 barras verticales Ø12 mm
+    aceroPrincipal = 4 * alto * peso12mm;
+    // Cercos: 4 cercos Ø6 mm, altura total
+    aceroCercos = 4 * alto * peso6mm;
   } else {
-    // Viga: acero en perímetro de sección, supongamos 4 barras longitudinales + estribos cada 0.2 m
-    const barrasLongitudinales = 4 * largo;
+    // Viga: 4 barras longitudinales Ø12 mm
+    aceroPrincipal = 4 * largo * peso12mm;
+    // Estribos Ø6 mm cada 0.2 m
     const numEstribos = Math.ceil(largo / 0.2);
-    const perimetroEstribo = 2 * (ancho + alto); // rectangular
-    acero = barrasLongitudinales + (numEstribos * perimetroEstribo);
+    const perimetroEstribo = 2 * (ancho + alto);
+    aceroCercos = numEstribos * perimetroEstribo * peso6mm;
   }
 
-  // Peso acero por metro
-  const pesoPorMetro = 0.222; // Ø6 mm
-
-  acero = acero * pesoPorMetro; // kg
+  const aceroTotal = aceroPrincipal + aceroCercos;
 
   // ====== Precios ======
   const pCemento = Number(document.getElementById("precio_cemento_cv").value);
   const pArena   = Number(document.getElementById("precio_arena_cv").value);
   const pGrava   = Number(document.getElementById("precio_grava_cv").value);
-  const pAcero   = Number(document.getElementById("precio_acero_cv").value);
+  const pAcero12 = Number(document.getElementById("precio_acero_cv").value);
+  const pAcero6  = Number(document.getElementById("precio_acero_cv").value); // mismo input para simplificar
 
   // ====== Costos ======
   const cCemento = cemento * pCemento;
   const cArena   = arena * pArena;
   const cGrava   = grava * pGrava;
-  const cAcero   = acero * pAcero;
+  const cAceroPrincipal = aceroPrincipal * pAcero12;
+  const cAceroCercos    = aceroCercos * pAcero6;
+  const cAceroTotal     = cAceroPrincipal + cAceroCercos;
 
-  const total = cCemento + cArena + cGrava + cAcero;
+  const total = cCemento + cArena + cGrava + cAceroTotal;
 
   // ====== Resultados ======
   document.getElementById("resultadoCV").innerHTML = `
@@ -80,10 +85,16 @@ function calcularColumnasVigas() {
         <td>${cGrava.toFixed(2)}</td>
       </tr>
       <tr>
-        <td>Acero Ø6 mm</td>
-        <td>${acero.toFixed(2)}</td>
+        <td>Acero principal Ø12 mm</td>
+        <td>${aceroPrincipal.toFixed(2)}</td>
         <td>kg</td>
-        <td>${cAcero.toFixed(2)}</td>
+        <td>${cAceroPrincipal.toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td>Acero cercos Ø6 mm</td>
+        <td>${aceroCercos.toFixed(2)}</td>
+        <td>kg</td>
+        <td>${cAceroCercos.toFixed(2)}</td>
       </tr>
       <tr class="total">
         <td colspan="3"><strong>Total</strong></td>

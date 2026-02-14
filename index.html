@@ -52,14 +52,20 @@
 
 
 
+
+  
+  
+
 <div class="card">
 <h1>Muros de Ladrillos</h1>
-
   <label>Largo del muro (m)</label>
   <input type="number" id="l_largo" step="0.01">
 
   <label>Alto del muro (m)</label>
   <input type="number" id="l_alto" step="0.01">
+
+  <!-- Área calculada automáticamente -->
+  <p><b>Área del muro:</b> <span id="l_area">0.00</span> m²</p>
 
   <label>Tipo de ladrillo</label>
   <select id="tipo_ladrillo">
@@ -95,13 +101,6 @@
 </div>
 
 <div id="resultadoLadrillo" class="card"></div>
-
-<!-- Incluye al final de tu index -->
-<script src="js/ladrillos.js"></script>
-<script>
-  // Esto asegura que el botón llame a la función correctamente
-  document.getElementById("btnCalcularLadrillo").addEventListener("click", calcularMuroLadrillo);
-</script>
   
 
   

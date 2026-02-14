@@ -242,6 +242,48 @@
   </div>
 </div>
 
+<!-- ========================= -->
+<!-- LOSA DE HORMIGÓN -->
+<!-- ========================= -->
+<div class="card">
+  <h2>Losa de Hormigón para Cubierta</h2>
+  <div class="card-content">
+    <label>Largo de la losa (m)</label>
+    <input type="number" id="l_losa" step="0.01">
+
+    <label>Ancho de la losa (m)</label>
+    <input type="number" id="a_losa" step="0.01">
+
+    <label>Espesor de la losa (m)</label>
+    <input type="number" id="e_losa" step="0.01" value="0.12">
+
+    <label>Diámetro del acero (mm)</label>
+    <select id="d_losa">
+      <option value="6">Ø 6 mm</option>
+      <option value="8">Ø 8 mm</option>
+      <option value="10">Ø 10 mm</option>
+      <option value="12" selected>Ø 12 mm</option>
+      <option value="14">Ø 14 mm</option>
+      <option value="16">Ø 16 mm</option>
+    </select>
+
+    <h3>Precios (CUP)</h3>
+    <label>Cemento (CUP / saco)</label>
+    <input type="number" id="precio_cemento_losa" value="150">
+
+    <label>Arena (CUP / m³)</label>
+    <input type="number" id="precio_arena_losa" value="200">
+
+    <label>Grava (CUP / m³)</label>
+    <input type="number" id="precio_grava_losa" value="250">
+
+    <label>Acero (CUP / kg)</label>
+    <input type="number" id="precio_acero_losa" value="50">
+
+    <button onclick="calcularLosa()">Calcular losa</button>
+    <div id="resultadoLosa" class="card"></div>
+  </div>
+</div>
 
 <!-- Scripts -->
 <script src="js/muros.js"></script>
